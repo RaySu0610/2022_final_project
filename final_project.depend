@@ -5,7 +5,7 @@
 1653757793 c:\users\a2282\finalproject\2022_final_project\charater.h
 	"global.h"
 
-1653757793 c:\users\a2282\finalproject\2022_final_project\global.h
+1654612138 c:\users\a2282\finalproject\2022_final_project\global.h
 	<stdio.h>
 	<allegro5/allegro.h>
 	<allegro5/allegro_primitives.h>
@@ -14,6 +14,7 @@
 	<allegro5/allegro_acodec.h>
 	<allegro5/allegro_font.h>
 	<allegro5/allegro_ttf.h>
+	<allegro5/allegro_video.h>
 
 1653298788 c:\users\a2282\finalproject\2022_final_project\allegro\include\allegro5\allegro.h
 	"allegro5/base.h"
@@ -319,12 +320,12 @@
 1653757792 source:c:\users\a2282\finalproject\2022_final_project\gamewindow.cpp
 	"GameWindow.h"
 
-1653757792 c:\users\a2282\finalproject\2022_final_project\gamewindow.h
+1654612181 c:\users\a2282\finalproject\2022_final_project\gamewindow.h
 	"global.h"
 	"charater.h"
 	"scene.h"
 
-1653757793 c:\users\a2282\finalproject\2022_final_project\scene.h
+1654612127 c:\users\a2282\finalproject\2022_final_project\scene.h
 	"global.h"
 	"charater.h"
 
@@ -336,4 +337,11 @@
 
 1653757793 source:c:\users\a2282\finalproject\2022_final_project\scene.cpp
 	"scene.h"
+
+1653298789 c:\users\a2282\finalproject\2022_final_project\allegro\include\allegro5\allegro_video.h
+	"allegro5/allegro5.h"
+	"allegro5/allegro_audio.h"
+
+1653298788 c:\users\a2282\finalproject\2022_final_project\allegro\include\allegro5\allegro5.h
+	"allegro.h"
 

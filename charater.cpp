@@ -31,6 +31,7 @@ void character_init(){
     // load effective sound
     sample = al_load_sample("./sound/atk_sound.wav");
     chara.atk_Sound  = al_create_sample_instance(sample);
+    al_set_sample_instance_gain(chara.atk_Sound, 0.4) ;
     al_set_sample_instance_playmode(chara.atk_Sound, ALLEGRO_PLAYMODE_ONCE);
     al_attach_sample_instance_to_mixer(chara.atk_Sound, al_get_default_mixer());
 
@@ -132,4 +133,5 @@ void character_destory(){
     al_destroy_bitmap(chara.img_move[0]);
     al_destroy_bitmap(chara.img_move[1]);
     al_destroy_sample_instance(chara.atk_Sound);
+    al_destroy_sample(sample);
 }
