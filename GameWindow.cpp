@@ -5,6 +5,7 @@ change parts: menu interface
              ,beginning animation
              ,about interface -> scene.cpp line 146
              ,setting interface -> scene.cpp line 206
+             ,volume function -> scene.cpp line
 
 notice:
 
@@ -20,7 +21,7 @@ notice:
     4 -> setting
     5 -> exit(directly close the program)
 6. I also isolate the menu music so that it would not replay if we back to the menu.you can check the function in scene.cpp line 186
-
+7. Volume function in setting was finished,you can press the mouse button on the line and change the volume.
 */
 
 /*
@@ -34,10 +35,10 @@ notice:
 bool draw = false;
 int window = 1;
 
-const char *title = "Final Project 10xxxxxxx";
+
 
 // ALLEGRO Variables
-ALLEGRO_DISPLAY *display = NULL;
+
 ALLEGRO_EVENT_QUEUE *queue;
 ALLEGRO_VIDEO *video;
 ALLEGRO_FONT *font_ = NULL;
@@ -91,12 +92,14 @@ void init_video()
     al_init_video_addon();
     al_install_audio();
     al_install_keyboard();
+    al_init_image_addon();
     fps = al_create_timer(1.0 / FPS);
     // al_set_new_display_flags(ALLEGRO_RESIZABLE);
     // al_set_new_display_option(ALLEGRO_VSYNC, 1, ALLEGRO_SUGGEST);
-    display = al_create_display(1024, 760);
+    display = al_create_display(WIDTH, HEIGHT);
     // linear interpolation for scaling images
     al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR | ALLEGRO_MAG_LINEAR);
+    al_set_window_title(display, title);
     char filename[50] = "animation.ogv";
     printf("reading video.....\n");
     video = al_open_video(filename);
@@ -111,6 +114,12 @@ void init_video()
     al_register_event_source(queue, temp);
     al_register_event_source(queue, al_get_display_event_source(display));
     al_register_event_source(queue, al_get_timer_event_source(fps));
+    ALLEGRO_BITMAP *icon = al_load_bitmap("./image/sans_icon.png");
+    printf("load icon succeed\n");
+    al_set_display_icon(display, icon);
+    printf("icon set succeed\n");
+    al_destroy_bitmap(icon);
+
 }
 void video_begin()
 {
@@ -159,11 +168,11 @@ void game_init()
     event_queue = al_create_event_queue(); // set the window with position
     // Initialize Allegro settings
     //  al_set_window_position(display, 0, 0);//---------------------------------
-    al_set_window_title(display, title);
+
     al_init_primitives_addon();
     al_init_font_addon();   // initialize the font addon
     al_init_ttf_addon();    // initialize the ttf (True Type Font) addon
-    al_init_image_addon();  // initialize the image addon
+      // initialize the image addon
     al_init_acodec_addon(); // initialize acodec addon
                             //   al_install_keyboard(); // install keyboard event--------------------------------
     al_install_mouse();     // install mouse event
@@ -175,8 +184,6 @@ void game_init()
     //   fps  = al_create_timer( 1.0 / FPS );//---------------------------------------
     al_register_event_source(event_queue, al_get_timer_event_source(fps));
     // initialize the icon on the display
-    ALLEGRO_BITMAP *icon = al_load_bitmap("./image/icon.jpg");
-    al_set_display_icon(display, icon);
 
     // font_ = al_load_ttf_font("./font/UndertaleSans.ttf", 50, 0);
     // al_draw_text(font_, al_map_rgb(255, 100, 100), 90, HEIGHT / 2 + 220, ALLEGRO_ALIGN_LEFT, "Start");
@@ -313,3 +320,4 @@ void game_destroy()
     else if (window == SETTING_WINDOW)
         setting_destroy();
 }
+

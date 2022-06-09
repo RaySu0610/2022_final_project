@@ -1,11 +1,11 @@
 # depslib dependency file v1.0
-1653757793 source:c:\users\a2282\finalproject\2022_final_project\charater.cpp
+1654612101 source:c:\users\a2282\finalproject\2022_final_project\charater.cpp
 	"charater.h"
 
 1653757793 c:\users\a2282\finalproject\2022_final_project\charater.h
 	"global.h"
 
-1654612138 c:\users\a2282\finalproject\2022_final_project\global.h
+1654743082 c:\users\a2282\finalproject\2022_final_project\global.h
 	<stdio.h>
 	<allegro5/allegro.h>
 	<allegro5/allegro_primitives.h>
@@ -317,25 +317,25 @@
 	"allegro5/allegro.h"
 	"allegro5/allegro_font.h"
 
-1653757792 source:c:\users\a2282\finalproject\2022_final_project\gamewindow.cpp
+1654749291 source:c:\users\a2282\finalproject\2022_final_project\gamewindow.cpp
 	"GameWindow.h"
 
-1654612181 c:\users\a2282\finalproject\2022_final_project\gamewindow.h
+1654744398 c:\users\a2282\finalproject\2022_final_project\gamewindow.h
 	"global.h"
 	"charater.h"
 	"scene.h"
 
-1654612127 c:\users\a2282\finalproject\2022_final_project\scene.h
+1654744400 c:\users\a2282\finalproject\2022_final_project\scene.h
 	"global.h"
 	"charater.h"
 
-1653757793 source:c:\users\a2282\finalproject\2022_final_project\global.cpp
+1654743081 source:c:\users\a2282\finalproject\2022_final_project\global.cpp
 	"global.h"
 
-1653758057 source:c:\users\a2282\finalproject\2022_final_project\main.cpp
+1654624104 source:c:\users\a2282\finalproject\2022_final_project\main.cpp
 	"GameWindow.h"
 
-1653757793 source:c:\users\a2282\finalproject\2022_final_project\scene.cpp
+1654745278 source:c:\users\a2282\finalproject\2022_final_project\scene.cpp
 	"scene.h"
 
 1653298789 c:\users\a2282\finalproject\2022_final_project\allegro\include\allegro5\allegro_video.h
@@ -344,4 +344,11 @@
 
 1653298788 c:\users\a2282\finalproject\2022_final_project\allegro\include\allegro5\allegro5.h
 	"allegro.h"
+
+1654742924 c:\users\a2282\finalproject\2022_final_project\game_scene.h
+	"global.h"
+	"charater.h"
+
+1654742924 source:c:\users\a2282\finalproject\2022_final_project\game_scene.cpp
+	"game_scene.h"
 

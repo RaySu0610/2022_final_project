@@ -15,9 +15,7 @@ void menu_process(ALLEGRO_EVENT event);
 void menu_draw();
 void menu_destroy();
 
-void game_scene_init();
-void game_scene_draw();
-void game_scene_destroy();
+
 
 void back_draw(int color);
 
@@ -33,3 +31,11 @@ void setting_init();
 void setting_process(ALLEGRO_EVENT event);
 void setting_draw();
 void setting_destroy();
+
+void volume_draw(int color);
+
+void screen_set(int w,int h);
+
+void game_scene_init();
+void game_scene_draw();
+void game_scene_destroy();

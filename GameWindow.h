@@ -2,6 +2,7 @@
 #include "charater.h"
 #include "scene.h"
 
+
 int Game_establish();
 void animation();
 void init_video();
