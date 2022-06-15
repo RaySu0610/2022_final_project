@@ -37,5 +37,6 @@ void volume_draw(int color);
 void screen_set(int w,int h);
 
 void game_scene_init();
+void game_scene_process(ALLEGRO_EVENT event);
 void game_scene_draw();
 void game_scene_destroy();

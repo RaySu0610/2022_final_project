@@ -35,16 +35,44 @@ notice:
 bool draw = false;
 int window = 1;
 
-
-
 // ALLEGRO Variables
 
 ALLEGRO_EVENT_QUEUE *queue;
 ALLEGRO_VIDEO *video;
 ALLEGRO_FONT *font_ = NULL;
 
+int readFile()
+{
+    char szTest[1000] = {0};
+    int row = 0;
+
+    FILE *fp = fopen("./data.txt", "r");
+    if (NULL == fp)
+    {
+        printf("failed to open data.txt\n");
+        return 1;
+    }
+
+    while (!feof(fp))
+    {
+        memset(szTest, 0, sizeof(szTest));
+        fgets(szTest, sizeof(szTest) - 1, fp); // 包含了換行符
+        printf("%d : %s", row, szTest);
+
+        row++;
+    }
+
+    fclose(fp);
+
+    printf("\n");
+
+    return 0;
+}
+
 int Game_establish()
 {
+    // readFile();
+
     int msg = 0;
 
     animation();
@@ -119,7 +147,6 @@ void init_video()
     al_set_display_icon(display, icon);
     printf("icon set succeed\n");
     al_destroy_bitmap(icon);
-
 }
 void video_begin()
 {
@@ -172,7 +199,7 @@ void game_init()
     al_init_primitives_addon();
     al_init_font_addon();   // initialize the font addon
     al_init_ttf_addon();    // initialize the ttf (True Type Font) addon
-      // initialize the image addon
+                            // initialize the image addon
     al_init_acodec_addon(); // initialize acodec addon
                             //   al_install_keyboard(); // install keyboard event--------------------------------
     al_install_mouse();     // install mouse event
@@ -218,6 +245,7 @@ void game_update()
         {
             music_destroy(); // destroy the menu music since we need to play the new music in game_scene
             game_scene_init();
+            character_init();
         }
         else if (judge_next_window == ABOUT_WINDOW)
             about_init();
@@ -243,7 +271,8 @@ int process_event()
     }
     else if (window == GAME_SCENE_WINDOW)
     {
-        charater_process(event);
+        game_scene_process(event);
+        // charater_process(event);
     }
     else if (window == ABOUT_WINDOW)
     {
@@ -277,6 +306,7 @@ void game_draw()
     else if (window == GAME_SCENE_WINDOW)
     {
         game_scene_draw();
+        character_draw();
     }
     else if (window == ABOUT_WINDOW)
     {
@@ -320,4 +350,3 @@ void game_destroy()
     else if (window == SETTING_WINDOW)
         setting_destroy();
 }
-

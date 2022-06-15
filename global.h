@@ -21,4 +21,9 @@ extern ALLEGRO_TIMER *fps;
 extern ALLEGRO_DISPLAY *display;
 extern const char *title;
 extern float volume_value;
+
+extern int bound_top;
+extern int bound_bottom;
+extern int bound_left;
+extern int bound_right;
 #endif

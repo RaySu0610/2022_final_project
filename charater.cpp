@@ -1,137 +1,122 @@
 #include "charater.h"
 
 // the state of character
-enum {STOP = 0, MOVE, ATK};
-typedef struct character
+enum
+{
+    STOP = 0,
+    MOVE,
+    ATK
+};
+typedef struct
 {
     int x, y; // the position of image
-    int width, height; // the width and height of image
-    bool dir; // left: false, right: true
-    int state; // the state of character
-    ALLEGRO_BITMAP *img_move[2];
-    ALLEGRO_BITMAP *img_atk[2];
-    ALLEGRO_SAMPLE_INSTANCE *atk_Sound;
-    int anime; // counting the time of animation
-    int anime_time; // indicate how long the animation
-}Character;
-Character chara;
+    int width, height;
+    int v = 3;
+    double scale = 0.1;
+    ALLEGRO_BITMAP *img;
+} Heart;
+
+Heart heart;
 ALLEGRO_SAMPLE *sample = NULL;
-void character_init(){
-    // load character images
-    for(int i = 1 ; i <= 2 ; i++){
-        char temp[50];
-        sprintf( temp, "./image/char_move%d.png", i );
-        chara.img_move[i-1] = al_load_bitmap(temp);
-    }
-    for(int i = 1 ; i <= 2 ; i++){
-        char temp[50];
-        sprintf( temp, "./image/char_atk%d.png", i );
-        chara.img_atk[i-1] = al_load_bitmap(temp);
-    }
-    // load effective sound
-    sample = al_load_sample("./sound/atk_sound.wav");
-    chara.atk_Sound  = al_create_sample_instance(sample);
-    al_set_sample_instance_gain(chara.atk_Sound, 0.4) ;
-    al_set_sample_instance_playmode(chara.atk_Sound, ALLEGRO_PLAYMODE_ONCE);
-    al_attach_sample_instance_to_mixer(chara.atk_Sound, al_get_default_mixer());
+void character_init()
+{
+    // heart.img = al_load_bitmap("./image/heart1.jfif");
+    heart.img = al_load_bitmap("./image/heart.png");
+    al_convert_mask_to_alpha(heart.img, al_map_rgb(255, 255, 255));
 
     // initial the geometric information of character
-    chara.width = al_get_bitmap_width(chara.img_move[0]);
-    chara.height = al_get_bitmap_height(chara.img_move[0]);
-    chara.x = WIDTH/2;
-    chara.y = HEIGHT/2;
-    chara.dir = false;
+    heart.width = al_get_bitmap_width(heart.img);
+    heart.height = al_get_bitmap_height(heart.img);
 
-    // initial the animation component
-    chara.state = STOP;
-    chara.anime = 0;
-    chara.anime_time = 30;
-
+    // heart.x = WIDTH / 2;
+    // heart.y = HEIGHT / 2;
+    heart.x = (bound_left + bound_right) / 2;
+    heart.y = (bound_top + bound_bottom) / 2;
 }
-void charater_process(ALLEGRO_EVENT event){
-    // process the animation
-    if( event.type == ALLEGRO_EVENT_TIMER ){
-        if( event.timer.source == fps ){
-            chara.anime++;
-            chara.anime %= chara.anime_time;
-        }
-    // process the keyboard event
-    }else if( event.type == ALLEGRO_EVENT_KEY_DOWN ){
+void charater_process(ALLEGRO_EVENT event)
+{
+    // // process the animation
+    if (event.type == ALLEGRO_EVENT_TIMER)
+    {
+        // if (event.timer.source == fps)
+        // {
+        //     chara.anime++;
+        //     chara.anime %= chara.anime_time;
+        // }
+        // // process the keyboard event
+    }
+    else if (event.type == ALLEGRO_EVENT_KEY_DOWN)
+    {
         key_state[event.keyboard.keycode] = true;
-        chara.anime = 0;
-    }else if( event.type == ALLEGRO_EVENT_KEY_UP ){
+        // chara.anime = 0;
+    }
+    else if (event.type == ALLEGRO_EVENT_KEY_UP)
+    {
         key_state[event.keyboard.keycode] = false;
     }
 }
-void charater_update(){
-    // use the idea of finite state machine to deal with different state
-    if( key_state[ALLEGRO_KEY_W] ){
-        chara.y -= 5;
-        chara.state = MOVE;
-    }else if( key_state[ALLEGRO_KEY_A] ){
-        chara.dir = false;
-        chara.x -= 5;
-        chara.state = MOVE;
-    }else if( key_state[ALLEGRO_KEY_S] ){
-        chara.y += 5;
-        chara.state = MOVE;
-    }else if( key_state[ALLEGRO_KEY_D] ){
-        chara.dir = true;
-        chara.x += 5;
-        chara.state = MOVE;
-    }else if( key_state[ALLEGRO_KEY_SPACE] ){
-        chara.state = ATK;
-    }else if( chara.anime == chara.anime_time-1 ){
-        chara.anime = 0;
-        chara.state = STOP;
-    }else if ( chara.anime == 0 ){
-        chara.state = STOP;
+void charater_update()
+{
+    // // use the idea of finite state machine to deal with different state
+    if (key_state[ALLEGRO_KEY_W])
+    {
+        heart.y -= heart.v;
+        if (heart.y <= bound_top)
+        {
+            heart.y = bound_top;
+        }
+        // chara.state = MOVE;
+    }
+    else if (key_state[ALLEGRO_KEY_S])
+    {
+        heart.y += heart.v;
+        if (heart.y >= bound_bottom - heart.height * heart.scale)
+        {
+            heart.y = bound_bottom - heart.height * heart.scale;
+        }
+        // chara.state = MOVE;
+    }
+
+    if (key_state[ALLEGRO_KEY_A])
+    {
+        // chara.dir = false;
+        heart.x -= heart.v;
+        if (heart.x <= bound_left + heart.width * heart.scale / 2)
+        {
+            heart.x = bound_left + heart.width * heart.scale / 2;
+        }
+        // chara.state = MOVE;
+    }
+    else if (key_state[ALLEGRO_KEY_D])
+    {
+        // chara.dir = true;
+        heart.x += heart.v;
+        if (heart.x >= bound_right - heart.width * heart.scale / 2)
+        {
+            heart.x = bound_right - heart.width * heart.scale / 2;
+        }
+        // chara.state = MOVE;
     }
 }
-void character_draw(){
-    // with the state, draw corresponding image
-    if( chara.state == STOP ){
-        if( chara.dir )
-            al_draw_bitmap(chara.img_move[0], chara.x, chara.y, ALLEGRO_FLIP_HORIZONTAL);
-        else
-            al_draw_bitmap(chara.img_move[0], chara.x, chara.y, 0);
-    }else if( chara.state == MOVE ){
-        if( chara.dir ){
-            if( chara.anime < chara.anime_time/2 ){
-                al_draw_bitmap(chara.img_move[0], chara.x, chara.y, ALLEGRO_FLIP_HORIZONTAL);
-            }else{
-                al_draw_bitmap(chara.img_move[1], chara.x, chara.y, ALLEGRO_FLIP_HORIZONTAL);
-            }
-        }else{
-            if( chara.anime < chara.anime_time/2 ){
-                al_draw_bitmap(chara.img_move[0], chara.x, chara.y, 0);
-            }else{
-                al_draw_bitmap(chara.img_move[1], chara.x, chara.y, 0);
-            }
-        }
-    }else if( chara.state == ATK ){
-        if( chara.dir ){
-            if( chara.anime < chara.anime_time/2 ){
-                al_draw_bitmap(chara.img_atk[0], chara.x, chara.y, ALLEGRO_FLIP_HORIZONTAL);
-            }else{
-                al_draw_bitmap(chara.img_atk[1], chara.x, chara.y, ALLEGRO_FLIP_HORIZONTAL);
-                al_play_sample_instance(chara.atk_Sound);
-            }
-        }else{
-            if( chara.anime < chara.anime_time/2 ){
-                al_draw_bitmap(chara.img_atk[0], chara.x, chara.y, 0);
-            }else{
-                al_draw_bitmap(chara.img_atk[1], chara.x, chara.y, 0);
-                al_play_sample_instance(chara.atk_Sound);
-            }
-        }
-    }
+void character_draw()
+{
+    //show heart
+    al_draw_scaled_bitmap(
+        heart.img, 0, 0, heart.width, heart.height,
+        heart.x, heart.y,
+        heart.width * heart.scale, heart.height * heart.scale,
+        0);
+
+
+
 }
-void character_destory(){
-    al_destroy_bitmap(chara.img_atk[0]);
-    al_destroy_bitmap(chara.img_atk[1]);
-    al_destroy_bitmap(chara.img_move[0]);
-    al_destroy_bitmap(chara.img_move[1]);
-    al_destroy_sample_instance(chara.atk_Sound);
-    al_destroy_sample(sample);
+void character_destory()
+{
+    al_destroy_bitmap(heart.img);
+
+    // al_destroy_bitmap(chara.img_atk[1]);
+    // al_destroy_bitmap(chara.img_move[0]);
+    // al_destroy_bitmap(chara.img_move[1]);
+    // al_destroy_sample_instance(chara.atk_Sound);
+    // al_destroy_sample(sample);
 }
