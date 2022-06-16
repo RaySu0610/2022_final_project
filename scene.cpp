@@ -45,15 +45,15 @@ void menu_process(ALLEGRO_EVENT event)
     {
         pos_x = event.mouse.x;
         pos_y = event.mouse.y;
-        if (pos_y >= (HEIGHT * 600 / HEIGHT) * scalar + dy && pos_y <= (HEIGHT * 655 / HEIGHT) * scalar + dy)
+        if (pos_y >= (HEIGHT * 600 / 760) * scalar + dy && pos_y <= (HEIGHT * 655 / 760) * scalar + dy)
         {
-            if (pos_x >= (WIDTH * 70 / WIDTH) * scalar + dx && pos_x <= (WIDTH * 230 / WIDTH) * scalar + dx)
+            if (pos_x >= (WIDTH * 70 / 1024) * scalar + dx && pos_x <= (WIDTH * 230 / 1024) * scalar + dx)
                 start_inrange = true;
-            else if (pos_x >= (WIDTH * 290 / WIDTH) * scalar + dx && pos_x <= (WIDTH * 450 / WIDTH) * scalar + dx)
+            else if (pos_x >= (WIDTH * 290 / 1024) * scalar + dx && pos_x <= (WIDTH * 450 / 1024) * scalar + dx)
                 about_inrange = true;
-            else if (pos_x >= (WIDTH * 530 / WIDTH) * scalar + dx && pos_x <= (WIDTH * 730 / WIDTH) * scalar + dx)
+            else if (pos_x >= (WIDTH * 530 / 1024) * scalar + dx && pos_x <= (WIDTH * 730 / 1024) * scalar + dx)
                 setting_inrange = true;
-            else if (pos_x >= (WIDTH * 790 / WIDTH) * scalar + dx && pos_x <= (WIDTH * 920 / WIDTH) * scalar + dx)
+            else if (pos_x >= (WIDTH * 790 / 1024) * scalar + dx && pos_x <= (WIDTH * 920 / 1024) * scalar + dx)
                 exit_inrange = true;
             else
                 start_inrange = false, about_inrange = false, setting_inrange = false, exit_inrange = false;
@@ -67,47 +67,47 @@ void menu_draw()
     // al_clear_to_color(al_map_rgb(100,100,100));
 
     al_clear_to_color(al_map_rgb(0, 0, 0));
-    al_draw_scaled_bitmap(background, 0, 0, WIDTH, 720, 0, 0, WIDTH, HEIGHT, 0);
+    al_draw_scaled_bitmap(background, 0, 0, 1024, 760, 0, 0, WIDTH, HEIGHT, 0);
     if (start_inrange)
     {
-        al_draw_text(font, al_map_rgb(255, 100, 100), (WIDTH * 90 / WIDTH) * scalar + dx, (HEIGHT * 600 / HEIGHT) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Start");
-        al_draw_rectangle((WIDTH * 70 / WIDTH) * scalar + dx, (HEIGHT * 600 / HEIGHT) * scalar + dy, (WIDTH * 230 / WIDTH) * scalar + dx, (HEIGHT * 655 / HEIGHT) * scalar + dy, al_map_rgb(255, 100, 100), 0);
+        al_draw_text(font, al_map_rgb(255, 100, 100), (WIDTH * 90 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Start");
+        al_draw_rectangle((WIDTH * 70 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, (WIDTH * 230 / 1024) * scalar + dx, (HEIGHT * 655 / 760) * scalar + dy, al_map_rgb(255, 100, 100), 0);
     }
     else
     {
-        al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 90 / WIDTH) * scalar + dx, (HEIGHT * 600 / HEIGHT) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Start");
-        al_draw_rectangle((WIDTH * 70 / WIDTH) * scalar + dx, (HEIGHT * 600 / HEIGHT) * scalar + dy, (WIDTH * 230 / WIDTH) * scalar + dx, (HEIGHT * 655 / HEIGHT) * scalar + dy, al_map_rgb(255, 255, 255), 0);
+        al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 90 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Start");
+        al_draw_rectangle((WIDTH * 70 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, (WIDTH * 230 / 1024) * scalar + dx, (HEIGHT * 655 / 760) * scalar + dy, al_map_rgb(255, 255, 255), 0);
     }
     if (about_inrange)
     {
-        al_draw_text(font, al_map_rgb(255, 100, 100), (WIDTH * 310 / WIDTH) * scalar + dx, (HEIGHT * 600 / HEIGHT) * scalar + dy, ALLEGRO_ALIGN_LEFT, "About");
-        al_draw_rectangle((WIDTH * 290 / WIDTH) * scalar + dx, (HEIGHT * 600 / HEIGHT) * scalar + dy, (WIDTH * 450 / WIDTH) * scalar + dx, (HEIGHT * 655 / HEIGHT) * scalar + dy, al_map_rgb(255, 100, 100), 0);
+        al_draw_text(font, al_map_rgb(255, 100, 100), (WIDTH * 310 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "About");
+        al_draw_rectangle((WIDTH * 290 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, (WIDTH * 450 / 1024) * scalar + dx, (HEIGHT * 655 / 760) * scalar + dy, al_map_rgb(255, 100, 100), 0);
     }
     else
     {
-        al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 310 / WIDTH) * scalar + dx, (HEIGHT * 600 / HEIGHT) * scalar + dy, ALLEGRO_ALIGN_LEFT, "About");
-        al_draw_rectangle((WIDTH * 290 / WIDTH) * scalar + dx, (HEIGHT * 600 / HEIGHT) * scalar + dy, (WIDTH * 450 / WIDTH) * scalar + dx, (HEIGHT * 655 / HEIGHT) * scalar + dy, al_map_rgb(255, 255, 255), 0);
+        al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 310 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "About");
+        al_draw_rectangle((WIDTH * 290 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, (WIDTH * 450 / 1024) * scalar + dx, (HEIGHT * 655 / 760) * scalar + dy, al_map_rgb(255, 255, 255), 0);
     }
 
     if (setting_inrange)
     {
-        al_draw_text(font, al_map_rgb(255, 100, 100), (WIDTH * 550 / WIDTH) * scalar + dx, (HEIGHT * 600 / HEIGHT) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Setting");
-        al_draw_rectangle((WIDTH * 530 / WIDTH) * scalar + dx, (HEIGHT * 600 / HEIGHT) * scalar + dy, (WIDTH * 730 / WIDTH) * scalar + dx, (HEIGHT * 655 / HEIGHT) * scalar + dy, al_map_rgb(255, 100, 100), 0);
+        al_draw_text(font, al_map_rgb(255, 100, 100), (WIDTH * 550 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Setting");
+        al_draw_rectangle((WIDTH * 530 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, (WIDTH * 730 / 1024) * scalar + dx, (HEIGHT * 655 / 760) * scalar + dy, al_map_rgb(255, 100, 100), 0);
     }
     else
     {
-        al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 550 / WIDTH) * scalar + dx, (HEIGHT * 600 / HEIGHT) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Setting");
-        al_draw_rectangle((WIDTH * 530 / WIDTH) * scalar + dx, (HEIGHT * 600 / HEIGHT) * scalar + dy, (WIDTH * 730 / WIDTH) * scalar + dx, (HEIGHT * 655 / HEIGHT) * scalar + dy, al_map_rgb(255, 255, 255), 0);
+        al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 550 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Setting");
+        al_draw_rectangle((WIDTH * 530 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, (WIDTH * 730 / 1024) * scalar + dx, (HEIGHT * 655 / 760) * scalar + dy, al_map_rgb(255, 255, 255), 0);
     }
     if (exit_inrange)
     {
-        al_draw_text(font, al_map_rgb(255, 100, 100), (WIDTH * 810 / WIDTH) * scalar + dx, (HEIGHT * 600 / HEIGHT) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Exit");
-        al_draw_rectangle((WIDTH * 790 / WIDTH) * scalar + dx, (HEIGHT * 600 / HEIGHT) * scalar + dy, (WIDTH * 920 / WIDTH) * scalar + dx, (HEIGHT * 655 / HEIGHT) * scalar + dy, al_map_rgb(255, 100, 100), 0);
+        al_draw_text(font, al_map_rgb(255, 100, 100), (WIDTH * 810 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Exit");
+        al_draw_rectangle((WIDTH * 790 /1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, (WIDTH * 920 / 1024) * scalar + dx, (HEIGHT * 655 / 760) * scalar + dy, al_map_rgb(255, 100, 100), 0);
     }
     else
     {
-        al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 810 / WIDTH) * scalar + dx, (HEIGHT * 600 / HEIGHT) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Exit");
-        al_draw_rectangle((WIDTH * 790 / WIDTH) * scalar + dx, (HEIGHT * 600 / HEIGHT) * scalar + dy, (WIDTH * 920 / WIDTH) * scalar + dx, (HEIGHT * 655 / HEIGHT) * scalar + dy, al_map_rgb(255, 255, 255), 0);
+        al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 810 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Exit");
+        al_draw_rectangle((WIDTH * 790 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, (WIDTH * 920 / 1024) * scalar + dx, (HEIGHT * 655 / 760) * scalar + dy, al_map_rgb(255, 255, 255), 0);
     }
 }
 void menu_destroy()
@@ -120,8 +120,8 @@ void menu_destroy()
 void back_draw(int color)
 {
 
-    al_draw_text(font, al_map_rgb(255, color, color), (WIDTH * 40 / WIDTH) * scalar + dx, (HEIGHT * 705 / HEIGHT) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Back");
-    al_draw_rectangle((WIDTH * 20 / WIDTH) * scalar + dx, (HEIGHT * 700 / HEIGHT) * scalar + dy, (WIDTH * 180 / WIDTH) * scalar + dx, (HEIGHT * 755 / HEIGHT) * scalar + dy, al_map_rgb(255, color, color), 0);
+    al_draw_text(font, al_map_rgb(255, color, color), (WIDTH * 40 / 1024) * scalar + dx, (HEIGHT * 705 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Back");
+    al_draw_rectangle((WIDTH * 20 / 1024) * scalar + dx, (HEIGHT * 700 / 760) * scalar + dy, (WIDTH * 180 / 1024) * scalar + dx, (HEIGHT * 755 / 760) * scalar + dy, al_map_rgb(255, color, color), 0);
 }
 
 // about func-----------------------------------------------------------------------------------------------------------
@@ -145,9 +145,9 @@ void about_process(ALLEGRO_EVENT event)
     {
         pos_x = event.mouse.x;
         pos_y = event.mouse.y;
-        if (pos_y >= (HEIGHT * 700 / HEIGHT) * scalar + dy && pos_y <= (HEIGHT * 755 / HEIGHT) * scalar + dy)
+        if (pos_y >= (HEIGHT * 700 / 760) * scalar + dy && pos_y <= (HEIGHT * 755 / 760) * scalar + dy)
         {
-            if (pos_x >= (WIDTH * 20 / WIDTH) * scalar + dx && pos_x <= (WIDTH * 180 / WIDTH) * scalar + dx)
+            if (pos_x >= (WIDTH * 20 /1024) * scalar + dx && pos_x <= (WIDTH * 180 / 1024) * scalar + dx)
                 back_inrange = true;
             else
                 back_inrange = false;
@@ -207,18 +207,18 @@ void setting_process(ALLEGRO_EVENT event)
             judge_next_window = MENU_WINDOW;
             back_inrange = false;
         }
-        if (pos_y >= (HEIGHT * 260 / HEIGHT) * scalar + dy && pos_y <= (HEIGHT * 300 / HEIGHT) * scalar + dy)
+        if (pos_y >= (HEIGHT * 260 / 760) * scalar + dy && pos_y <= (HEIGHT * 300 / 760) * scalar + dy)
         {
-            if (pos_x >= (WIDTH * 250 / WIDTH) * scalar + dx && pos_x <= (WIDTH * (250 + 200) / WIDTH) * scalar + dx)
+            if (pos_x >= (WIDTH * 250 / 1024) * scalar + dx && pos_x <= (WIDTH * (250 + 200) / 1024) * scalar + dx)
             {
-                volume_value = pos_x - WIDTH * 250 / WIDTH;
+                volume_value = pos_x - WIDTH * 250 / 1024;
                 al_set_sample_instance_gain(sample_instance, (volume_value - 10) / 200);
             }
         }
-        else if (pos_y >= (HEIGHT * 445 / HEIGHT) * scalar + dy && pos_y <= (HEIGHT * 495 / HEIGHT) * scalar + dy)
+        else if (pos_y >= (HEIGHT * 445 / 760) * scalar + dy && pos_y <= (HEIGHT * 495 / 760) * scalar + dy)
         {
-            if (Size_inrange[0] && WIDTH != WIDTH)
-                screen_set(WIDTH, HEIGHT);
+            if (Size_inrange[0] && WIDTH != 1024)
+                screen_set(1024, 760);
             else if (Size_inrange[1] && WIDTH != 1280)
                 screen_set(1280, 720);
             else if (Size_inrange[2] && WIDTH != 1440)
@@ -233,20 +233,20 @@ void setting_process(ALLEGRO_EVENT event)
     {
         pos_x = event.mouse.x;
         pos_y = event.mouse.y;
-        if (pos_y >= (HEIGHT * 700 / HEIGHT) * scalar + dy && pos_y <= (HEIGHT * 755 / HEIGHT) * scalar + dy)
+        if (pos_y >= (HEIGHT * 700 / 760) * scalar + dy && pos_y <= (HEIGHT * 755 / 760) * scalar + dy)
         {
-            if (pos_x >= (WIDTH * 20 / WIDTH) * scalar + dx && pos_x <= (WIDTH * 180 / WIDTH) * scalar + dx)
+            if (pos_x >= (WIDTH * 20 / 1024) * scalar + dx && pos_x <= (WIDTH * 180 / 1024) * scalar + dx)
                 back_inrange = true;
             else
                 back_inrange = false;
         }
-        else if (pos_y >= (HEIGHT * 445 / HEIGHT) * scalar + dy && pos_y <= (HEIGHT * 495 / HEIGHT) * scalar + dy)
+        else if (pos_y >= (HEIGHT * 445 / 760) * scalar + dy && pos_y <= (HEIGHT * 495 / 760) * scalar + dy)
         {
-            if (pos_x >= (WIDTH * 40 / WIDTH) * scalar + dx && pos_x <= (WIDTH * (305) / WIDTH) * scalar + dx)
+            if (pos_x >= (WIDTH * 40 / 1024) * scalar + dx && pos_x <= (WIDTH * (305) / 1024) * scalar + dx)
                 Size_inrange[0] = true;
-            else if (pos_x >= (WIDTH * 370 / WIDTH) * scalar + dx && pos_x <= (WIDTH * (635) / WIDTH) * scalar + dx)
+            else if (pos_x >= (WIDTH * 370 / 1024) * scalar + dx && pos_x <= (WIDTH * (635) / 1024) * scalar + dx)
                 Size_inrange[1] = true;
-            else if (pos_x >= (WIDTH * 700 / WIDTH) * scalar + dx && pos_x <= (WIDTH * (959) / WIDTH) * scalar + dx)
+            else if (pos_x >= (WIDTH * 700 / 1024) * scalar + dx && pos_x <= (WIDTH * (959) / 1024) * scalar + dx)
                 Size_inrange[2] = true;
             else
                 Size_inrange[0] = false, Size_inrange[1] = false, Size_inrange[2] = false;
@@ -262,23 +262,25 @@ void setting_draw()
         back_draw(100);
     else
         back_draw(255);
-    al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 40 / WIDTH) * scalar + dx, (HEIGHT * 250 / HEIGHT) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Voloume");
-    al_draw_rectangle((WIDTH * 250 / WIDTH) * scalar + dx, (HEIGHT * 280 / HEIGHT) * scalar + dy, (WIDTH * 450 / WIDTH) * scalar + dx, (HEIGHT * 280 / HEIGHT) * scalar + dy, al_map_rgb(255, 255, 255), 0);
-    al_draw_filled_rectangle((WIDTH * (240 + volume_value) / WIDTH) * scalar + dx, (HEIGHT * 260 / HEIGHT) * scalar + dy, (WIDTH * (250 + volume_value) / WIDTH) * scalar + dx, (HEIGHT * 300 / HEIGHT) * scalar + dy, al_map_rgb(255, 255, 255));
 
-    al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 40 / WIDTH) * scalar + dx, (HEIGHT * 380 / HEIGHT) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Size");
+    al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH*40/1024)*scalar+dx, (HEIGHT*250/760)*scalar+dy, ALLEGRO_ALIGN_LEFT, "Volume");
+    al_draw_rectangle((WIDTH*250/1024)*scalar+dx, (HEIGHT*280/760)*scalar+dy, (WIDTH*450/1024)*scalar+dx, (HEIGHT*280/760)*scalar+dy, al_map_rgb(255, 255, 255), 0);
+    al_draw_filled_rectangle((WIDTH*(240+volume_value)/1024)*scalar+dx, (HEIGHT*260/760)*scalar+dy, (WIDTH*(250+volume_value)/1024)*scalar+dx, (HEIGHT*300/760)*scalar+dy, al_map_rgb(255, 255, 255));
+
+
+    al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 40 / 1024) * scalar + dx, (HEIGHT * 380 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Size");
     if (Size_inrange[0])
-        al_draw_text(font, al_map_rgb(255, 100, 100), (WIDTH * 40 / WIDTH) * scalar + dx, (HEIGHT * 450 / HEIGHT) * scalar + dy, ALLEGRO_ALIGN_LEFT, "WIDTH X HEIGHT");
+        al_draw_text(font, al_map_rgb(255, 100, 100), (WIDTH * 40 / 1024) * scalar + dx, (HEIGHT * 450 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "1024 X 760");
     else
-        al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 40 / WIDTH) * scalar + dx, (HEIGHT * 450 / HEIGHT) * scalar + dy, ALLEGRO_ALIGN_LEFT, "WIDTH X HEIGHT");
+        al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 40 / 1024) * scalar + dx, (HEIGHT * 450 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "1024 X 760");
     if (Size_inrange[1])
-        al_draw_text(font, al_map_rgb(255, 100, 100), (WIDTH * 370 / WIDTH) * scalar + dx, (HEIGHT * 450 / HEIGHT) * scalar + dy, ALLEGRO_ALIGN_LEFT, "1280 X 720");
+        al_draw_text(font, al_map_rgb(255, 100, 100), (WIDTH * 370 / 1024) * scalar + dx, (HEIGHT * 450 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "1280 X 720");
     else
-        al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 370 / WIDTH) * scalar + dx, (HEIGHT * 450 / HEIGHT) * scalar + dy, ALLEGRO_ALIGN_LEFT, "1280 X 720");
+        al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 370 / 1024) * scalar + dx, (HEIGHT * 450 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "1280 X 720");
     if (Size_inrange[2])
-        al_draw_text(font, al_map_rgb(255, 100, 100), (WIDTH * 700 / WIDTH) * scalar + dx, (HEIGHT * 450 / HEIGHT) * scalar + dy, ALLEGRO_ALIGN_LEFT, "1440 X 900");
+        al_draw_text(font, al_map_rgb(255, 100, 100), (WIDTH * 700 / 1024) * scalar + dx, (HEIGHT * 450 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "1440 X 900");
     else
-        al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 700 / WIDTH) * scalar + dx, (HEIGHT * 450 / HEIGHT) * scalar + dy, ALLEGRO_ALIGN_LEFT, "1440 X 900");
+        al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 700 / 1024) * scalar + dx, (HEIGHT * 450 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "1440 X 900");
 }
 void setting_destroy()
 {
@@ -286,13 +288,13 @@ void setting_destroy()
 }
 
 // volume func----------------------------------------------------------------------------------------------------------------------------------------
-void volume_draw(int color)
+/*void volume_draw(int color)
 {
 
-    al_draw_text(font, al_map_rgb(255, color, color), (WIDTH * 40 / WIDTH) * scalar + dx, (HEIGHT * 250 / HEIGHT) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Voloume");
-    al_draw_rectangle((WIDTH * 250 / WIDTH) * scalar + dx, (HEIGHT * 280 / HEIGHT) * scalar + dy, (WIDTH * 450 / WIDTH) * scalar + dx, (HEIGHT * 280 / HEIGHT) * scalar + dy, al_map_rgb(255, color, color), 0);
-    al_draw_filled_rectangle((WIDTH * (240 + volume_value) / WIDTH) * scalar + dx, (HEIGHT * 260 / HEIGHT) * scalar + dy, (WIDTH * (250 + volume_value) / WIDTH) * scalar + dx, (HEIGHT * 300 / HEIGHT) * scalar + dy, al_map_rgb(255, color, color));
-}
+    al_draw_text(font, al_map_rgb(255, color, color), (WIDTH * 40 / 1024) * scalar + dx, (HEIGHT * 250 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Volume");
+    al_draw_rectangle((WIDTH * 250 / 1024) * scalar + dx, (HEIGHT * 280 / 760) * scalar + dy, (WIDTH * 450 / 1024) * scalar + dx, (HEIGHT * 280 / 760) * scalar + dy, al_map_rgb(255, color, color), 0);
+    al_draw_filled_rectangle((WIDTH * (240 + volume_value) / 1024) * scalar + dx, (HEIGHT * 260 / 760) * scalar + dy, (WIDTH * (250 + volume_value) / 1024) * scalar + dx, (HEIGHT * 300 / 760) * scalar + dy, al_map_rgb(255, color, color));
+}*/
 
 // size reset func------------------------------------------------------------------------------------------------------------
 void screen_set(int w, int h)
