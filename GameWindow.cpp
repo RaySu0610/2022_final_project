@@ -306,7 +306,7 @@ void game_draw()
     else if (window == GAME_SCENE_WINDOW)
     {
         game_scene_draw();
-        character_draw();
+        // character_draw();
     }
     else if (window == ABOUT_WINDOW)
     {

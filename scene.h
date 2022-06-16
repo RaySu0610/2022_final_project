@@ -40,3 +40,7 @@ void game_scene_init();
 void game_scene_process(ALLEGRO_EVENT event);
 void game_scene_draw();
 void game_scene_destroy();
+
+
+void monster_attack_init2();
+void monster_attack2();

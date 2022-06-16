@@ -26,4 +26,7 @@ extern int bound_top;
 extern int bound_bottom;
 extern int bound_left;
 extern int bound_right;
+
+extern int bound_left1;
+extern int bound_right1;
 #endif

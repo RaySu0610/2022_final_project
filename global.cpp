@@ -16,3 +16,5 @@ int bound_top = 400;
 int bound_bottom = 580;
 int bound_left = WIDTH * 1 / 10;
 int bound_right = WIDTH * 9 / 10;
+int bound_left1 = WIDTH * 3 / 10;
+int bound_right1 = WIDTH * 7 / 10;

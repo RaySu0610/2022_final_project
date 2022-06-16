@@ -100,15 +100,12 @@ void charater_update()
 }
 void character_draw()
 {
-    //show heart
+    // show heart
     al_draw_scaled_bitmap(
         heart.img, 0, 0, heart.width, heart.height,
         heart.x, heart.y,
         heart.width * heart.scale, heart.height * heart.scale,
         0);
-
-
-
 }
 void character_destory()
 {
@@ -119,4 +116,17 @@ void character_destory()
     // al_destroy_bitmap(chara.img_move[1]);
     // al_destroy_sample_instance(chara.atk_Sound);
     // al_destroy_sample(sample);
+}
+
+void character_attack_check2(int pos[][2], int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        if (
+            abs(pos[i][0] - heart.x) <= 3 &&
+            abs(pos[i][1] - heart.y) <= 3)
+        {
+            printf("heart\n");
+        }
+    }
 }
