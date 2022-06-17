@@ -15,8 +15,6 @@ void menu_process(ALLEGRO_EVENT event);
 void menu_draw();
 void menu_destroy();
 
-
-
 void back_draw(int color);
 
 void about_init();
@@ -34,13 +32,15 @@ void setting_destroy();
 
 void volume_draw(int color);
 
-void screen_set(int w,int h);
+void screen_set(int w, int h);
 
 void game_scene_init();
 void game_scene_process(ALLEGRO_EVENT event);
 void game_scene_draw();
 void game_scene_destroy();
 
+void monster_attack_init1();
+void monster_attack1();
 
 void monster_attack_init2();
 void monster_attack2();

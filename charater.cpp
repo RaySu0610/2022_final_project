@@ -1,5 +1,8 @@
 #include "charater.h"
 
+int heart_counter_initial = 500;
+int heart_counter = heart_counter_initial;
+
 // the state of character
 enum
 {
@@ -13,6 +16,7 @@ typedef struct
     int width, height;
     int v = 3;
     double scale = 0.1;
+    int hp = 20;
     ALLEGRO_BITMAP *img;
 } Heart;
 
@@ -30,7 +34,7 @@ void character_init()
 
     // heart.x = WIDTH / 2;
     // heart.y = HEIGHT / 2;
-    heart.x = (bound_left + bound_right) / 2;
+    heart.x = (bound_left1 + bound_right1) / 2;
     heart.y = (bound_top + bound_bottom) / 2;
 }
 void charater_process(ALLEGRO_EVENT event)
@@ -81,9 +85,9 @@ void charater_update()
     {
         // chara.dir = false;
         heart.x -= heart.v;
-        if (heart.x <= bound_left + heart.width * heart.scale / 2)
+        if (heart.x <= bound_left1 + heart.width * heart.scale / 2)
         {
-            heart.x = bound_left + heart.width * heart.scale / 2;
+            heart.x = bound_left1 + heart.width * heart.scale / 2;
         }
         // chara.state = MOVE;
     }
@@ -91,21 +95,25 @@ void charater_update()
     {
         // chara.dir = true;
         heart.x += heart.v;
-        if (heart.x >= bound_right - heart.width * heart.scale / 2)
+        if (heart.x >= bound_right1 - heart.width * heart.scale / 2)
         {
-            heart.x = bound_right - heart.width * heart.scale / 2;
+            heart.x = bound_right1 - heart.width * heart.scale / 2;
         }
         // chara.state = MOVE;
     }
 }
 void character_draw()
 {
+
     // show heart
-    al_draw_scaled_bitmap(
-        heart.img, 0, 0, heart.width, heart.height,
-        heart.x, heart.y,
-        heart.width * heart.scale, heart.height * heart.scale,
-        0);
+    if (heart_counter == heart_counter_initial || (heart_counter % 50) < 25)
+    {
+        al_draw_scaled_bitmap(
+            heart.img, 0, 0, heart.width, heart.height,
+            heart.x, heart.y,
+            heart.width * heart.scale, heart.height * heart.scale,
+            0);
+    }
 }
 void character_destory()
 {
@@ -118,15 +126,60 @@ void character_destory()
     // al_destroy_sample(sample);
 }
 
+int get_character_hp()
+{
+    return heart.hp;
+}
+
+void character_attack_check1(int pos[][2], int n)
+{
+    if (heart_counter != heart_counter_initial)
+    {
+        heart_counter--;
+        if (heart_counter == 0)
+        {
+            heart_counter = heart_counter_initial;
+        }
+    }
+    else
+    {
+        for (int i = 0; i < n; i++)
+        {
+            if (
+                abs(pos[i][0] - heart.x) <= 6 &&
+                abs(pos[i][1] - heart.y) <= 6)
+            {
+                heart.hp -= 3;
+                heart_counter--;
+                printf("heart\n");
+                break;
+            }
+        }
+    }
+}
 void character_attack_check2(int pos[][2], int n)
 {
-    for (int i = 0; i < n; i++)
+    if (heart_counter != heart_counter_initial)
     {
-        if (
-            abs(pos[i][0] - heart.x) <= 3 &&
-            abs(pos[i][1] - heart.y) <= 3)
+        heart_counter--;
+        if (heart_counter == 0)
         {
-            printf("heart\n");
+            heart_counter = heart_counter_initial;
+        }
+    }
+    else
+    {
+        for (int i = 0; i < n; i++)
+        {
+            if (
+                abs(pos[i][0] - heart.x) <= 6 &&
+                abs(pos[i][1] - heart.y) <= 6)
+            {
+                heart.hp -= 3;
+                heart_counter--;
+                printf("heart\n");
+                break;
+            }
         }
     }
 }
