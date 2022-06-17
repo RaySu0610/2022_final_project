@@ -44,3 +44,6 @@ void monster_attack1();
 
 void monster_attack_init2();
 void monster_attack2();
+
+void monster_attack_init3();
+void monster_attack3();

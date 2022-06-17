@@ -12,9 +12,11 @@ int judge_next_window = 0;
 const char *title = "Final Project 10xxxxxxx";
 float volume_value = 20;
 
-float bound_top = 400.0/ 760;
+float bound_top = 400.0 / 760;
 float bound_bottom = 580.0 / 760;
-float bound_left =  1.0 / 10;
+float bound_left = 1.0 / 10;
 float bound_right = 9.0 / 10;
 float bound_left1 = 3.0 / 10;
-float bound_right1 =7.0 / 10;
+float bound_right1 = 7.0 / 10;
+
+bool mercy_usabled = false;

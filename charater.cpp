@@ -17,6 +17,7 @@ typedef struct
     int v = 3;
     double scale = 0.1;
     int hp = 20;
+    bool cheating = false;
     ALLEGRO_BITMAP *img;
 } Heart;
 
@@ -31,7 +32,7 @@ void character_init()
     // initial the geometric information of character
     heart.width = al_get_bitmap_width(heart.img);
     heart.height = al_get_bitmap_height(heart.img);
-    printf("%d %d\n",heart.width, heart.height);
+    printf("%d %d\n", heart.width, heart.height);
     // heart.x = WIDTH / 2;
     // heart.y = HEIGHT / 2;
     heart.x = WIDTH * (bound_left1 + bound_right1) / 2;
@@ -133,6 +134,10 @@ int get_character_hp()
 
 void character_attack_check1(int pos[][2], int n)
 {
+    if (heart.cheating)
+    {
+        return;
+    }
     if (heart_counter != heart_counter_initial)
     {
         heart_counter--;
@@ -159,6 +164,10 @@ void character_attack_check1(int pos[][2], int n)
 }
 void character_attack_check2(int pos[][2], int n)
 {
+    if (heart.cheating)
+    {
+        return;
+    }
     if (heart_counter != heart_counter_initial)
     {
         heart_counter--;
@@ -183,13 +192,56 @@ void character_attack_check2(int pos[][2], int n)
         }
     }
 }
-
-void cheating_init(){
-
-    printf("Cheating mode is on!!!!!!!!!!!!!!!!!!!!\n");
+void character_attack_check3(int pos[][2], int n)
+{
+    if (heart.cheating)
+    {
+        return;
+    }
+    if (heart_counter != heart_counter_initial)
+    {
+        heart_counter--;
+        if (heart_counter == 0)
+        {
+            heart_counter = heart_counter_initial;
+        }
+    }
+    else
+    {
+        for (int i = 0; i < n; i++)
+        {
+            if (
+                abs(pos[i][0] - heart.x) <= heart.width * heart.scale / 2 + 3 &&
+                abs(pos[i][1] - heart.y) <= heart.height * heart.scale / 2 + 3)
+            {
+                if (i != 0)
+                {
+                    heart.hp -= 3;
+                    heart_counter--;
+                    printf("heart\n");
+                    break;
+                }
+                else
+                {
+                    mercy_usabled = true;
+                    heart.hp += 1;
+                    heart_counter--;
+                    printf("heart_plus\n");
+                    break;
+                }
+            }
+        }
+    }
 }
-void recover(int val){
 
-    heart.hp+=val;
-    printf("hp: %d\n",heart.hp);
+void cheating_init()
+{
+    heart.cheating = true;
+    // printf("Cheating mode is on!!!!!!!!!!!!!!!!!!!!\n");
+}
+void recover(int val)
+{
+
+    heart.hp += val;
+    // printf("hp: %d\n", heart.hp);
 }

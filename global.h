@@ -29,4 +29,6 @@ extern float bound_right;
 
 extern float bound_left1;
 extern float bound_right1;
+
+extern bool mercy_usabled;
 #endif
