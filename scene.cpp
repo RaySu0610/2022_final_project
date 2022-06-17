@@ -315,6 +315,11 @@ void screen_set(int w, int h)
 }
 
 // function of game_scene------------------------------------------------------------------------------------------------------
+/*
+The format of the position is HEIGHT/WEIGHT * bound_top/bottom/left/right * scalar + dx/dy
+                        or   (WIDTH/HEIGHT) * 70 / (1024/760)
+
+*/
 bool game_button[4] = {false};
 bool game_scene2_button[4] = {false};
 enum
@@ -391,15 +396,15 @@ void game_scene_process(ALLEGRO_EVENT event)
         {
             pos_x = event.mouse.x;
             pos_y = event.mouse.y;
-            if (pos_y >= (HEIGHT * 660 / HEIGHT) * scalar + dy && pos_y <= (HEIGHT * 715 / HEIGHT) * scalar + dy)
+            if (pos_y >= (HEIGHT * 660 / 760) * scalar + dy && pos_y <= (HEIGHT * 715 / 760) * scalar + dy)
             {
-                if (pos_x >= (WIDTH * 70 / WIDTH) * scalar + dx && pos_x <= (WIDTH * 230 / WIDTH) * scalar + dx)
+                if (pos_x >= (WIDTH * 70 / 1024) * scalar + dx && pos_x <= (WIDTH * 230 / 1024) * scalar + dx)
                     game_button[game_button_fight] = true;
-                else if (pos_x >= (WIDTH * 290 / WIDTH) * scalar + dx && pos_x <= (WIDTH * 450 / WIDTH) * scalar + dx)
+                else if (pos_x >= (WIDTH * 290 / 1024) * scalar + dx && pos_x <= (WIDTH * 450 / 1024) * scalar + dx)
                     game_button[game_button_act] = true;
-                else if (pos_x >= (WIDTH * 530 / WIDTH) * scalar + dx && pos_x <= (WIDTH * 730 / WIDTH) * scalar + dx)
+                else if (pos_x >= (WIDTH * 530 / 1024) * scalar + dx && pos_x <= (WIDTH * 730 / 1024) * scalar + dx)
                     game_button[game_button_item] = true;
-                else if (pos_x >= (WIDTH * 790 / WIDTH) * scalar + dx && pos_x <= (WIDTH * 920 / WIDTH) * scalar + dx)
+                else if (pos_x >= (WIDTH * 790 / 1024) * scalar + dx && pos_x <= (WIDTH * 920 / 1024) * scalar + dx)
                     game_button[game_button_mercy] = true;
                 else
                     game_button[game_button_fight] = false, game_button[game_button_act] = false, game_button[game_button_item] = false, game_button[game_button_mercy] = false;
@@ -439,22 +444,22 @@ void game_scene_process(ALLEGRO_EVENT event)
         {
             pos_x = event.mouse.x;
             pos_y = event.mouse.y;
-            if (pos_y >= (bound_top + (bound_bottom - bound_top) * 1 / 5) * scalar + dy && pos_y <= (bound_top + (bound_bottom - bound_top) * 2.5 / 5) * scalar + dy)
+            if (pos_y >= (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 5) * scalar + dy && pos_y <= (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 2.5 / 5) * scalar + dy)
             {
-                if (pos_x >= (bound_left)*scalar + dx && pos_x <= (bound_left + 28 * 5) * scalar + dx)
+                if (pos_x >= (WIDTH * bound_left)*scalar + dx && pos_x <= (WIDTH * bound_left + 28 * 5) * scalar + dx)
                     game_scene2_button[0] = true; // check
-                else if (pos_x >= (bound_left * 5) * scalar + dx && pos_x <= (bound_left * 5 + 28 * 4) * scalar + dx)
+                else if (pos_x >= (WIDTH * bound_left * 5) * scalar + dx && pos_x <= (WIDTH * bound_left * 5 + 28 * 4) * scalar + dx)
                     game_scene2_button[2] = true; // talk
                 else
                 {
                     game_scene2_button[0] = false, game_scene2_button[1] = false, game_scene2_button[2] = false, game_scene2_button[3] = false;
                 }
             }
-            else if (pos_y > (bound_top + (bound_bottom - bound_top) * 3 / 5) * scalar + dy && pos_y <= (bound_top + (bound_bottom - bound_top) * 4.5 / 5) * scalar + dy)
+            else if (pos_y > (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 3 / 5) * scalar + dy && pos_y <= (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 4.5 / 5) * scalar + dy)
             {
-                if (pos_x >= (bound_left)*scalar + dx && pos_x <= (bound_left + 28 * 6) * scalar + dx)
+                if (pos_x >= (WIDTH * bound_left)*scalar + dx && pos_x <= (WIDTH * bound_left + 28 * 6) * scalar + dx)
                     game_scene2_button[1] = true; // devour
-                else if (pos_x >= (bound_left * 5) * scalar + dx && pos_x <= (bound_left * 5 + 28 * 6) * scalar + dx)
+                else if (pos_x >= (WIDTH * bound_left * 5) * scalar + dx && pos_x <= (WIDTH * bound_left * 5 + 28 * 6) * scalar + dx)
                     game_scene2_button[3] = true; // dinner
                 else
                 {
@@ -480,16 +485,16 @@ int character_infor_draw()
     al_draw_text(
         font,
         al_map_rgb(255, 255, 255),
-        (bound_left)*scalar + dx,
-        (600) * scalar + dy,
+        (WIDTH * 102 /1024)*scalar + dx,
+        (HEIGHT * 600 / 760) * scalar + dy,
         ALLEGRO_ALIGN_LEFT,
         "Player name");
 
     al_draw_text(
         font,
         al_map_rgb(255, 255, 255),
-        (bound_left * 4) * scalar + dx,
-        (600) * scalar + dy,
+        (WIDTH * 409 / 1024) * scalar + dx,
+        (HEIGHT * 600 / 760) * scalar + dy,
         ALLEGRO_ALIGN_LEFT,
         "LV.1");
 
@@ -499,8 +504,8 @@ int character_infor_draw()
     al_draw_text(
         font,
         al_map_rgb(255, 255, 255),
-        (bound_left * 6) * scalar + dx,
-        (600) * scalar + dy,
+        (WIDTH * 614 / 1024) * scalar + dx,
+        (HEIGHT * 600 / 760) * scalar + dy,
         ALLEGRO_ALIGN_LEFT,
         str);
 }
@@ -576,18 +581,18 @@ void game_scene_draw()
     if (game_scene_mode1 == 0)
     {
         al_draw_rectangle( //邊框
-            (bound_left)*scalar + dx,
-            (bound_top)*scalar + dy,
-            (bound_right)*scalar + dx,
-            (bound_bottom)*scalar + dy,
+            (WIDTH * bound_left)*scalar + dx,
+            (HEIGHT * bound_top)*scalar + dy,
+            (WIDTH * bound_right)*scalar + dx,
+            (HEIGHT * bound_bottom)*scalar + dy,
             al_map_rgb(255, 255, 255),
             0);
 
         al_draw_text(
             font,
             al_map_rgb(255, 255, 255),
-            (bound_left)*scalar + dx,
-            (bound_top + (bound_bottom - bound_top) * 1 / 3) * scalar + dy,
+            (WIDTH * bound_left)*scalar + dx,
+            (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 3) * scalar + dy,
             ALLEGRO_ALIGN_LEFT,
             "* Vegetoid came out of the earth!");
 
@@ -600,18 +605,18 @@ void game_scene_draw()
             character_infor_draw();
 
             al_draw_rectangle( //邊框
-                (bound_left)*scalar + dx,
-                (bound_top)*scalar + dy,
-                (bound_right)*scalar + dx,
-                (bound_bottom)*scalar + dy,
+                (WIDTH * bound_left)*scalar + dx,
+                (HEIGHT * bound_top)*scalar + dy,
+                (WIDTH * bound_right)*scalar + dx,
+                (HEIGHT * bound_bottom)*scalar + dy,
                 al_map_rgb(255, 255, 255),
                 0);
 
             al_draw_text(
                 font,
                 al_map_rgb(255, 255, 255),
-                (bound_left)*scalar + dx,
-                (bound_top + (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
+                (WIDTH * bound_left)*scalar + dx,
+                (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "* You attack the Vegetoid.");
 
@@ -621,8 +626,8 @@ void game_scene_draw()
             al_draw_text(
                 font,
                 al_map_rgb(255, 255, 255),
-                (bound_left)*scalar + dx,
-                (bound_top + (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
+                (WIDTH * bound_left)*scalar + dx,
+                (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 str); //要給實際參數值
 
@@ -649,17 +654,17 @@ void game_scene_draw()
             character_infor_draw();
 
             al_draw_rectangle( //邊框
-                (bound_left)*scalar + dx,
-                (bound_top)*scalar + dy,
-                (bound_right)*scalar + dx,
-                (bound_bottom)*scalar + dy,
+                (WIDTH * bound_left)*scalar + dx,
+                (HEIGHT * bound_top)*scalar + dy,
+                (WIDTH * bound_right)*scalar + dx,
+                (HEIGHT * bound_bottom)*scalar + dy,
                 al_map_rgb(255, 255, 255),
                 0);
             al_draw_text(
                 font,
                 al_map_rgb(255, 255, 255),
-                (bound_left)*scalar + dx,
-                (bound_top + (bound_bottom - bound_top) * 1 / 3) * scalar + dy,
+                (WIDTH * bound_left)*scalar + dx,
+                (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 3) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "* You WIN!");
         }
@@ -669,10 +674,10 @@ void game_scene_draw()
             character_infor_draw();
 
             al_draw_rectangle( //邊框
-                (bound_left1)*scalar + dx,
-                (bound_top)*scalar + dy,
-                (bound_right1)*scalar + dx,
-                (bound_bottom)*scalar + dy,
+                (WIDTH * bound_left1)*scalar + dx,
+                (HEIGHT * bound_top)*scalar + dy,
+                (WIDTH * bound_right1)*scalar + dx,
+                (HEIGHT * bound_bottom)*scalar + dy,
                 al_map_rgb(255, 255, 255),
                 0);
 
@@ -694,76 +699,76 @@ void game_scene_draw()
             character_infor_draw();
 
             al_draw_rectangle( //邊框
-                (bound_left)*scalar + dx,
-                (bound_top)*scalar + dy,
-                (bound_right)*scalar + dx,
-                (bound_bottom)*scalar + dy,
+                (WIDTH * bound_left)*scalar + dx,
+                (HEIGHT * bound_top)*scalar + dy,
+                (WIDTH * bound_right)*scalar + dx,
+                (HEIGHT * bound_bottom)*scalar + dy,
                 al_map_rgb(255, 255, 255),
                 0);
 
             al_draw_text(
                 font,
                 al_map_rgb(255, 255, 255),
-                (bound_left)*scalar + dx,
-                (bound_top + (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
+                (WIDTH * bound_left)*scalar + dx,
+                (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "* Check.");
             al_draw_text(
                 font,
                 al_map_rgb(255, 255, 255),
-                (bound_left)*scalar + dx,
-                (bound_top + (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
+                (WIDTH * bound_left)*scalar + dx,
+                (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "* Devour.");
             al_draw_text(
                 font,
                 al_map_rgb(255, 255, 255),
-                (bound_left * 5) * scalar + dx,
-                (bound_top + (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
+                (WIDTH * bound_left * 5) * scalar + dx,
+                (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "* Talk.");
             al_draw_text(
                 font,
                 al_map_rgb(255, 255, 255),
-                (bound_left * 5) * scalar + dx,
-                (bound_top + (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
+                (WIDTH * bound_left * 5) * scalar + dx,
+                (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "* Dinner.");
 
             if (game_scene2_button[0]) // check
             {
                 al_draw_filled_rectangle(
-                    (bound_left + 28 * 1.5) * scalar + dx,
-                    (bound_top + (bound_bottom - bound_top) * 2 / 5 + 3) * scalar + dy,
-                    (bound_left + 28 * 6.5) * scalar + dx,
-                    (bound_top + (bound_bottom - bound_top) * 2 / 5 + 5) * scalar + dy,
+                    (WIDTH * bound_left + 28 * 1.5) * scalar + dx,
+                    (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 2 / 5 + 3) * scalar + dy,
+                    (WIDTH * bound_left + 28 * 6.5) * scalar + dx,
+                    (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 2 / 5 + 5) * scalar + dy,
                     al_map_rgb(255, 255, 255));
             }
             else if (game_scene2_button[1]) // devour
             {
                 al_draw_filled_rectangle(
-                    (bound_left + 28 * 1.5) * scalar + dx,
-                    (bound_top + (bound_bottom - bound_top) * 4 / 5 + 3) * scalar + dy,
-                    (bound_left + 28 * 7.5) * scalar + dx,
-                    (bound_top + (bound_bottom - bound_top) * 4 / 5 + 5) * scalar + dy,
+                    (WIDTH * bound_left + 28 * 1.5) * scalar + dx,
+                    (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 4 / 5 + 3) * scalar + dy,
+                    (WIDTH * bound_left + 28 * 7.5) * scalar + dx,
+                    (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 4 / 5 + 5) * scalar + dy,
                     al_map_rgb(255, 255, 255));
             }
             else if (game_scene2_button[2]) // talk
             {
                 al_draw_filled_rectangle(
-                    (bound_left * 5 + 28 * 1.5) * scalar + dx,
-                    (bound_top + (bound_bottom - bound_top) * 2 / 5 + 3) * scalar + dy,
-                    (bound_left * 5 + 28 * 5.5) * scalar + dx,
-                    (bound_top + (bound_bottom - bound_top) * 2 / 5 + 5) * scalar + dy,
+                    (WIDTH * bound_left * 5 + 28 * 1.5) * scalar + dx,
+                    (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 2 / 5 + 3) * scalar + dy,
+                    (WIDTH * bound_left * 5 + 28 * 5.5) * scalar + dx,
+                    (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 2 / 5 + 5) * scalar + dy,
                     al_map_rgb(255, 255, 255));
             }
             else if (game_scene2_button[3]) // dinner
             {
                 al_draw_filled_rectangle(
-                    (bound_left * 5 + 28 * 1.5) * scalar + dx,
-                    (bound_top + (bound_bottom - bound_top) * 4 / 5 + 3) * scalar + dy,
-                    (bound_left * 5 + 28 * 7.0) * scalar + dx,
-                    (bound_top + (bound_bottom - bound_top) * 4 / 5 + 5) * scalar + dy,
+                    (WIDTH * bound_left * 5 + 28 * 1.5) * scalar + dx,
+                    (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 4 / 5 + 3) * scalar + dy,
+                    (WIDTH * bound_left * 5 + 28 * 7.0) * scalar + dx,
+                    (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 4 / 5 + 5) * scalar + dy,
                     al_map_rgb(255, 255, 255));
             }
         }
@@ -774,10 +779,10 @@ void game_scene_draw()
             if (game_scene_mode2_ == 0)
             {
                 al_draw_rectangle( //邊框
-                    (bound_left)*scalar + dx,
-                    (bound_top)*scalar + dy,
-                    (bound_right)*scalar + dx,
-                    (bound_bottom)*scalar + dy,
+                    (WIDTH * bound_left)*scalar + dx,
+                    (HEIGHT * bound_top)*scalar + dy,
+                    (WIDTH * bound_right)*scalar + dx,
+                    (HEIGHT * bound_bottom)*scalar + dy,
                     al_map_rgb(255, 255, 255),
                     0);
 
@@ -787,8 +792,8 @@ void game_scene_draw()
                 al_draw_text(
                     font,
                     al_map_rgb(255, 255, 255),
-                    (bound_left)*scalar + dx,
-                    (bound_top + (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
+                    (WIDTH * bound_left)*scalar + dx,
+                    (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
                     ALLEGRO_ALIGN_LEFT,
                     str);
 
@@ -809,10 +814,10 @@ void game_scene_draw()
                 character_infor_draw();
 
                 al_draw_rectangle( //邊框
-                    (bound_left1)*scalar + dx,
-                    (bound_top)*scalar + dy,
-                    (bound_right1)*scalar + dx,
-                    (bound_bottom)*scalar + dy,
+                    (WIDTH * bound_left1)*scalar + dx,
+                    (HEIGHT * bound_top)*scalar + dy,
+                    (WIDTH * bound_right1)*scalar + dx,
+                    (HEIGHT * bound_bottom)*scalar + dy,
                     al_map_rgb(255, 255, 255),
                     0);
 
@@ -830,10 +835,10 @@ void game_scene_draw()
             else if (game_scene_mode2_ == 2)
             {
                 al_draw_rectangle( //邊框
-                    (bound_left)*scalar + dx,
-                    (bound_top)*scalar + dy,
-                    (bound_right)*scalar + dx,
-                    (bound_bottom)*scalar + dy,
+                    (WIDTH * bound_left)*scalar + dx,
+                    (HEIGHT * bound_top)*scalar + dy,
+                    (WIDTH * bound_right)*scalar + dx,
+                    (HEIGHT * bound_bottom)*scalar + dy,
                     al_map_rgb(255, 255, 255),
                     0);
 
@@ -841,15 +846,15 @@ void game_scene_draw()
                 al_draw_text(
                     font,
                     al_map_rgb(255, 255, 255),
-                    (bound_left)*scalar + dx,
-                    (bound_top + (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
+                    (WIDTH * bound_left)*scalar + dx,
+                    (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
                     ALLEGRO_ALIGN_LEFT,
                     "* Vegetoid gave a mysterious");
                 al_draw_text(
                     font,
                     al_map_rgb(255, 255, 255),
-                    (bound_left)*scalar + dx,
-                    (bound_top + (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
+                    (WIDTH * bound_left)*scalar + dx,
+                    (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
                     ALLEGRO_ALIGN_LEFT,
                     "  smile");
             }
@@ -913,8 +918,7 @@ void monster_attack_init1()
     for (int i = 0; i < attack_sum1; i++)
     {
         int x = rand();
-        double x_ = bound_left1 + ((x % 301)) * 1.0 / 300 * (bound_right1 - bound_left1);
-
+        double x_ = WIDTH * bound_left1 + ((x % 301)) * 1.0 / 300 * WIDTH * (bound_right1 - bound_left1);
         // int y = rand();
         // double y_ = ((y % 11) + 10) * 1.0 / 20 * attack_v1;
         int y_ = ((i + 1) * 1.0 / 2);
@@ -927,19 +931,19 @@ void monster_attack_init1()
         attack_direc1[i][1] = y_;
 
         attack_pos1[i][0] = x_;
-        attack_pos1[i][1] = bound_top - attack_direc1[i][1] * 5;
+        attack_pos1[i][1] = HEIGHT * bound_top - attack_direc1[i][1] * 5;
     }
 }
 void monster_attack1()
 {
     for (int i = 0; i < attack_sum1; i++)
     {
-        if (attack_pos1[i][1] >= bound_bottom)
+        if (attack_pos1[i][1] >= HEIGHT * bound_bottom)
         {
             int x = rand();
-            double x_ = bound_left1 + ((x % 301)) * 1.0 / 300 * (bound_right1 - bound_left1);
+            double x_ = WIDTH * bound_left1 + ((x % 301)) * 1.0 / 300 * WIDTH * (bound_right1 - bound_left1);
             attack_pos1[i][0] = x_;
-            attack_pos1[i][1] = bound_top - attack_direc1[i][1] * 5;
+            attack_pos1[i][1] = HEIGHT * bound_top - attack_direc1[i][1] * 5;
         }
 
         attack_pos1[i][1] += attack_direc1[i][1];
@@ -968,38 +972,41 @@ void monster_attack_init2()
         attack_direc2[i][0] = x_;
         attack_direc2[i][1] = y_;
 
-        attack_pos2[i][0] = bound_left1 + (bound_right1 - bound_left1) * i / attack_sum2;
-        attack_pos2[i][1] = bound_top;
+        attack_pos2[i][0] = WIDTH * bound_left1 + WIDTH * (bound_right1 - bound_left1) * i / attack_sum2;
+        attack_pos2[i][1] = HEIGHT * bound_top;
     }
 }
 void monster_attack2()
 {
     for (int i = 0; i < attack_sum2; i++)
     {
-        if (attack_pos2[i][0] <= bound_left1)
+        if (attack_pos2[i][0]  <= WIDTH * bound_left1 * scalar + dx + 3) // 3 is the radius of attack
         {
-            attack_direc2[i][0] = abs(attack_direc2[i][0]);
-            attack_pos2[i][0] = bound_left1;
+            attack_direc2[i][0] = -(attack_direc2[i][0]);
+            //printf("%d\n",attack_direc2[i][0]);
+            attack_pos2[i][0] = WIDTH * bound_left1 * scalar + dx + 3;
         }
-        else if (attack_pos2[i][0] >= bound_right1)
+        else if (attack_pos2[i][0] >= WIDTH * bound_right1 * scalar + dx - 3)
         {
-            attack_direc2[i][0] = -1 * abs(attack_direc2[i][0]);
-            attack_pos2[i][0] = bound_right1;
+            attack_direc2[i][0] = -(attack_direc2[i][0]);
+            //printf("%d\n",attack_direc2[i][0]);
+            attack_pos2[i][0] = WIDTH * bound_right1 * scalar + dx - 3;
         }
 
-        if (attack_pos2[i][1] <= bound_top)
+        if (attack_pos2[i][1] <= HEIGHT * bound_top * scalar + dy + 3)
         {
             attack_direc2[i][1] = abs(attack_direc2[i][1]);
-            attack_pos2[i][1] = bound_top;
+            attack_pos2[i][1] = HEIGHT * bound_top * scalar + dy + 3;
         }
-        else if (attack_pos2[i][1] >= bound_bottom)
+        else if (attack_pos2[i][1] >= HEIGHT * bound_bottom * scalar + dy - 3)
         {
             attack_direc2[i][1] = -1 * abs(attack_direc2[i][1]);
-            attack_pos2[i][1] = bound_bottom;
+            attack_pos2[i][1] = HEIGHT * bound_bottom * scalar + dy - 3;
         }
 
         attack_pos2[i][0] += attack_direc2[i][0];
         attack_pos2[i][1] += attack_direc2[i][1];
+
 
         al_draw_circle(attack_pos2[i][0], attack_pos2[i][1], 3, al_map_rgb(255, 255, 255), 5.0);
 

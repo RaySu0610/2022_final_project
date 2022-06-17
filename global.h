@@ -22,11 +22,11 @@ extern ALLEGRO_DISPLAY *display;
 extern const char *title;
 extern float volume_value;
 
-extern int bound_top;
-extern int bound_bottom;
-extern int bound_left;
-extern int bound_right;
+extern float bound_top;
+extern float bound_bottom;
+extern float bound_left;
+extern float bound_right;
 
-extern int bound_left1;
-extern int bound_right1;
+extern float bound_left1;
+extern float bound_right1;
 #endif

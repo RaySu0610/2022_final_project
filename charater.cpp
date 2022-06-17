@@ -31,11 +31,11 @@ void character_init()
     // initial the geometric information of character
     heart.width = al_get_bitmap_width(heart.img);
     heart.height = al_get_bitmap_height(heart.img);
-
+    printf("%d %d\n",heart.width, heart.height);
     // heart.x = WIDTH / 2;
     // heart.y = HEIGHT / 2;
-    heart.x = (bound_left1 + bound_right1) / 2;
-    heart.y = (bound_top + bound_bottom) / 2;
+    heart.x = WIDTH * (bound_left1 + bound_right1) / 2;
+    heart.y = HEIGHT * (bound_top + bound_bottom) / 2;
 }
 void charater_process(ALLEGRO_EVENT event)
 {
@@ -65,18 +65,18 @@ void charater_update()
     if (key_state[ALLEGRO_KEY_W])
     {
         heart.y -= heart.v;
-        if (heart.y <= bound_top)
+        if (heart.y <= HEIGHT * bound_top + heart.height * heart.scale)
         {
-            heart.y = bound_top;
+            heart.y = HEIGHT * bound_top + heart.height * heart.scale;
         }
         // chara.state = MOVE;
     }
     else if (key_state[ALLEGRO_KEY_S])
     {
         heart.y += heart.v;
-        if (heart.y >= bound_bottom - heart.height * heart.scale)
+        if (heart.y >= HEIGHT * bound_bottom - heart.height * heart.scale)
         {
-            heart.y = bound_bottom - heart.height * heart.scale;
+            heart.y = HEIGHT * bound_bottom - heart.height * heart.scale;
         }
         // chara.state = MOVE;
     }
@@ -85,9 +85,9 @@ void charater_update()
     {
         // chara.dir = false;
         heart.x -= heart.v;
-        if (heart.x <= bound_left1 + heart.width * heart.scale / 2)
+        if (heart.x <= WIDTH * bound_left1 + heart.width * heart.scale / 2)
         {
-            heart.x = bound_left1 + heart.width * heart.scale / 2;
+            heart.x = WIDTH * bound_left1 + heart.width * heart.scale / 2;
         }
         // chara.state = MOVE;
     }
@@ -95,9 +95,9 @@ void charater_update()
     {
         // chara.dir = true;
         heart.x += heart.v;
-        if (heart.x >= bound_right1 - heart.width * heart.scale / 2)
+        if (heart.x >= WIDTH * bound_right1 - heart.width * heart.scale / 2)
         {
-            heart.x = bound_right1 - heart.width * heart.scale / 2;
+            heart.x = WIDTH * bound_right1 - heart.width * heart.scale / 2;
         }
         // chara.state = MOVE;
     }
@@ -172,8 +172,8 @@ void character_attack_check2(int pos[][2], int n)
         for (int i = 0; i < n; i++)
         {
             if (
-                abs(pos[i][0] - heart.x) <= 6 &&
-                abs(pos[i][1] - heart.y) <= 6)
+                abs(pos[i][0] - heart.x) <= heart.width * heart.scale / 2 + 3 &&
+                abs(pos[i][1] - heart.y) <= heart.height * heart.scale / 2 + 3)
             {
                 heart.hp -= 3;
                 heart_counter--;
