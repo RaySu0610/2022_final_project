@@ -3,6 +3,8 @@
 ALLEGRO_BITMAP *background = NULL;
 ALLEGRO_FONT *font = NULL;
 ALLEGRO_SAMPLE *song = NULL;
+ALLEGRO_SAMPLE *attack_reflect = NULL;
+ALLEGRO_SAMPLE_INSTANCE *reflect_instance[8];
 ALLEGRO_SAMPLE_INSTANCE *sample_instance;
 
 // function of menu----------------------------------------------------------------------------------------------------------
@@ -209,15 +211,20 @@ void about_destroy()
 void music_init()
 {
     song = al_load_sample("./sound/UNDERTALE Start Menu.mp3");
+
     al_reserve_samples(20);
     sample_instance = al_create_sample_instance(song);
+
     // al_set_sample_instance_gain(sample_instance ,1);
     //  Loop the song until the display closes
     al_set_sample_instance_playmode(sample_instance, ALLEGRO_PLAYMODE_LOOP);
+
     al_restore_default_mixer();
     al_attach_sample_instance_to_mixer(sample_instance, al_get_default_mixer());
+
     // set the volume of instance
     al_set_sample_instance_gain(sample_instance, (volume_value - 10) / 200);
+
 
     al_play_sample_instance(sample_instance);
 }
@@ -225,6 +232,7 @@ void music_destroy()
 {
     al_destroy_sample_instance(sample_instance);
     al_destroy_sample(song);
+
 }
 
 // setting func------------------------------------------------------------------------------------------------
@@ -422,18 +430,31 @@ void game_scene_init()
     // background = al_load_bitmap("./image/menu.jpg");
     // background = al_load_bitmap("./image/stage.jpg");
 
-    // song = al_load_sample("./sound/UNDERTALE Ruins.mp3");
-    // al_reserve_samples(20);
-    // sample_instance = al_create_sample_instance(song);
-    // // al_set_sample_instance_gain(sample_instance ,1);
-    // //  Loop the song until the display closes
-    // al_set_sample_instance_playmode(sample_instance, ALLEGRO_PLAYMODE_LOOP);
-    // al_restore_default_mixer();
-    // al_attach_sample_instance_to_mixer(sample_instance, al_get_default_mixer());
-    // // set the volume of instance
-    // al_set_sample_instance_gain(sample_instance, (volume_value-10)/200);
+    song = al_load_sample("./sound/UNDERTALE_MEGALOVANIA.mp3");
+    attack_reflect = al_load_sample("./sound/attack_reflect.wav");
+    al_reserve_samples(20);
+    sample_instance = al_create_sample_instance(song);
 
-    // al_play_sample_instance(sample_instance);
+    for (int num = 0;num<8;num++)           // to give each attach bullet independent sample instance
+    {
+        reflect_instance[num] = al_create_sample_instance(attack_reflect);
+        al_set_sample_instance_playmode(reflect_instance[num], ALLEGRO_PLAYMODE_ONCE);
+        al_attach_sample_instance_to_mixer(reflect_instance[num], al_get_default_mixer());
+        al_set_sample_instance_gain(reflect_instance[num], (volume_value) / 200);
+    }
+    al_restore_default_mixer();
+
+    // //  Loop the song until the display closes
+
+
+    al_set_sample_instance_playmode(sample_instance, ALLEGRO_PLAYMODE_LOOP);
+
+    al_attach_sample_instance_to_mixer(sample_instance, al_get_default_mixer());
+
+    // // set the volume of instance
+    al_set_sample_instance_gain(sample_instance, (volume_value-10)/200);
+    //al_play_sample_instance(reflect_instance);
+    al_play_sample_instance(sample_instance);
 
     srand(time(NULL));
 }
@@ -471,11 +492,11 @@ void game_scene_process(ALLEGRO_EVENT event)
         {
             if (pos_x >= (WIDTH * 70 / 1024) * scalar + dx && pos_x <= (WIDTH * 230 / 1024) * scalar + dx)
                 game_button[game_button_fight] = true;
-            else if (pos_x >= (WIDTH * 290 / 1024) * scalar + dx && pos_x <= (WIDTH * 450 / 1024) * scalar + dx)
+            else if (pos_x >= (WIDTH * 320 / 1024) * scalar + dx && pos_x <= (WIDTH * 424 / 1024) * scalar + dx)
                 game_button[game_button_act] = true;
-            else if (pos_x >= (WIDTH * 530 / 1024) * scalar + dx && pos_x <= (WIDTH * 730 / 1024) * scalar + dx)
+            else if (pos_x >= (WIDTH * 540 / 1024) * scalar + dx && pos_x <= (WIDTH * 675 / 1024) * scalar + dx)
                 game_button[game_button_item] = true;
-            else if (pos_x >= (WIDTH * 790 / 1024) * scalar + dx && pos_x <= (WIDTH * 920 / 1024) * scalar + dx)
+            else if (pos_x >= (WIDTH * 790 / 1024) * scalar + dx && pos_x <= (WIDTH * 950 / 1024) * scalar + dx)
                 game_button[game_button_mercy] = (true && mercy_usabled);
             else
                 game_button[game_button_fight] = false, game_button[game_button_act] = false, game_button[game_button_item] = false, game_button[game_button_mercy] = false;
@@ -519,9 +540,9 @@ void game_scene_process(ALLEGRO_EVENT event)
                 pos_y = event.mouse.y;
                 if (pos_y >= (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 5) * scalar + dy && pos_y <= (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 2.5 / 5) * scalar + dy)
                 {
-                    if (pos_x >= (WIDTH * bound_left) * scalar + dx && pos_x <= (WIDTH * bound_left + 28 * 5) * scalar + dx)
+                    if (pos_x >= (WIDTH * bound_left) * scalar + dx && pos_x <= (WIDTH * bound_left + 28 * 7) * scalar + dx)
                         game_scene2_button[0] = true; // check
-                    else if (pos_x >= (WIDTH * bound_left * 5) * scalar + dx && pos_x <= (WIDTH * bound_left * 5 + 28 * 4) * scalar + dx)
+                    else if (pos_x >= (WIDTH * bound_left * 5) * scalar + dx && pos_x <= (WIDTH * bound_left * 5 + 28 * 6) * scalar + dx)
                         game_scene2_button[2] = true; // talk
                     else
                     {
@@ -530,9 +551,9 @@ void game_scene_process(ALLEGRO_EVENT event)
                 }
                 else if (pos_y > (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 3 / 5) * scalar + dy && pos_y <= (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 4.5 / 5) * scalar + dy)
                 {
-                    if (pos_x >= (WIDTH * bound_left) * scalar + dx && pos_x <= (WIDTH * bound_left + 28 * 6) * scalar + dx)
+                    if (pos_x >= (WIDTH * bound_left) * scalar + dx && pos_x <= (WIDTH * bound_left + 28 * 7) * scalar + dx)
                         game_scene2_button[1] = true; // devour
-                    else if (pos_x >= (WIDTH * bound_left * 5) * scalar + dx && pos_x <= (WIDTH * bound_left * 5 + 28 * 6) * scalar + dx)
+                    else if (pos_x >= (WIDTH * bound_left * 5) * scalar + dx && pos_x <= (WIDTH * bound_left * 5 + 28 * 7) * scalar + dx)
                         game_scene2_button[3] = true; // dinner
                     else
                     {
@@ -733,7 +754,7 @@ int character_infor_draw()
     al_draw_text(
         font,
         al_map_rgb(255, 255, 255),
-        (WIDTH * 409 / 1024) * scalar + dx,
+        (WIDTH * 439 / 1024) * scalar + dx,
         (HEIGHT * 600 / 760) * scalar + dy,
         ALLEGRO_ALIGN_LEFT,
         "LV.1");
@@ -744,7 +765,7 @@ int character_infor_draw()
     al_draw_text(
         font,
         al_map_rgb(255, 255, 255),
-        (WIDTH * 614 / 1024) * scalar + dx,
+        (WIDTH * 714 / 1024) * scalar + dx,
         (HEIGHT * 600 / 760) * scalar + dy,
         ALLEGRO_ALIGN_LEFT,
         str);
@@ -832,10 +853,10 @@ void game_scene_draw()
         al_draw_text(
             font,
             al_map_rgb(255, 255, 255),
-            (WIDTH * bound_left) * scalar + dx,
-            (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 3) * scalar + dy,
+            (WIDTH * bound_left + 3) * scalar + dx,
+            (HEIGHT * bound_top + HEIGHT * 70 / 760) * scalar + dy,
             ALLEGRO_ALIGN_LEFT,
-            "* Vegetoid came out of the earth!");
+            "  Vegetoid came out of the earth!");
 
         character_infor_draw();
     }
@@ -856,7 +877,7 @@ void game_scene_draw()
             al_draw_text(
                 font,
                 al_map_rgb(255, 255, 255),
-                (WIDTH * bound_left) * scalar + dx,
+                (WIDTH * bound_left + 10) * scalar + dx,
                 (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "* You attack the Vegetoid.");
@@ -867,7 +888,7 @@ void game_scene_draw()
             al_draw_text(
                 font,
                 al_map_rgb(255, 255, 255),
-                (WIDTH * bound_left) * scalar + dx,
+                (WIDTH * bound_left + 10) * scalar + dx,
                 (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 str); //要給實際參數值
@@ -950,14 +971,14 @@ void game_scene_draw()
             al_draw_text(
                 font,
                 al_map_rgb(255, 255, 255),
-                (WIDTH * bound_left) * scalar + dx,
+                (WIDTH * bound_left + 10) * scalar + dx,
                 (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "* Check.");
             al_draw_text(
                 font,
                 al_map_rgb(255, 255, 255),
-                (WIDTH * bound_left) * scalar + dx,
+                (WIDTH * bound_left + 10) * scalar + dx,
                 (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "* Devour.");
@@ -1233,77 +1254,77 @@ void game_scene_draw()
             al_draw_text(
                 font,
                 al_map_rgb(255, 255, 255),
-                (WIDTH * bound_left) * scalar + dx,
+                (WIDTH * bound_left + WIDTH * 10 / 1024) * scalar + dx,
                 (HEIGHT * 670 / 1024) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "cheating : ");
             al_draw_text(
                 font,
                 cheating_keyword[0] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
-                (WIDTH * bound_left + 28 * 11) * scalar + dx,
+                (WIDTH * bound_left + WIDTH * (28 * 9 - 4) / 1024) * scalar + dx,
                 (HEIGHT * 670 / 1024) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "U");
             al_draw_text(
                 font,
                 cheating_keyword[1] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
-                (WIDTH * bound_left + 28 * 12) * scalar + dx,
+                (WIDTH * bound_left + WIDTH * (28 * 10 - 2) / 1024) * scalar + dx,
                 (HEIGHT * 670 / 1024) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "U");
             al_draw_text(
                 font,
                 cheating_keyword[2] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
-                (WIDTH * bound_left + 28 * 13) * scalar + dx,
+                (WIDTH * bound_left + WIDTH * (28 * 11) / 1024) * scalar + dx,
                 (HEIGHT * 670 / 1024) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "D");
             al_draw_text(
                 font,
                 cheating_keyword[3] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
-                (WIDTH * bound_left + 28 * 14) * scalar + dx,
+                (WIDTH * bound_left + WIDTH * (28 * 12) /1024) * scalar + dx,
                 (HEIGHT * 670 / 1024) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "D");
             al_draw_text(
                 font,
                 cheating_keyword[4] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
-                (WIDTH * bound_left + 28 * 15) * scalar + dx,
+                (WIDTH * bound_left + WIDTH * (28 * 13) / 1024) * scalar + dx,
                 (HEIGHT * 670 / 1024) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "L");
             al_draw_text(
                 font,
                 cheating_keyword[5] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
-                (WIDTH * bound_left + 28 * 16) * scalar + dx,
+                (WIDTH * bound_left + WIDTH * (28 * 14 - 2) / 1024) * scalar + dx,
                 (HEIGHT * 670 / 1024) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "R");
             al_draw_text(
                 font,
                 cheating_keyword[6] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
-                (WIDTH * bound_left + 28 * 17) * scalar + dx,
+                (WIDTH * bound_left + WIDTH * (28 * 15 - 2) / 1024) * scalar + dx,
                 (HEIGHT * 670 / 1024) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "L");
             al_draw_text(
                 font,
                 cheating_keyword[7] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
-                (WIDTH * bound_left + 28 * 18) * scalar + dx,
+                (WIDTH * bound_left + WIDTH * (28 * 16 - 3) / 1024) * scalar + dx,
                 (HEIGHT * 670 / 1024) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "R");
             al_draw_text(
                 font,
                 cheating_keyword[8] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
-                (WIDTH * bound_left + 28 * 19) * scalar + dx,
+                (WIDTH * bound_left + WIDTH * (28 * 17 - 5) / 1024) * scalar + dx,
                 (HEIGHT * 670 / 1024) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "A");
             al_draw_text(
                 font,
                 cheating_keyword[9] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
-                (WIDTH * bound_left + 28 * 20) * scalar + dx,
+                (WIDTH * bound_left + WIDTH * (28 * 18 - 2) / 1024) * scalar + dx,
                 (HEIGHT * 670 / 1024) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "B");
@@ -1430,18 +1451,19 @@ void monster_attack1()
 {
     for (int i = 0; i < attack_sum1; i++)
     {
-        if (attack_pos1[i][1] >= HEIGHT * bound_bottom)
+        attack_pos1[i][1] += attack_direc1[i][1];
+        if (attack_pos1[i][1] >= HEIGHT * bound_bottom * scalar + dy - 3)
         {
             int x = rand();
-            double x_ = WIDTH * bound_left1 + ((x % 301)) * 1.0 / 300 * WIDTH * (bound_right1 - bound_left1);
-            attack_pos1[i][0] = x_;
-            attack_pos1[i][1] = HEIGHT * bound_top - attack_direc1[i][1] * 5;
+            double x_ = WIDTH * bound_left1 + 3 + ((x % 301)) * 1.0 / 300 * WIDTH * (bound_right1 - bound_left1);
+            attack_pos1[i][0] = x_+ dx;
+            attack_pos1[i][1] = HEIGHT * bound_top ;//+ attack_direc1[i][1] * 5
         }
 
-        attack_pos1[i][1] += attack_direc1[i][1];
+
 
         int r = 3;
-        al_draw_circle(attack_pos1[i][0] + r * 2, attack_pos1[i][1] + r * 2, r, al_map_rgb(255, 255, 255), 5.0);
+        al_draw_circle(attack_pos1[i][0] , attack_pos1[i][1] , r, al_map_rgb(255, 255, 255), 5.0);
 
         character_attack_check1(attack_pos1, attack_sum1);
     }
@@ -1473,35 +1495,41 @@ void monster_attack2()
 {
     for (int i = 0; i < attack_sum2; i++)
     {
-        if (attack_pos2[i][0] <= WIDTH * bound_left1 * scalar + dx + 3) // 3 is the radius of attack
-        {
-            attack_direc2[i][0] = -(attack_direc2[i][0]);
-            // printf("%d\n",attack_direc2[i][0]);
-            attack_pos2[i][0] = WIDTH * bound_left1 * scalar + dx + 3;
-        }
-        else if (attack_pos2[i][0] >= WIDTH * bound_right1 * scalar + dx - 3)
-        {
-            attack_direc2[i][0] = -(attack_direc2[i][0]);
-            // printf("%d\n",attack_direc2[i][0]);
-            attack_pos2[i][0] = WIDTH * bound_right1 * scalar + dx - 3;
-        }
-
-        if (attack_pos2[i][1] <= HEIGHT * bound_top * scalar + dy + 3)
-        {
-            attack_direc2[i][1] = abs(attack_direc2[i][1]);
-            attack_pos2[i][1] = HEIGHT * bound_top * scalar + dy + 3;
-        }
-        else if (attack_pos2[i][1] >= HEIGHT * bound_bottom * scalar + dy - 3)
-        {
-            attack_direc2[i][1] = -1 * abs(attack_direc2[i][1]);
-            attack_pos2[i][1] = HEIGHT * bound_bottom * scalar + dy - 3;
-        }
-
         attack_pos2[i][0] += attack_direc2[i][0];
         attack_pos2[i][1] += attack_direc2[i][1];
 
+        if (attack_pos2[i][0] <= WIDTH * bound_left1 * scalar + dx + 6) // 3 is the radius of attack
+        {
+            attack_direc2[i][0] = -(attack_direc2[i][0]);
+            // printf("%d\n",attack_direc2[i][0]);
+            attack_pos2[i][0] = WIDTH * bound_left1 * scalar + dx + 6;
+            al_play_sample_instance(reflect_instance[i]);
+        }
+        else if (attack_pos2[i][0] >= WIDTH * bound_right1 * scalar + dx - 6)
+        {
+            attack_direc2[i][0] = -(attack_direc2[i][0]);
+            // printf("%d\n",attack_direc2[i][0]);
+            attack_pos2[i][0] = WIDTH * bound_right1 * scalar + dx - 6;
+            al_play_sample_instance(reflect_instance[i]);
+        }
+
+        if (attack_pos2[i][1] <= HEIGHT * bound_top * scalar + dy + 6)
+        {
+            attack_direc2[i][1] = abs(attack_direc2[i][1]);
+            attack_pos2[i][1] = HEIGHT * bound_top * scalar + dy + 6;
+            al_play_sample_instance(reflect_instance[i]);
+        }
+        else if (attack_pos2[i][1] >= HEIGHT * bound_bottom * scalar + dy - 6)
+        {
+            attack_direc2[i][1] = -1 * abs(attack_direc2[i][1]);
+            attack_pos2[i][1] = HEIGHT * bound_bottom * scalar + dy - 6;
+            al_play_sample_instance(reflect_instance[i]);
+        }
+
+
+
         int r = 3;
-        al_draw_circle(attack_pos2[i][0] + r * 2, attack_pos2[i][1] + r * 2, r, al_map_rgb(255, 255, 255), 5.0);
+        al_draw_circle(attack_pos2[i][0]  , attack_pos2[i][1]  , r, al_map_rgb(255, 255, 255), 5.0);
         // al_draw_circle(attack_pos2[i][0], attack_pos2[i][1], 3, al_map_rgb(255, 255, 255), 5.0);
 
         character_attack_check2(attack_pos2, attack_sum2);
@@ -1534,32 +1562,38 @@ void monster_attack3()
 {
     for (int i = 0; i < attack_sum3; i++)
     {
+        attack_pos3[i][0] += attack_direc3[i][0];
+        attack_pos3[i][1] += attack_direc3[i][1];
+
         if (attack_pos3[i][0] <= WIDTH * bound_left1 * scalar + dx + 3) // 3 is the radius of attack
         {
             attack_direc3[i][0] = -(attack_direc3[i][0]);
             // printf("%d\n",attack_direc3[i][0]);
             attack_pos3[i][0] = WIDTH * bound_left1 * scalar + dx + 3;
+            al_play_sample_instance(reflect_instance[i]);
         }
         else if (attack_pos3[i][0] >= WIDTH * bound_right1 * scalar + dx - 3)
         {
             attack_direc3[i][0] = -(attack_direc3[i][0]);
             // printf("%d\n",attack_direc3[i][0]);
             attack_pos3[i][0] = WIDTH * bound_right1 * scalar + dx - 3;
+            al_play_sample_instance(reflect_instance[i]);
         }
 
         if (attack_pos3[i][1] <= HEIGHT * bound_top * scalar + dy + 3)
         {
             attack_direc3[i][1] = abs(attack_direc3[i][1]);
             attack_pos3[i][1] = HEIGHT * bound_top * scalar + dy + 3;
+            al_play_sample_instance(reflect_instance[i]);
         }
         else if (attack_pos3[i][1] >= HEIGHT * bound_bottom * scalar + dy - 3)
         {
             attack_direc3[i][1] = -1 * abs(attack_direc3[i][1]);
             attack_pos3[i][1] = HEIGHT * bound_bottom * scalar + dy - 3;
+            al_play_sample_instance(reflect_instance[i]);
         }
 
-        attack_pos3[i][0] += attack_direc3[i][0];
-        attack_pos3[i][1] += attack_direc3[i][1];
+
 
         int r = 3;
         al_draw_circle(attack_pos3[i][0] + r * 2, attack_pos3[i][1] + r * 2, r,
@@ -1575,5 +1609,9 @@ void game_scene_destroy()
 {
     al_destroy_font(font);
     // al_destroy_bitmap(background);
+    music_destroy();
+    for (int num=0;num<8;num++)
+        al_destroy_sample_instance(reflect_instance[num]);
+    al_destroy_sample(attack_reflect);
     character_destory();
 }

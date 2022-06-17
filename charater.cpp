@@ -2,7 +2,8 @@
 
 int heart_counter_initial = 500;
 int heart_counter = heart_counter_initial;
-
+ALLEGRO_SAMPLE *injuried = NULL;
+ALLEGRO_SAMPLE_INSTANCE *injuried_instance;
 // the state of character
 enum
 {
@@ -28,7 +29,11 @@ void character_init()
     // heart.img = al_load_bitmap("./image/heart1.jfif");
     heart.img = al_load_bitmap("./image/heart.png");
     al_convert_mask_to_alpha(heart.img, al_map_rgb(255, 255, 255));
-
+    injuried = al_load_sample("./sound/injuried.wav");
+    injuried_instance = al_create_sample_instance(injuried);
+    al_set_sample_instance_playmode(injuried_instance, ALLEGRO_PLAYMODE_ONCE);
+    al_attach_sample_instance_to_mixer(injuried_instance, al_get_default_mixer());
+    al_set_sample_instance_gain(injuried_instance, (volume_value) / 200);
     // initial the geometric information of character
     heart.width = al_get_bitmap_width(heart.img);
     heart.height = al_get_bitmap_height(heart.img);
@@ -119,7 +124,8 @@ void character_draw()
 void character_destory()
 {
     al_destroy_bitmap(heart.img);
-
+    al_destroy_sample(injuried);
+    al_destroy_sample_instance(injuried_instance);
     // al_destroy_bitmap(chara.img_atk[1]);
     // al_destroy_bitmap(chara.img_move[0]);
     // al_destroy_bitmap(chara.img_move[1]);
@@ -156,6 +162,7 @@ void character_attack_check1(int pos[][2], int n)
             {
                 heart.hp -= 3;
                 heart_counter--;
+                al_play_sample_instance(injuried_instance);
                 printf("heart\n");
                 break;
             }
@@ -186,6 +193,7 @@ void character_attack_check2(int pos[][2], int n)
             {
                 heart.hp -= 3;
                 heart_counter--;
+                al_play_sample_instance(injuried_instance);
                 printf("heart\n");
                 break;
             }
@@ -218,6 +226,7 @@ void character_attack_check3(int pos[][2], int n)
                 {
                     heart.hp -= 3;
                     heart_counter--;
+                    al_play_sample_instance(injuried_instance);
                     printf("heart\n");
                     break;
                 }
@@ -226,6 +235,7 @@ void character_attack_check3(int pos[][2], int n)
                     mercy_usabled = true;
                     heart.hp += 1;
                     heart_counter--;
+                    al_play_sample_instance(injuried_instance);
                     printf("heart_plus\n");
                     break;
                 }

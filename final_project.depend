@@ -1,11 +1,11 @@
 # depslib dependency file v1.0
-1655464106 source:c:\users\a2282\finalproject\2022_final_project\charater.cpp
+1655494937 source:c:\users\a2282\finalproject\2022_final_project\charater.cpp
 	"charater.h"
 
-1655463983 c:\users\a2282\finalproject\2022_final_project\charater.h
+1655486233 c:\users\a2282\finalproject\2022_final_project\charater.h
 	"global.h"
 
-1655447540 c:\users\a2282\finalproject\2022_final_project\global.h
+1655486233 c:\users\a2282\finalproject\2022_final_project\global.h
 	<stdio.h>
 	<allegro5/allegro.h>
 	<allegro5/allegro_primitives.h>
@@ -325,17 +325,17 @@
 	"charater.h"
 	"scene.h"
 
-1655441564 c:\users\a2282\finalproject\2022_final_project\scene.h
+1655486233 c:\users\a2282\finalproject\2022_final_project\scene.h
 	"global.h"
 	"charater.h"
 
-1655447540 source:c:\users\a2282\finalproject\2022_final_project\global.cpp
+1655486233 source:c:\users\a2282\finalproject\2022_final_project\global.cpp
 	"global.h"
 
 1654624104 source:c:\users\a2282\finalproject\2022_final_project\main.cpp
 	"GameWindow.h"
 
-1655464258 source:c:\users\a2282\finalproject\2022_final_project\scene.cpp
+1655494773 source:c:\users\a2282\finalproject\2022_final_project\scene.cpp
 	"scene.h"
 
 1653298789 c:\users\a2282\finalproject\2022_final_project\allegro\include\allegro5\allegro_video.h
