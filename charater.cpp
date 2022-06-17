@@ -183,3 +183,13 @@ void character_attack_check2(int pos[][2], int n)
         }
     }
 }
+
+void cheating_init(){
+
+    printf("Cheating mode is on!!!!!!!!!!!!!!!!!!!!\n");
+}
+void recover(int val){
+
+    heart.hp+=val;
+    printf("hp: %d\n",heart.hp);
+}

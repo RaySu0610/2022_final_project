@@ -68,47 +68,78 @@ void menu_draw()
 
     al_clear_to_color(al_map_rgb(0, 0, 0));
     al_draw_scaled_bitmap(background, 0, 0, 1024, 760, 0, 0, WIDTH, HEIGHT, 0);
-    if (start_inrange)
-    {
-        al_draw_text(font, al_map_rgb(255, 100, 100), (WIDTH * 90 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Start");
-        al_draw_rectangle((WIDTH * 70 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, (WIDTH * 230 / 1024) * scalar + dx, (HEIGHT * 655 / 760) * scalar + dy, al_map_rgb(255, 100, 100), 0);
-    }
-    else
-    {
-        al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 90 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Start");
-        al_draw_rectangle((WIDTH * 70 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, (WIDTH * 230 / 1024) * scalar + dx, (HEIGHT * 655 / 760) * scalar + dy, al_map_rgb(255, 255, 255), 0);
-    }
-    if (about_inrange)
-    {
-        al_draw_text(font, al_map_rgb(255, 100, 100), (WIDTH * 310 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "About");
-        al_draw_rectangle((WIDTH * 290 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, (WIDTH * 450 / 1024) * scalar + dx, (HEIGHT * 655 / 760) * scalar + dy, al_map_rgb(255, 100, 100), 0);
-    }
-    else
-    {
-        al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 310 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "About");
-        al_draw_rectangle((WIDTH * 290 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, (WIDTH * 450 / 1024) * scalar + dx, (HEIGHT * 655 / 760) * scalar + dy, al_map_rgb(255, 255, 255), 0);
-    }
 
-    if (setting_inrange)
-    {
-        al_draw_text(font, al_map_rgb(255, 100, 100), (WIDTH * 550 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Setting");
-        al_draw_rectangle((WIDTH * 530 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, (WIDTH * 730 / 1024) * scalar + dx, (HEIGHT * 655 / 760) * scalar + dy, al_map_rgb(255, 100, 100), 0);
-    }
-    else
-    {
-        al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 550 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Setting");
-        al_draw_rectangle((WIDTH * 530 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, (WIDTH * 730 / 1024) * scalar + dx, (HEIGHT * 655 / 760) * scalar + dy, al_map_rgb(255, 255, 255), 0);
-    }
-    if (exit_inrange)
-    {
-        al_draw_text(font, al_map_rgb(255, 100, 100), (WIDTH * 810 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Exit");
-        al_draw_rectangle((WIDTH * 790 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, (WIDTH * 920 / 1024) * scalar + dx, (HEIGHT * 655 / 760) * scalar + dy, al_map_rgb(255, 100, 100), 0);
-    }
-    else
-    {
-        al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 810 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Exit");
-        al_draw_rectangle((WIDTH * 790 / 1024) * scalar + dx, (HEIGHT * 600 / 760) * scalar + dy, (WIDTH * 920 / 1024) * scalar + dx, (HEIGHT * 655 / 760) * scalar + dy, al_map_rgb(255, 255, 255), 0);
-    }
+    al_draw_text(
+    font,
+    start_inrange ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+    (WIDTH * 90 / 1024) * scalar + dx,
+    (HEIGHT * 600 / 760) * scalar + dy,
+    ALLEGRO_ALIGN_LEFT,
+    "Start");
+
+    al_draw_rectangle(
+    (WIDTH * 70 / 1024) * scalar + dx,
+    (HEIGHT * 600 / 760) * scalar + dy,
+    (WIDTH * 230 / 1024) * scalar + dx,
+    (HEIGHT * 655 / 760) * scalar + dy,
+    start_inrange ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+    0);
+
+
+
+    al_draw_text(
+    font,
+    about_inrange ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+    (WIDTH * 310 / 1024) * scalar + dx,
+    (HEIGHT * 600 / 760) * scalar + dy,
+    ALLEGRO_ALIGN_LEFT,
+    "About");
+
+    al_draw_rectangle(
+    (WIDTH * 290 / 1024) * scalar + dx,
+    (HEIGHT * 600 / 760) * scalar + dy,
+    (WIDTH * 450 / 1024) * scalar + dx,
+    (HEIGHT * 655 / 760) * scalar + dy,
+    about_inrange ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+    0);
+
+
+
+    al_draw_text(
+    font,
+    setting_inrange ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+    (WIDTH * 550 / 1024) * scalar + dx,
+    (HEIGHT * 600 / 760) * scalar + dy,
+    ALLEGRO_ALIGN_LEFT,
+    "Setting");
+
+    al_draw_rectangle(
+    (WIDTH * 530 / 1024) * scalar + dx,
+    (HEIGHT * 600 / 760) * scalar + dy,
+    (WIDTH * 730 / 1024) * scalar + dx,
+    (HEIGHT * 655 / 760) * scalar + dy,
+    setting_inrange ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+    0);
+
+
+
+    al_draw_text(
+    font,
+    exit_inrange ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+    (WIDTH * 810 / 1024) * scalar + dx,
+    (HEIGHT * 600 / 760) * scalar + dy,
+    ALLEGRO_ALIGN_LEFT,
+    "Exit");
+
+    al_draw_rectangle(
+    (WIDTH * 790 / 1024) * scalar + dx,
+    (HEIGHT * 600 / 760) * scalar + dy,
+    (WIDTH * 920 / 1024) * scalar + dx,
+    (HEIGHT * 655 / 760) * scalar + dy,
+    exit_inrange ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+    0);
+
+
 }
 void menu_destroy()
 {
@@ -120,8 +151,21 @@ void menu_destroy()
 void back_draw(int color)
 {
 
-    al_draw_text(font, al_map_rgb(255, color, color), (WIDTH * 40 / 1024) * scalar + dx, (HEIGHT * 705 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Back");
-    al_draw_rectangle((WIDTH * 20 / 1024) * scalar + dx, (HEIGHT * 700 / 760) * scalar + dy, (WIDTH * 180 / 1024) * scalar + dx, (HEIGHT * 755 / 760) * scalar + dy, al_map_rgb(255, color, color), 0);
+    al_draw_text(
+    font,
+    al_map_rgb(255, color, color),
+    (WIDTH * 40 / 1024) * scalar + dx,
+    (HEIGHT * 705 / 760) * scalar + dy,
+    ALLEGRO_ALIGN_LEFT,
+    "Back");
+
+    al_draw_rectangle(
+    (WIDTH * 20 / 1024) * scalar + dx,
+    (HEIGHT * 700 / 760) * scalar + dy,
+    (WIDTH * 180 / 1024) * scalar + dx,
+    (HEIGHT * 755 / 760) * scalar + dy,
+    al_map_rgb(255, color, color),
+    0);
 }
 
 // about func-----------------------------------------------------------------------------------------------------------
@@ -263,37 +307,68 @@ void setting_draw()
     else
         back_draw(255);
 
-    al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 40 / 1024) * scalar + dx, (HEIGHT * 250 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Volume");
-    al_draw_rectangle((WIDTH * 250 / 1024) * scalar + dx, (HEIGHT * 280 / 760) * scalar + dy, (WIDTH * 450 / 1024) * scalar + dx, (HEIGHT * 280 / 760) * scalar + dy, al_map_rgb(255, 255, 255), 0);
-    al_draw_filled_rectangle((WIDTH * (240 + volume_value) / 1024) * scalar + dx, (HEIGHT * 260 / 760) * scalar + dy, (WIDTH * (250 + volume_value) / 1024) * scalar + dx, (HEIGHT * 300 / 760) * scalar + dy, al_map_rgb(255, 255, 255));
+    al_draw_text(
+    font,
+    al_map_rgb(255, 255, 255),
+    (WIDTH * 40 / 1024) * scalar + dx,
+    (HEIGHT * 250 / 760) * scalar + dy,
+    ALLEGRO_ALIGN_LEFT,
+    "Volume");
 
-    al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 40 / 1024) * scalar + dx, (HEIGHT * 380 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Size");
-    if (Size_inrange[0])
-        al_draw_text(font, al_map_rgb(255, 100, 100), (WIDTH * 40 / 1024) * scalar + dx, (HEIGHT * 450 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "1024 X 760");
-    else
-        al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 40 / 1024) * scalar + dx, (HEIGHT * 450 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "1024 X 760");
-    if (Size_inrange[1])
-        al_draw_text(font, al_map_rgb(255, 100, 100), (WIDTH * 370 / 1024) * scalar + dx, (HEIGHT * 450 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "1280 X 720");
-    else
-        al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 370 / 1024) * scalar + dx, (HEIGHT * 450 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "1280 X 720");
-    if (Size_inrange[2])
-        al_draw_text(font, al_map_rgb(255, 100, 100), (WIDTH * 700 / 1024) * scalar + dx, (HEIGHT * 450 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "1440 X 900");
-    else
-        al_draw_text(font, al_map_rgb(255, 255, 255), (WIDTH * 700 / 1024) * scalar + dx, (HEIGHT * 450 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "1440 X 900");
+    al_draw_rectangle(
+    (WIDTH * 250 / 1024) * scalar + dx,
+    (HEIGHT * 280 / 760) * scalar + dy,
+    (WIDTH * 450 / 1024) * scalar + dx,
+    (HEIGHT * 280 / 760) * scalar + dy,
+    al_map_rgb(255, 255, 255),
+    0);
+
+    al_draw_filled_rectangle(
+    (WIDTH * (240 + volume_value) / 1024) * scalar + dx,
+    (HEIGHT * 260 / 760) * scalar + dy,
+    (WIDTH * (250 + volume_value) / 1024) * scalar + dx,
+    (HEIGHT * 300 / 760) * scalar + dy,
+    al_map_rgb(255, 255, 255));
+
+    al_draw_text(
+    font,
+    al_map_rgb(255, 255, 255),
+    (WIDTH * 40 / 1024) * scalar + dx,
+    (HEIGHT * 380 / 760) * scalar + dy,
+    ALLEGRO_ALIGN_LEFT,
+    "Size");
+
+    al_draw_text(
+    font,
+    Size_inrange[0] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+    (WIDTH * 40 / 1024) * scalar + dx,
+    (HEIGHT * 450 / 760) * scalar + dy,
+    ALLEGRO_ALIGN_LEFT,
+    "1024 X 760");
+
+    al_draw_text(
+    font,
+    Size_inrange[1] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+    (WIDTH * 370 / 1024) * scalar + dx,
+    (HEIGHT * 450 / 760) * scalar + dy,
+    ALLEGRO_ALIGN_LEFT,
+    "1280 X 720");
+
+    al_draw_text(
+    font,
+    Size_inrange[2] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+    (WIDTH * 700 / 1024) * scalar + dx,
+    (HEIGHT * 450 / 760) * scalar + dy,
+    ALLEGRO_ALIGN_LEFT,
+    "1440 X 900");
+
 }
 void setting_destroy()
 {
     al_destroy_font(font);
 }
 
-// volume func----------------------------------------------------------------------------------------------------------------------------------------
-/*void volume_draw(int color)
-{
 
-    al_draw_text(font, al_map_rgb(255, color, color), (WIDTH * 40 / 1024) * scalar + dx, (HEIGHT * 250 / 760) * scalar + dy, ALLEGRO_ALIGN_LEFT, "Volume");
-    al_draw_rectangle((WIDTH * 250 / 1024) * scalar + dx, (HEIGHT * 280 / 760) * scalar + dy, (WIDTH * 450 / 1024) * scalar + dx, (HEIGHT * 280 / 760) * scalar + dy, al_map_rgb(255, color, color), 0);
-    al_draw_filled_rectangle((WIDTH * (240 + volume_value) / 1024) * scalar + dx, (HEIGHT * 260 / 760) * scalar + dy, (WIDTH * (250 + volume_value) / 1024) * scalar + dx, (HEIGHT * 300 / 760) * scalar + dy, al_map_rgb(255, color, color));
-}*/
 
 // size reset func------------------------------------------------------------------------------------------------------------
 void screen_set(int w, int h)
@@ -321,7 +396,13 @@ The format of the position is HEIGHT/WEIGHT * bound_top/bottom/left/right * scal
 
 */
 bool game_button[4] = {false};
+bool cheating_keyword[10]={false};  //to check each keyword was pressed
 bool game_scene2_button[4] = {false};
+bool snowpiece_button=false;
+bool keywords_check=false;  //to check if the cheating word is pressing
+int keywords_count=0;        //to count the keyword was pressed
+bool cheating_mode=false;
+
 enum
 {
     game_button_fight = 0,
@@ -373,6 +454,7 @@ void game_scene_process(ALLEGRO_EVENT event)
     {
         if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
         {
+            printf("%d %d\n",pos_x,pos_y);
             if (game_button[game_button_fight] && game_scene_mode1 != 1)
             {
                 game_scene_mode1 = 1;
@@ -472,8 +554,141 @@ void game_scene_process(ALLEGRO_EVENT event)
             }
         }
     }
-    else if (game_scene_mode1 == 3) // item
+    else if (game_scene_mode1 == 3) //item
     {
+        game_button[game_button_fight] = false, game_button[game_button_act] = false, game_button[game_button_item] = false, game_button[game_button_mercy] = false;
+
+        if(!cheating_mode) // if the cheating mode is off,then detect the keyboard
+        {
+            if(event.type == ALLEGRO_EVENT_KEY_DOWN && !keywords_check) // keywords_check is to prevent the continuous pressing on keyboard
+            {
+                key_state[event.keyboard.keycode] = true;
+                if (keywords_count == 0 ||keywords_count == 1)
+                {
+                    if(key_state[ALLEGRO_KEY_UP])
+                    {
+                        cheating_keyword[keywords_count]=true;
+                        keywords_check=true;
+                        keywords_count++;
+                    }
+                    else
+                    {
+                        memset(cheating_keyword,false,sizeof(bool)*10);
+                        keywords_check=true;
+                        keywords_count=0;
+                    }
+                }
+                else if(keywords_count == 2 ||keywords_count == 3)
+                {
+                    if(key_state[ALLEGRO_KEY_DOWN])
+                    {
+                        cheating_keyword[keywords_count]=true;
+                        keywords_check=true;
+                        keywords_count++;
+                    }
+                    else
+                    {
+                        memset(cheating_keyword,false,sizeof(bool)*10);
+                        keywords_check=true;
+                        keywords_count=0;
+                    }
+                }
+                else if(keywords_count == 4 ||keywords_count == 6)
+                {
+                    if(key_state[ALLEGRO_KEY_LEFT])
+                    {
+                        cheating_keyword[keywords_count]=true;
+                        keywords_check=true;
+                        keywords_count++;
+                    }
+                    else
+                    {
+                        memset(cheating_keyword,false,sizeof(bool)*10);
+                        keywords_check=true;
+                        keywords_count=0;
+                    }
+                }
+                else if(keywords_count == 5 ||keywords_count == 7)
+                {
+                    if(key_state[ALLEGRO_KEY_RIGHT])
+                    {
+                        cheating_keyword[keywords_count]=true;
+                        keywords_check=true;
+                        keywords_count++;
+                    }
+                    else
+                    {
+                        memset(cheating_keyword,false,sizeof(bool)*10);
+                        keywords_check=true;
+                        keywords_count=0;
+                    }
+                }
+                else if(keywords_count == 8)
+                {
+                    if(key_state[ALLEGRO_KEY_A])
+                    {
+                        cheating_keyword[keywords_count]=true;
+                        keywords_check=true;
+                        keywords_count++;
+                    }
+                    else
+                    {
+                        memset(cheating_keyword,false,sizeof(bool)*10);
+                        keywords_check=true;
+                        keywords_count=0;
+                    }
+                }
+                else if(keywords_count == 9)
+                {
+                    if(key_state[ALLEGRO_KEY_B])
+                    {
+                        cheating_keyword[keywords_count]=true;
+                        keywords_check=true;
+                        cheating_mode = true;
+                        cheating_init();
+                    }
+                    else
+                    {
+                        memset(cheating_keyword,false,sizeof(bool)*10);
+                        keywords_check=true;
+                        keywords_count=0;
+                    }
+                }
+
+            }
+            else if (event.type == ALLEGRO_EVENT_KEY_UP)
+            {
+                key_state[event.keyboard.keycode] = false;
+                keywords_check = false;
+            }
+
+
+        // chara.anime = 0;
+        }
+        if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
+        {
+            if(snowpiece_button)
+                recover(10);
+        }
+        if (event.type == ALLEGRO_EVENT_MOUSE_AXES)
+        {
+            pos_x = event.mouse.x;
+            pos_y = event.mouse.y;
+
+            if(pos_x >= (WIDTH * bound_left)*scalar + dx && pos_x <= (WIDTH * bound_left + 28 * 14)*scalar + dx)
+            {
+                if(pos_y >= (HEIGHT * 570 / 1024) * scalar + dy && pos_y <= (HEIGHT * 650 / 1024) * scalar + dy )
+                    snowpiece_button = true;
+                else
+                    snowpiece_button = false;
+
+            }
+            else
+                snowpiece_button = false;
+
+        }
+
+
     }
     else if (game_scene_mode1 == 4) // mercy
     {
@@ -598,7 +813,7 @@ void game_scene_draw()
 
         character_infor_draw();
     }
-    else if (game_scene_mode1 == 1)
+    else if (game_scene_mode1 == 1)   //----------------------------------------------------------------------------------------fight page
     {
         if (game_scene_mode2 == 1)
         {
@@ -692,7 +907,7 @@ void game_scene_draw()
             }
         }
     }
-    else if (game_scene_mode1 == 2)
+    else if (game_scene_mode1 == 2)//---------------------------------------------------------------------------------act page
     {
         if (game_scene_mode2 == 0)
         {
@@ -864,13 +1079,105 @@ void game_scene_draw()
         }
         else if (game_scene_mode2 == 3) // talk
         {
+
         }
         else if (game_scene_mode2 == 4) // dinner
         {
         }
     }
-    else if (game_scene_mode1 == 3)
+    else if (game_scene_mode1 == 3)         //----------------------------------------------------------------------------------item page
     {
+        al_draw_rectangle( //邊框
+            (WIDTH * bound_left)*scalar + dx,
+            (HEIGHT * bound_top)*scalar + dy,
+            (WIDTH * bound_right)*scalar + dx,
+            (HEIGHT * bound_bottom)*scalar + dy,
+            al_map_rgb(255, 255, 255),
+            0);
+        al_draw_text(
+            font,
+            snowpiece_button ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+            (WIDTH * bound_left)*scalar + dx,
+            (HEIGHT * 570 / 1024) * scalar + dy,
+            ALLEGRO_ALIGN_LEFT,
+            " * Snowman piece");
+        al_draw_text(
+            font,
+            al_map_rgb(255, 255, 255),
+            (WIDTH * bound_left)*scalar + dx,
+            (HEIGHT * 670 / 1024) * scalar + dy,
+            ALLEGRO_ALIGN_LEFT,
+            "cheating : ");
+        al_draw_text(
+            font,
+            cheating_keyword[0] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+            (WIDTH * bound_left + 28 * 11)*scalar + dx,
+            (HEIGHT * 670 / 1024) * scalar + dy,
+            ALLEGRO_ALIGN_LEFT,
+            "U");
+        al_draw_text(
+            font,
+            cheating_keyword[1] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+            (WIDTH * bound_left + 28 * 12)*scalar + dx,
+            (HEIGHT * 670 / 1024) * scalar + dy,
+            ALLEGRO_ALIGN_LEFT,
+            "U");
+        al_draw_text(
+            font,
+            cheating_keyword[2] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+            (WIDTH * bound_left + 28 * 13)*scalar + dx,
+            (HEIGHT * 670 / 1024) * scalar + dy,
+            ALLEGRO_ALIGN_LEFT,
+            "D");
+        al_draw_text(
+            font,
+            cheating_keyword[3] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+            (WIDTH * bound_left + 28 * 14)*scalar + dx,
+            (HEIGHT * 670 / 1024) * scalar + dy,
+            ALLEGRO_ALIGN_LEFT,
+            "D");
+        al_draw_text(
+            font,
+            cheating_keyword[4] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+            (WIDTH * bound_left + 28 * 15)*scalar + dx,
+            (HEIGHT * 670 / 1024) * scalar + dy,
+            ALLEGRO_ALIGN_LEFT,
+            "L");
+        al_draw_text(
+            font,
+            cheating_keyword[5] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+            (WIDTH * bound_left + 28 * 16)*scalar + dx,
+            (HEIGHT * 670 / 1024) * scalar + dy,
+            ALLEGRO_ALIGN_LEFT,
+            "R");
+        al_draw_text(
+            font,
+            cheating_keyword[6] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+            (WIDTH * bound_left + 28 * 17)*scalar + dx,
+            (HEIGHT * 670 / 1024) * scalar + dy,
+            ALLEGRO_ALIGN_LEFT,
+            "L");
+        al_draw_text(
+            font,
+            cheating_keyword[7] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+            (WIDTH * bound_left + 28 * 18)*scalar + dx,
+            (HEIGHT * 670 / 1024) * scalar + dy,
+            ALLEGRO_ALIGN_LEFT,
+            "R");
+        al_draw_text(
+            font,
+            cheating_keyword[8] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+            (WIDTH * bound_left + 28 * 19)*scalar + dx,
+            (HEIGHT * 670 / 1024) * scalar + dy,
+            ALLEGRO_ALIGN_LEFT,
+            "A");
+        al_draw_text(
+            font,
+            cheating_keyword[9] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+            (WIDTH * bound_left + 28 * 20)*scalar + dx,
+            (HEIGHT * 670 / 1024) * scalar + dy,
+            ALLEGRO_ALIGN_LEFT,
+            "B");
     }
     else if (game_scene_mode1 == 4)
     {
