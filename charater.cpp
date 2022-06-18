@@ -13,8 +13,8 @@ enum
 };
 typedef struct
 {
-    int x,y;
-    int width,height;
+    int x, y;
+    int width, height;
     int scale;
     ALLEGRO_BITMAP *img;
 } Monster;
@@ -126,7 +126,7 @@ void character_draw()
     // show heart
     if (heart_counter == heart_counter_initial || (heart_counter % 50) < 25)
     {
-        if(!lose)
+        if (!lose)
         {
             al_draw_scaled_bitmap(
                 heart.img, 0, 0, heart.width, heart.height,
@@ -160,6 +160,10 @@ void character_destory()
 int get_character_hp()
 {
     return heart.hp;
+}
+void character_hp_reset()
+{
+    heart.hp = 20;
 }
 
 void character_attack_check1(int pos[][2], int n)
@@ -273,7 +277,7 @@ void character_attack_check3(int pos[][2], int n)
 
 void alive()
 {
-    if(heart.hp <= 0)
+    if (heart.hp <= 0)
     {
         lose = true;
         printf("You died\n");
@@ -290,57 +294,67 @@ void recover(int val)
     heart.hp += val;
     // printf("hp: %d\n", heart.hp);
 }
-void monster_init(){
+void monster_init()
+{
     int i;
     monster[0].img = al_load_bitmap("./image/vegetoid_01.jpg");
-	monster[1].img = al_load_bitmap("./image/vegetoid_02.jpg");
-	monster[2].img = al_load_bitmap("./image/vegetoid_03.jpg");
-	monster[3].img = al_load_bitmap("./image/vegetoid_04.jpg");
-	monster[4].img = al_load_bitmap("./image/vegetoid_05_01.png");
-	monster[5].img = al_load_bitmap("./image/fight.png");
-//    printf("check2\n");
-//	monster.width  = al_get_bitmap_width(monster.img);
-//    monster.height = al_get_bitmap_height(monster.img);
-//    printf("check3\n");
-    for(i=0;i<=4;i++)  monster[i].x = WIDTH  * (bound_left1 + bound_right1) / 2 -100;
-    for(i=0;i<=4;i++)  monster[i].y = HEIGHT / 4;
+    monster[1].img = al_load_bitmap("./image/vegetoid_02.jpg");
+    monster[2].img = al_load_bitmap("./image/vegetoid_03.jpg");
+    monster[3].img = al_load_bitmap("./image/vegetoid_04.jpg");
+    monster[4].img = al_load_bitmap("./image/vegetoid_05_01.png");
+    monster[5].img = al_load_bitmap("./image/fight.png");
+    //    printf("check2\n");
+    //	monster.width  = al_get_bitmap_width(monster.img);
+    //    monster.height = al_get_bitmap_height(monster.img);
+    //    printf("check3\n");
+    for (i = 0; i <= 4; i++)
+        monster[i].x = WIDTH * (bound_left1 + bound_right1) / 2 - 100;
+    for (i = 0; i <= 4; i++)
+        monster[i].y = HEIGHT / 4;
     printf("monster_init\n");
 }
 
-void monster_draw(){
-    if(monster_hurt==0){ //©Çª«¡]¤@¯ë¡^
-        if(monster_anime < monster_anime_time/4)
+void monster_draw()
+{
+    if (monster_hurt == 0)
+    { //ï¿½Çªï¿½ï¿½]ï¿½@ï¿½ï¿½^
+        if (monster_anime < monster_anime_time / 4)
             al_draw_bitmap(monster[0].img, monster[0].x, monster[0].y, 0);
-        else if(monster_anime < monster_anime_time/2)
+        else if (monster_anime < monster_anime_time / 2)
             al_draw_bitmap(monster[1].img, monster[0].x, monster[0].y, 0);
-        else if(monster_anime < monster_anime_time*3/4)
+        else if (monster_anime < monster_anime_time * 3 / 4)
             al_draw_bitmap(monster[2].img, monster[0].x, monster[0].y, 0);
-        else if(monster_anime < monster_anime_time)
+        else if (monster_anime < monster_anime_time)
             al_draw_bitmap(monster[3].img, monster[0].x, monster[0].y, 0);
-    }else if(monster_hurt==1){  //©Çª«³Q¥´
-        if(monster_anime < monster_anime_time/4)
+    }
+    else if (monster_hurt == 1)
+    { //ï¿½Çªï¿½ï¿½Qï¿½ï¿½
+        if (monster_anime < monster_anime_time / 4)
             al_draw_bitmap(monster[0].img, monster[0].x, monster[0].y, 0);
-        else if(monster_anime < monster_anime_time/2)
+        else if (monster_anime < monster_anime_time / 2)
             al_draw_bitmap(monster[1].img, monster[0].x, monster[0].y, 0);
-        else if(monster_anime < monster_anime_time*3/4)
+        else if (monster_anime < monster_anime_time * 3 / 4)
             al_draw_bitmap(monster[2].img, monster[0].x, monster[0].y, 0);
-        else if(monster_anime < monster_anime_time)
+        else if (monster_anime < monster_anime_time)
             al_draw_bitmap(monster[3].img, monster[0].x, monster[0].y, 0);
         al_draw_bitmap(monster[5].img, monster[0].x, monster[0].y, 0);
-    }else{ //©Çª«¨ü¶Ë
-        monster_anime%=monster_anime_hurt;
-//        printf("monster_anime=%d monster_anime_hurt=%d, position=%d\n",monster_anime,monster_anime_hurt,monster[0].x-(monster_anime_hurt/2)+monster_anime);
-        if(monster_anime < monster_anime_hurt/4)
-            al_draw_bitmap(monster[4].img, monster[0].x-(monster_anime_hurt/2)+monster_anime/3, monster[0].y, 0);
-        else if(monster_anime < monster_anime_hurt/2)
-            al_draw_bitmap(monster[4].img, monster[0].x+(monster_anime_hurt/2)-monster_anime/3, monster[0].y, 0);
-        else if(monster_anime < monster_anime_hurt*3/4)
-            al_draw_bitmap(monster[4].img, monster[0].x-(monster_anime_hurt/2)+monster_anime/3, monster[0].y, 0);
-        else if(monster_anime < monster_anime_hurt)
-            al_draw_bitmap(monster[4].img, monster[0].x+(monster_anime_hurt/2)-monster_anime/3, monster[0].y, 0);
+    }
+    else
+    { //ï¿½Çªï¿½ï¿½ï¿½ï¿½ï¿½
+        monster_anime %= monster_anime_hurt;
+        //        printf("monster_anime=%d monster_anime_hurt=%d, position=%d\n",monster_anime,monster_anime_hurt,monster[0].x-(monster_anime_hurt/2)+monster_anime);
+        if (monster_anime < monster_anime_hurt / 4)
+            al_draw_bitmap(monster[4].img, monster[0].x - (monster_anime_hurt / 2) + monster_anime / 3, monster[0].y, 0);
+        else if (monster_anime < monster_anime_hurt / 2)
+            al_draw_bitmap(monster[4].img, monster[0].x + (monster_anime_hurt / 2) - monster_anime / 3, monster[0].y, 0);
+        else if (monster_anime < monster_anime_hurt * 3 / 4)
+            al_draw_bitmap(monster[4].img, monster[0].x - (monster_anime_hurt / 2) + monster_anime / 3, monster[0].y, 0);
+        else if (monster_anime < monster_anime_hurt)
+            al_draw_bitmap(monster[4].img, monster[0].x + (monster_anime_hurt / 2) - monster_anime / 3, monster[0].y, 0);
     }
 }
-void monster_destroy(){
-    for(int i=0;i<6;i++)
+void monster_destroy()
+{
+    for (int i = 0; i < 6; i++)
         al_destroy_bitmap(monster[i].img);
 }
