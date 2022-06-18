@@ -29,6 +29,7 @@ typedef struct
     int hp = 20;
     bool cheating = false;
     ALLEGRO_BITMAP *img;
+    ALLEGRO_BITMAP *died;
 } Heart;
 
 Heart heart;
@@ -38,6 +39,8 @@ void character_init()
     // heart.img = al_load_bitmap("./image/heart1.jfif");
     heart.img = al_load_bitmap("./image/heart.png");
     al_convert_mask_to_alpha(heart.img, al_map_rgb(255, 255, 255));
+    heart.died = al_load_bitmap("./image/dead.png");
+    al_convert_mask_to_alpha(heart.died, al_map_rgb(255, 255, 255));
     injuried = al_load_sample("./sound/injuried.wav");
     injuried_instance = al_create_sample_instance(injuried);
     al_set_sample_instance_playmode(injuried_instance, ALLEGRO_PLAYMODE_ONCE);
@@ -123,16 +126,28 @@ void character_draw()
     // show heart
     if (heart_counter == heart_counter_initial || (heart_counter % 50) < 25)
     {
-        al_draw_scaled_bitmap(
-            heart.img, 0, 0, heart.width, heart.height,
-            heart.x, heart.y,
-            heart.width * heart.scale, heart.height * heart.scale,
-            0);
+        if(!lose)
+        {
+            al_draw_scaled_bitmap(
+                heart.img, 0, 0, heart.width, heart.height,
+                heart.x, heart.y,
+                heart.width * heart.scale, heart.height * heart.scale,
+                0);
+        }
+        else
+        {
+            al_draw_scaled_bitmap(
+                heart.died, 0, 0, heart.width, heart.height,
+                heart.x, heart.y,
+                heart.width * heart.scale, heart.height * heart.scale,
+                0);
+        }
     }
 }
 void character_destory()
 {
     al_destroy_bitmap(heart.img);
+    al_destroy_bitmap(heart.died);
     al_destroy_sample(injuried);
     al_destroy_sample_instance(injuried_instance);
     // al_destroy_bitmap(chara.img_atk[1]);
@@ -173,6 +188,7 @@ void character_attack_check1(int pos[][2], int n)
                 heart_counter--;
                 al_play_sample_instance(injuried_instance);
                 printf("heart\n");
+                alive();
                 break;
             }
         }
@@ -204,6 +220,7 @@ void character_attack_check2(int pos[][2], int n)
                 heart_counter--;
                 al_play_sample_instance(injuried_instance);
                 printf("heart\n");
+                alive();
                 break;
             }
         }
@@ -237,6 +254,7 @@ void character_attack_check3(int pos[][2], int n)
                     heart_counter--;
                     al_play_sample_instance(injuried_instance);
                     printf("heart\n");
+                    alive();
                     break;
                 }
                 else
@@ -253,6 +271,14 @@ void character_attack_check3(int pos[][2], int n)
     }
 }
 
+void alive()
+{
+    if(heart.hp <= 0)
+    {
+        lose = true;
+        printf("You died\n");
+    }
+}
 void cheating_init()
 {
     heart.cheating = true;
@@ -314,6 +340,7 @@ void monster_draw(){
             al_draw_bitmap(monster[4].img, monster[0].x+(monster_anime_hurt/2)-monster_anime/3, monster[0].y, 0);
     }
 }
-void monster_distroy(){
-    al_destroy_bitmap(monster[0].img);
+void monster_destroy(){
+    for(int i=0;i<6;i++)
+        al_destroy_bitmap(monster[i].img);
 }

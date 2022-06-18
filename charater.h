@@ -17,4 +17,6 @@ void recover(int val);
 
 void monster_init();
 void monster_draw();
-void monster_distroy();
+void monster_destroy();
+
+void alive();

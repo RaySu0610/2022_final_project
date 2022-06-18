@@ -233,11 +233,21 @@ void game_update()
         if (window == MENU_WINDOW) // destroy the last interface
             menu_destroy();
         else if (window == GAME_SCENE_WINDOW)
+        {
             game_scene_destroy();
+            if(judge_next_window == MENU_WINDOW)
+                music_init();
+        }
         else if (window == ABOUT_WINDOW)
             about_destroy();
         else if (window == SETTING_WINDOW)
             setting_destroy();
+        else if (window == ENDING1_WINDOW)
+        {
+            ending1_destroy();
+            if(judge_next_window == MENU_WINDOW)
+                music_init();
+        }
 
         if (judge_next_window == MENU_WINDOW) // init the corresponding interface
             menu_init();
@@ -252,6 +262,8 @@ void game_update()
             about_init();
         else if (judge_next_window == SETTING_WINDOW)
             setting_init();
+        else if (judge_next_window == ENDING1_WINDOW)
+            ending1_init();
         window = judge_next_window;
         judge_next_window = 0;
     }
@@ -287,6 +299,10 @@ int process_event()
     {
         return GAME_TERMINATE; //------------------------ exit button
     }
+    else if (window == ENDING1_WINDOW)
+    {
+        ending1_process(event);
+    }
 
     // Shutdown our program
     if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
@@ -320,7 +336,10 @@ void game_draw()
     {
         setting_draw();
     }
-
+    else if (window == ENDING1_WINDOW)
+    {
+        ending1_draw();
+    }
     al_flip_display(); // display the result
 }
 int game_run()
@@ -353,4 +372,6 @@ void game_destroy()
         about_destroy();
     else if (window == SETTING_WINDOW)
         setting_destroy();
+    else if (window == ENDING1_WINDOW)
+        ending1_destroy();
 }

@@ -36,4 +36,5 @@ extern int monster_anime_hurt;
 extern int monster_hurt;
 
 extern bool mercy_usabled;
+extern bool lose;
 #endif

@@ -402,6 +402,8 @@ bool keywords_check = false; // to check if the cheating word is pressing
 int keywords_count = 0;      // to count the keyword was pressed
 bool cheating_mode = false;
 
+
+bool win = false,kill = false;
 enum
 {
     game_button_fight = 0,
@@ -430,7 +432,7 @@ void game_scene_init()
     // background = al_load_bitmap("./image/menu.jpg");
     // background = al_load_bitmap("./image/stage.jpg");
 
-    song = al_load_sample("./sound/UNDERTALE_MEGALOVANIA.mp3");
+    song = al_load_sample("./sound/stronger monster.mp3");
     attack_reflect = al_load_sample("./sound/attack_reflect.wav");
     al_reserve_samples(20);
     sample_instance = al_create_sample_instance(song);
@@ -510,6 +512,12 @@ void game_scene_process(ALLEGRO_EVENT event)
     }
     else if (game_scene_mode1 == 1) // fight
     {
+        if(win || lose)
+        {
+            al_rest(3);
+            judge_next_window = ENDING1_WINDOW;
+        }
+
     }
     else if (game_scene_mode1 == 2) // act
     {
@@ -564,6 +572,14 @@ void game_scene_process(ALLEGRO_EVENT event)
                 {
                     game_scene2_button[0] = false, game_scene2_button[1] = false, game_scene2_button[2] = false, game_scene2_button[3] = false;
                 }
+            }
+        }
+        else if(game_scene_mode2 == 1 || game_scene_mode2 == 4)
+        {
+            if(win || lose)
+            {
+                al_rest(3);
+                judge_next_window = ENDING1_WINDOW;
             }
         }
     }
@@ -704,6 +720,7 @@ void game_scene_process(ALLEGRO_EVENT event)
                 if (game_scene4_button[0])
                 {
                     game_scene_mode2 = 1;
+
                 }
                 else if (game_scene4_button[1])
                 {
@@ -737,6 +754,20 @@ void game_scene_process(ALLEGRO_EVENT event)
                     game_scene4_button[0] = false, game_scene4_button[1] = false;
                 }
             }
+        }
+        else if (game_scene_mode2 == 1)
+        {
+            if(win)
+            {
+                al_rest(3);
+                judge_next_window = ENDING1_WINDOW;
+            }
+        }
+        else if (game_scene_mode2 == 2)
+        {
+            al_rest(3);
+            judge_next_window = MENU_WINDOW;
+
         }
     }
 }
@@ -840,6 +871,7 @@ void game_scene_draw()
     al_clear_to_color(al_map_rgb(0, 0, 0));
     if(hurt_time<3||monster_hp>=0) monster_draw();
     game_button_draw();
+
     if (game_scene_mode1 == 0)
     {
         al_draw_rectangle( //邊框
@@ -935,6 +967,8 @@ void game_scene_draw()
                 (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 3) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "* You WIN!");
+                win = true;
+                kill = true;
         }
         else if (game_scene_mode2 == 3)
         {
@@ -950,7 +984,11 @@ void game_scene_draw()
                 0);
 
             monster_attack2();
-
+            if(lose)
+            {
+                failed_draw();
+                al_rest(3);
+            }
             game_scene_counter++;
             if (game_scene_counter == 500)
             {
@@ -1091,7 +1129,11 @@ void game_scene_draw()
                     0);
 
                 monster_attack1();
-
+                if(lose)
+                {
+                    failed_draw();
+                    al_rest(3);
+                }
                 game_scene_counter++;
                 if (game_scene_counter == 500)
                 {
@@ -1198,7 +1240,11 @@ void game_scene_draw()
                     0);
 
                 monster_attack3();
-
+                if(lose)
+                {
+                    failed_draw();
+                    al_rest(3);
+                }
                 game_scene_counter++;
                 if (game_scene_counter == 500)
                 {
@@ -1357,6 +1403,7 @@ void game_scene_draw()
                 (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "* Spare.");
+                //printf("spare show\n");
             al_draw_text(
                 font,
                 al_map_rgb(255, 255, 255),
@@ -1364,7 +1411,7 @@ void game_scene_draw()
                 (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "* Escape.");
-
+                //printf("escape show\n");
             if (game_scene4_button[0]) // Spare
             {
                 al_draw_filled_rectangle(
@@ -1373,6 +1420,7 @@ void game_scene_draw()
                     (WIDTH * bound_left + 28 * 6.5) * scalar + dx,
                     (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 2 / 5 + 5) * scalar + dy,
                     al_map_rgb(255, 255, 255));
+                //printf("cursor on spare\n");
             }
             else if (game_scene4_button[1]) // Escape
             {
@@ -1382,6 +1430,7 @@ void game_scene_draw()
                     (WIDTH * bound_left + 28 * 7.5) * scalar + dx,
                     (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 4 / 5 + 5) * scalar + dy,
                     al_map_rgb(255, 255, 255));
+                    //printf("cursor on escape\n");
             }
         }
         else if (game_scene_mode2 == 1)
@@ -1402,6 +1451,7 @@ void game_scene_draw()
                 (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 3) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "* You WIN!");
+            win = true;
         }
         else if (game_scene_mode2 == 2)
         {
@@ -1421,10 +1471,18 @@ void game_scene_draw()
                 (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 3) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "* You escaped...");
+
         }
     }
 
     // al_draw_scaled_bitmap(background, 0, 0, WIDTH, 720, 0, 0, WIDTH, HEIGHT, 0);
+}
+
+void failed_draw()
+{
+    al_clear_to_color(al_map_rgb(0, 0, 0));
+    character_draw();
+    al_stop_sample_instance(sample_instance);
 }
 
 //一般攻擊1
@@ -1620,4 +1678,128 @@ void game_scene_destroy()
         al_destroy_sample_instance(reflect_instance[num]);
     al_destroy_sample(attack_reflect);
     character_destory();
+    monster_destroy();
 }
+// --------------------------------------------------------------------- endin01
+bool back_menu_button = false, exit_button = false;
+void ending1_init()
+{
+    font = al_load_ttf_font("./font/UndertaleSans.ttf", 50, 0);
+
+    if(win)
+    {
+        if(kill)
+        {
+            background = al_load_bitmap("./image/killing_ending.png");
+            song = al_load_sample("./sound/killing ending.mp3");
+        }
+        else
+        {
+            background = al_load_bitmap("./image/peace_ending.jpg");
+            song = al_load_sample("./sound/A Peace Ending.mp3");
+        }
+    }
+    else
+    {
+        background = al_load_bitmap("./image/Ending01.jpg");
+        song = al_load_sample("./sound/failing ending.mp3");
+    }
+
+
+    sample_instance = al_create_sample_instance(song);
+    al_set_sample_instance_playmode(sample_instance, ALLEGRO_PLAYMODE_LOOP);
+    al_attach_sample_instance_to_mixer(sample_instance, al_get_default_mixer());
+    al_set_sample_instance_gain(sample_instance, (volume_value-10)/200);
+    //al_play_sample_instance(reflect_instance);
+    al_play_sample_instance(sample_instance);
+
+
+}
+
+void ending1_process(ALLEGRO_EVENT event)
+{
+    if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
+    {
+        if(back_menu_button)
+        {
+            judge_next_window = MENU_WINDOW;
+            back_menu_button = false;
+        }
+        else if(exit_button)
+        {
+            judge_next_window = EXIT_WINDOW;
+            exit_button = false;
+        }
+    }
+    if (event.type == ALLEGRO_EVENT_MOUSE_AXES)
+    {
+        pos_x = event.mouse.x;
+        pos_y = event.mouse.y;
+        if(pos_x >=(WIDTH * 350 / 1024) * scalar + dx && pos_x <= (WIDTH * 650 / 1024) * scalar + dx)
+        {
+            if(pos_y >= (HEIGHT * 500 / 760) * scalar + dy && pos_y <= (HEIGHT * 555 / 760) * scalar + dy)
+                back_menu_button = true;
+            else if(pos_y >= (HEIGHT * 600 / 760) * scalar + dy && pos_y <= (HEIGHT * 655 / 760) * scalar + dy)
+                exit_button = true;
+            else
+                back_menu_button = false, exit_button = false;
+        }
+        else
+            back_menu_button = false, exit_button = false;
+    }
+}
+void ending1_draw()
+{
+    al_clear_to_color(al_map_rgb(0, 0, 0));
+    if(win)
+    {
+        if(kill)
+            al_draw_scaled_bitmap(background, 0, 0, 244, 207, 300, 50, 244*2, 207*2, 0);
+        else
+            al_draw_bitmap(background, 250 , 100, 0);
+    }
+    else
+        al_draw_scaled_bitmap(background, 0, 0, 1080, 720, 0, 0, WIDTH, HEIGHT, 0);
+
+    al_draw_text(
+        font,
+        (back_menu_button) ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+        (WIDTH * 370 / 1024) * scalar + dx,
+        (HEIGHT * 505 / 760) * scalar + dy,
+        ALLEGRO_ALIGN_LEFT,
+        "Back to menu");
+    al_draw_rectangle(
+        (WIDTH * 350 / 1024) * scalar + dx,
+        (HEIGHT * 500 / 760) * scalar + dy,
+        (WIDTH * 700 / 1024) * scalar + dx,
+        (HEIGHT * 555 / 760) * scalar + dy,
+        (back_menu_button) ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+        0);
+    al_draw_text(
+        font,
+        (exit_button) ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+        (WIDTH * 370 / 1024) * scalar + dx,
+        (HEIGHT * 605 / 760) * scalar + dy,
+        ALLEGRO_ALIGN_LEFT,
+        "Exit the game");
+
+    al_draw_rectangle(
+        (WIDTH * 350 / 1024) * scalar + dx,
+        (HEIGHT * 600 / 760) * scalar + dy,
+        (WIDTH * 700 / 1024) * scalar + dx,
+        (HEIGHT * 655 / 760) * scalar + dy,
+        (exit_button) ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
+        0);
+
+}
+void ending1_destroy()
+{
+    al_destroy_font(font);
+    al_destroy_bitmap(background);
+    music_destroy();
+}
+
+void ending2_init();
+void ending2_process(ALLEGRO_EVENT event);
+void ending2_draw();
+void ending2_destroy();
