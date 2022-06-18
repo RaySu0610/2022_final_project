@@ -1882,10 +1882,10 @@ void ending1_draw()
     al_clear_to_color(al_map_rgb(0, 0, 0));
     if (win)
     {
-        if (kill)
-            al_draw_scaled_bitmap(background, 0, 0, 244, 207, 300, 50, 244 * 2, 207 * 2, 0);
+        if(kill)
+            al_draw_scaled_bitmap(background, 0, 0, 244, 207, (WIDTH * 300 / 1024) * scalar + dx, (HEIGHT * 50 / 760) * scalar + dy, WIDTH * 244 * 2 / 1024, HEIGHT * 207 * 2 / 760, 0);
         else
-            al_draw_bitmap(background, 250, 100, 0);
+            al_draw_bitmap(background, (WIDTH * 200 / 1024) * scalar + dx , (HEIGHT * 100 / 760) * scalar + dy, 0);
     }
     else
         al_draw_scaled_bitmap(background, 0, 0, 1080, 720, 0, 0, WIDTH, HEIGHT, 0);
@@ -1893,30 +1893,30 @@ void ending1_draw()
     al_draw_text(
         font,
         (back_menu_button) ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
-        (WIDTH * 370 / 1024) * scalar + dx,
+        (WIDTH * 350 / 1024) * scalar + dx,
         (HEIGHT * 505 / 760) * scalar + dy,
         ALLEGRO_ALIGN_LEFT,
         "Back to menu");
     al_draw_rectangle(
-        (WIDTH * 350 / 1024) * scalar + dx,
+        (WIDTH * 330 / 1024) * scalar + dx,
         (HEIGHT * 500 / 760) * scalar + dy,
-        (WIDTH * 700 / 1024) * scalar + dx,
-        (HEIGHT * 555 / 760) * scalar + dy,
+        (WIDTH * 330 / 1024) * scalar + dx + 350,
+        (HEIGHT * 500 / 760) * scalar + dy + 55,
         (back_menu_button) ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
         0);
     al_draw_text(
         font,
         (exit_button) ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
-        (WIDTH * 370 / 1024) * scalar + dx,
+        (WIDTH * 350 / 1024) * scalar + dx,
         (HEIGHT * 605 / 760) * scalar + dy,
         ALLEGRO_ALIGN_LEFT,
         "Exit the game");
 
     al_draw_rectangle(
-        (WIDTH * 350 / 1024) * scalar + dx,
+        (WIDTH * 330 / 1024) * scalar + dx,
         (HEIGHT * 600 / 760) * scalar + dy,
-        (WIDTH * 700 / 1024) * scalar + dx,
-        (HEIGHT * 655 / 760) * scalar + dy,
+        (WIDTH * 330 / 1024) * scalar + dx + 350,
+        (HEIGHT * 600 / 760) * scalar + dy + 55,
         (exit_button) ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
         0);
 }
