@@ -1,6 +1,8 @@
+#include "math.h"
 #include "scene.h"
 
 ALLEGRO_BITMAP *background = NULL;
+ALLEGRO_BITMAP *attack_img[2];
 ALLEGRO_FONT *font = NULL;
 ALLEGRO_SAMPLE *song = NULL;
 ALLEGRO_SAMPLE *attack_reflect = NULL;
@@ -432,6 +434,11 @@ void game_scene_init()
 {
     font = al_load_ttf_font("./font/UndertaleSans.ttf", 50, 0);
     character_init();
+
+    attack_img[0] = al_load_bitmap("./image/attack01.png");
+    attack_img[1] = al_load_bitmap("./image/attack02.png");
+    // al_convert_mask_to_alpha(attack_img[0], al_map_rgb(255, 255, 255));
+    // al_convert_mask_to_alpha(attack_img[1], al_map_rgb(255, 255, 255));
 
     // background = al_load_bitmap("./image/menu.jpg");
     // background = al_load_bitmap("./image/stage.jpg");
@@ -1633,7 +1640,8 @@ void monster_attack1()
         }
 
         int r = 3;
-        al_draw_circle(attack_pos1[i][0], attack_pos1[i][1], r, al_map_rgb(255, 255, 255), 5.0);
+        // al_draw_circle(attack_pos1[i][0], attack_pos1[i][1], r, al_map_rgb(255, 255, 255), 5.0);
+        al_draw_scaled_bitmap(attack_img[0], 0, 0, 1024, 760, attack_pos1[i][0], attack_pos1[i][1], attack_pos1[i][0] + r, attack_pos1[i][1] + r, 0);
 
         character_attack_check1(attack_pos1, attack_sum1);
     }
@@ -1668,37 +1676,44 @@ void monster_attack2()
         attack_pos2[i][0] += attack_direc2[i][0];
         attack_pos2[i][1] += attack_direc2[i][1];
 
-        if (attack_pos2[i][0] <= WIDTH * bound_left1 * scalar + dx + 6) // 3 is the radius of attack
+        if (attack_pos2[i][0] <= WIDTH * bound_left1 * scalar + dx) // 3 is the radius of attack
         {
             attack_direc2[i][0] = -(attack_direc2[i][0]);
             // printf("%d\n",attack_direc2[i][0]);
-            attack_pos2[i][0] = WIDTH * bound_left1 * scalar + dx + 6;
+            attack_pos2[i][0] = WIDTH * bound_left1 * scalar + dx;
             al_play_sample_instance(reflect_instance[i]);
         }
-        else if (attack_pos2[i][0] >= WIDTH * bound_right1 * scalar + dx - 6)
+        else if (attack_pos2[i][0] >= WIDTH * bound_right1 * scalar + dx - 30)
         {
             attack_direc2[i][0] = -(attack_direc2[i][0]);
             // printf("%d\n",attack_direc2[i][0]);
-            attack_pos2[i][0] = WIDTH * bound_right1 * scalar + dx - 6;
+            attack_pos2[i][0] = WIDTH * bound_right1 * scalar + dx - 30;
             al_play_sample_instance(reflect_instance[i]);
         }
 
-        if (attack_pos2[i][1] <= HEIGHT * bound_top * scalar + dy + 6)
+        if (attack_pos2[i][1] <= HEIGHT * bound_top * scalar + dy)
         {
             attack_direc2[i][1] = abs(attack_direc2[i][1]);
-            attack_pos2[i][1] = HEIGHT * bound_top * scalar + dy + 6;
+            attack_pos2[i][1] = HEIGHT * bound_top * scalar + dy;
             al_play_sample_instance(reflect_instance[i]);
         }
-        else if (attack_pos2[i][1] >= HEIGHT * bound_bottom * scalar + dy - 6)
+        else if (attack_pos2[i][1] >= HEIGHT * bound_bottom * scalar + dy - 45)
         {
             attack_direc2[i][1] = -1 * abs(attack_direc2[i][1]);
-            attack_pos2[i][1] = HEIGHT * bound_bottom * scalar + dy - 6;
+            attack_pos2[i][1] = HEIGHT * bound_bottom * scalar + dy - 45;
             al_play_sample_instance(reflect_instance[i]);
         }
 
         int r = 3;
-        al_draw_circle(attack_pos2[i][0], attack_pos2[i][1], r, al_map_rgb(255, 255, 255), 5.0);
+        // al_draw_circle(attack_pos2[i][0], attack_pos2[i][1], r, al_map_rgb(255, 255, 255), 5.0);
         // al_draw_circle(attack_pos2[i][0], attack_pos2[i][1], 3, al_map_rgb(255, 255, 255), 5.0);
+
+        // al_draw_scaled_bitmap(attack_img[0], 0, 0, 1024, 760, attack_pos2[i][0], attack_pos2[i][1], attack_pos2[i][0] + r, attack_pos2[i][1] + r, 0);
+        // al_draw_rotated_bitmap(attack_img[0], 0, 0, attack_pos2[i][0] + r, attack_pos2[i][1] + r, acos(1.0 * attack_pos2[i][0] / attack_pos2[i][1]), 0);
+
+        // al_draw_rotated_bitmap(attack_img[0], 0, 0, attack_pos2[i][0], attack_pos2[i][1], 0, 0);
+
+        al_draw_scaled_bitmap(attack_img[0], 0, 0, 1024, 760, attack_pos2[i][0], attack_pos2[i][1], attack_pos2[i][0] + r, attack_pos2[i][1] + r, 0);
 
         character_attack_check2(attack_pos2, attack_sum2);
     }
@@ -1733,39 +1748,46 @@ void monster_attack3()
         attack_pos3[i][0] += attack_direc3[i][0];
         attack_pos3[i][1] += attack_direc3[i][1];
 
-        if (attack_pos3[i][0] <= WIDTH * bound_left1 * scalar + dx + 3) // 3 is the radius of attack
+        if (attack_pos3[i][0] <= WIDTH * bound_left1 * scalar + dx) // 3 is the radius of attack
         {
             attack_direc3[i][0] = -(attack_direc3[i][0]);
             // printf("%d\n",attack_direc3[i][0]);
-            attack_pos3[i][0] = WIDTH * bound_left1 * scalar + dx + 3;
+            attack_pos3[i][0] = WIDTH * bound_left1 * scalar + dx;
             al_play_sample_instance(reflect_instance[i]);
         }
-        else if (attack_pos3[i][0] >= WIDTH * bound_right1 * scalar + dx - 3)
+        else if (attack_pos3[i][0] >= WIDTH * bound_right1 * scalar + dx - 30)
         {
             attack_direc3[i][0] = -(attack_direc3[i][0]);
             // printf("%d\n",attack_direc3[i][0]);
-            attack_pos3[i][0] = WIDTH * bound_right1 * scalar + dx - 3;
+            attack_pos3[i][0] = WIDTH * bound_right1 * scalar + dx - 30;
             al_play_sample_instance(reflect_instance[i]);
         }
 
-        if (attack_pos3[i][1] <= HEIGHT * bound_top * scalar + dy + 3)
+        if (attack_pos3[i][1] <= HEIGHT * bound_top * scalar + dy)
         {
             attack_direc3[i][1] = abs(attack_direc3[i][1]);
-            attack_pos3[i][1] = HEIGHT * bound_top * scalar + dy + 3;
+            attack_pos3[i][1] = HEIGHT * bound_top * scalar + dy;
             al_play_sample_instance(reflect_instance[i]);
         }
-        else if (attack_pos3[i][1] >= HEIGHT * bound_bottom * scalar + dy - 3)
+        else if (attack_pos3[i][1] >= HEIGHT * bound_bottom * scalar + dy - 45)
         {
             attack_direc3[i][1] = -1 * abs(attack_direc3[i][1]);
-            attack_pos3[i][1] = HEIGHT * bound_bottom * scalar + dy - 3;
+            attack_pos3[i][1] = HEIGHT * bound_bottom * scalar + dy - 45;
             al_play_sample_instance(reflect_instance[i]);
         }
 
         int r = 3;
-        al_draw_circle(attack_pos3[i][0] + r * 2, attack_pos3[i][1] + r * 2, r,
-                       i == 0 ? al_map_rgb(0, 255, 0) : al_map_rgb(255, 255, 255), 5.0);
+        // al_draw_circle(attack_pos3[i][0] + r * 2, attack_pos3[i][1] + r * 2, r,
+        //                i == 0 ? al_map_rgb(0, 255, 0) : al_map_rgb(255, 255, 255), 5.0);
         // al_draw_circle(attack_pos3[i][0], attack_pos3[i][1], 3,
         //                i == 0 ? al_map_rgb(0, 255, 0) : al_map_rgb(255, 255, 255), 5.0);
+
+        // al_draw_rotated_bitmap(
+        //     i == 0 ? attack_img[1] : attack_img[0],
+        //     0, 0, attack_pos3[i][0], attack_pos3[i][1], 0, 0);
+        al_draw_scaled_bitmap(
+            i == 0 ? attack_img[1] : attack_img[0],
+            0, 0, 1024, 760, attack_pos3[i][0], attack_pos3[i][1], attack_pos3[i][0] + r, attack_pos3[i][1] + r, 0);
 
         character_attack_check3(attack_pos3, attack_sum3);
     }
@@ -1813,7 +1835,6 @@ void ending1_init()
     al_set_sample_instance_gain(sample_instance, (volume_value - 10) / 200);
     // al_play_sample_instance(reflect_instance);
     al_play_sample_instance(sample_instance);
-
 }
 
 void ending1_process(ALLEGRO_EVENT event)
@@ -1824,7 +1845,6 @@ void ending1_process(ALLEGRO_EVENT event)
         {
             judge_next_window = MENU_WINDOW;
             back_menu_button = false;
-
 
             cheating_mode = false;
             win = false, kill = false;
