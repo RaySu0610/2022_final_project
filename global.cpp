@@ -19,4 +19,9 @@ float bound_right = 9.0 / 10;
 float bound_left1 = 3.0 / 10;
 float bound_right1 = 7.0 / 10;
 
+int monster_anime =0;
+int monster_anime_time =240;
+int monster_anime_hurt =20;
+int monster_hurt = 0;
+
 bool mercy_usabled = false;

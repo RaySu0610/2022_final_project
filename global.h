@@ -30,5 +30,10 @@ extern float bound_right;
 extern float bound_left1;
 extern float bound_right1;
 
+extern int monster_anime;
+extern int monster_anime_time;
+extern int monster_anime_hurt;
+extern int monster_hurt;
+
 extern bool mercy_usabled;
 #endif

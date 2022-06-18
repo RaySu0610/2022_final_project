@@ -834,11 +834,11 @@ int game_button_draw()
         game_button[game_button_mercy] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
         0);
 }
-
+int hurt_time=0;
 void game_scene_draw()
 {
     al_clear_to_color(al_map_rgb(0, 0, 0));
-
+    if(hurt_time<3||monster_hp>=0) monster_draw();
     game_button_draw();
     if (game_scene_mode1 == 0)
     {
@@ -864,6 +864,8 @@ void game_scene_draw()
     {
         if (game_scene_mode2 == 1)
         {
+            monster_hurt = 1;
+            if (game_scene_counter ==0){ monster_anime=0;  printf("*");}
             character_infor_draw();
 
             al_draw_rectangle( //邊框
@@ -894,8 +896,12 @@ void game_scene_draw()
                 str); //要給實際參數值
 
             game_scene_counter++;
+            if (game_scene_counter >= game_scene_counter_end/2) monster_hurt = 2;
             if (game_scene_counter == game_scene_counter_end)
             {
+                hurt_time++;
+                printf("hurt_time=%d\n",hurt_time);
+                monster_hurt = 0;
                 game_scene_counter = 0;
                 if (monster_hp > 0)
                 {

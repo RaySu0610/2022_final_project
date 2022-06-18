@@ -246,6 +246,7 @@ void game_update()
             music_destroy(); // destroy the menu music since we need to play the new music in game_scene
             game_scene_init();
             character_init();
+            monster_init();
         }
         else if (judge_next_window == ABOUT_WINDOW)
             about_init();
@@ -291,8 +292,11 @@ int process_event()
     if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
         return GAME_TERMINATE;
     else if (event.type == ALLEGRO_EVENT_TIMER)
-        if (event.timer.source == fps)
+        if (event.timer.source == fps){
+            monster_anime++;
+            monster_anime%=monster_anime_time;
             draw = true;
+        }
     if (draw)
         game_update();
     return 0;

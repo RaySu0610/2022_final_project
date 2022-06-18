@@ -14,3 +14,7 @@ void character_attack_check3(int pos[][2], int n);
 
 void cheating_init();
 void recover(int val);
+
+void monster_init();
+void monster_draw();
+void monster_distroy();
