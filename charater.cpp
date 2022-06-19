@@ -4,6 +4,8 @@ int heart_counter_initial = 500;
 int heart_counter = heart_counter_initial;
 ALLEGRO_SAMPLE *injuried = NULL;
 ALLEGRO_SAMPLE_INSTANCE *injuried_instance;
+ALLEGRO_SAMPLE *heart_increase = NULL;
+ALLEGRO_SAMPLE_INSTANCE *increase_instance;
 // the state of character
 enum
 {
@@ -46,6 +48,12 @@ void character_init()
     al_set_sample_instance_playmode(injuried_instance, ALLEGRO_PLAYMODE_ONCE);
     al_attach_sample_instance_to_mixer(injuried_instance, al_get_default_mixer());
     al_set_sample_instance_gain(injuried_instance, (volume_value) / 200);
+
+    heart_increase = al_load_sample("./sound/LOVE Increased.mp3");
+    increase_instance = al_create_sample_instance(heart_increase);
+    al_set_sample_instance_playmode(increase_instance, ALLEGRO_PLAYMODE_ONCE);
+    al_attach_sample_instance_to_mixer(increase_instance, al_get_default_mixer());
+    al_set_sample_instance_gain(increase_instance, (volume_value) / 200);
     // initial the geometric information of character
     heart.width = al_get_bitmap_width(heart.img);
     heart.height = al_get_bitmap_height(heart.img);
@@ -150,6 +158,8 @@ void character_destory()
     al_destroy_bitmap(heart.died);
     al_destroy_sample(injuried);
     al_destroy_sample_instance(injuried_instance);
+    al_destroy_sample(heart_increase);
+    al_destroy_sample_instance(increase_instance);
     // al_destroy_bitmap(chara.img_atk[1]);
     // al_destroy_bitmap(chara.img_move[0]);
     // al_destroy_bitmap(chara.img_move[1]);
@@ -268,7 +278,7 @@ void character_attack_check3(int pos[][2], int n)
                     mercy_usabled = true;
                     heart.hp += 1;
                     heart_counter--;
-                    al_play_sample_instance(injuried_instance);
+                    al_play_sample_instance(increase_instance);
                     printf("heart_plus\n");
                     break;
                 }
@@ -319,7 +329,7 @@ void monster_init()
 void monster_draw()
 {
     if (monster_hurt == 0)
-    { //�Ǫ��]�@��^
+    {
         if (monster_anime < monster_anime_time / 4)
             al_draw_bitmap(monster[0].img, monster[0].x, monster[0].y, 0);
         else if (monster_anime < monster_anime_time / 2)
@@ -330,7 +340,7 @@ void monster_draw()
             al_draw_bitmap(monster[3].img, monster[0].x, monster[0].y, 0);
     }
     else if (monster_hurt == 1)
-    { //�Ǫ��Q��
+    {
         if (monster_anime < monster_anime_time / 4)
             al_draw_bitmap(monster[0].img, monster[0].x, monster[0].y, 0);
         else if (monster_anime < monster_anime_time / 2)
@@ -342,7 +352,7 @@ void monster_draw()
         al_draw_bitmap(monster[5].img, monster[0].x, monster[0].y, 0);
     }
     else
-    { //�Ǫ�����
+    {
         monster_anime %= monster_anime_hurt;
         //        printf("monster_anime=%d monster_anime_hurt=%d, position=%d\n",monster_anime,monster_anime_hurt,monster[0].x-(monster_anime_hurt/2)+monster_anime);
         if (monster_anime < monster_anime_hurt / 4)

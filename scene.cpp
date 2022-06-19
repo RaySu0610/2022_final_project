@@ -888,6 +888,7 @@ int talk=0;
 void game_scene_draw()
 {
     al_clear_to_color(al_map_rgb(0, 0, 0));
+
     if (hurt_time < 3 )
         monster_draw();
     game_button_draw();
