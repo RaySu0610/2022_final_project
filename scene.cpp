@@ -1781,6 +1781,7 @@ int attack_direc1[8][2];
 int attack_v1 = 3;
 void monster_attack_init1()
 {
+    heart_counter_init();
     for (int i = 0; i < attack_sum1; i++)
     {
         int x = rand();
@@ -1829,6 +1830,7 @@ int attack_v2 = 3;
 
 void monster_attack_init2()
 {
+    heart_counter_init();
     for (int i = 0; i < attack_sum2; i++)
     {
         int x = rand();
@@ -1901,6 +1903,7 @@ int attack_v3 = 3;
 int green_check = 0;
 void monster_attack_init3()
 {
+    heart_counter_init();
     for (int i = 0; i < attack_sum3; i++)
     {
         int x = rand();

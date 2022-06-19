@@ -177,6 +177,10 @@ void character_hp_reset()
     heart.cheating = false;
 }
 
+
+void heart_counter_init(){
+    heart_counter = heart_counter_initial;
+}
 void character_attack_check1(int pos[][2], int n)
 {
     if (heart.cheating)
