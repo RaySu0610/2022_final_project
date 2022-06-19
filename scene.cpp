@@ -2127,4 +2127,19 @@ void reset()
     mercy_usabled = false;
     green_check = 0;
     talk = 0;
+
+    game_scene_counter = 0;
+    for (int i = 0; i < 4; i++)
+    {
+        game_button[i] = false;
+        game_scene2_button[i] = false;
+    }
+    for (int i = 0; i < 10; i++)
+    {
+        cheating_keyword[i] = false;
+    }
+    for (int i = 0; i < 2; i++)
+    {
+        game_scene4_button[i] = false;
+    }
 }

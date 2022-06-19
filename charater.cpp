@@ -91,9 +91,9 @@ void charater_update()
     if (key_state[ALLEGRO_KEY_W])
     {
         heart.y -= heart.v;
-        if (heart.y <= HEIGHT * bound_top + heart.height * heart.scale)
+        if (heart.y <= HEIGHT * bound_top)
         {
-            heart.y = HEIGHT * bound_top + heart.height * heart.scale;
+            heart.y = HEIGHT * bound_top;
         }
         // chara.state = MOVE;
     }
@@ -177,8 +177,8 @@ void character_hp_reset()
     heart.cheating = false;
 }
 
-
-void heart_counter_init(){
+void heart_counter_init()
+{
     heart_counter = heart_counter_initial;
 }
 void character_attack_check1(int pos[][2], int n)
