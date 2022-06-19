@@ -431,6 +431,8 @@ int game_scene_counter = 0;
 int game_scene_counter_end = 150;
 
 int monster_hp = 12;
+ALLEGRO_BITMAP *monster_talk[10];
+
 void game_scene_init()
 {
     font = al_load_ttf_font("./font/UndertaleSans.ttf", 50, 0);
@@ -438,6 +440,11 @@ void game_scene_init()
 
     attack_img[0] = al_load_bitmap("./image/attack01.png");
     attack_img[1] = al_load_bitmap("./image/attack02.png");
+    monster_talk[0] = al_load_bitmap("./image/talk01.png");
+    monster_talk[1] = al_load_bitmap("./image/talk02.png");
+    monster_talk[2] = al_load_bitmap("./image/talk03.png");
+    monster_talk[3] = al_load_bitmap("./image/talk04.png");
+    monster_talk[4] = al_load_bitmap("./image/talk05.png");
     // al_convert_mask_to_alpha(attack_img[0], al_map_rgb(255, 255, 255));
     // al_convert_mask_to_alpha(attack_img[1], al_map_rgb(255, 255, 255));
 
@@ -1032,14 +1039,12 @@ void game_scene_draw()
             if (game_scene_counter == game_scene_counter_end)
             {
                 hurt_time++;
-                printf("hurt_time=%d\n", hurt_time);
-
                 monster_hurt = 0;
                 game_scene_counter = 0;
                 if (monster_hp > 0)
                 {
                     game_scene_mode1 = 1;
-                    game_scene_mode2 = 3;
+                    game_scene_mode2 = 4;
 
                     monster_attack_init2();
                 }
@@ -1097,7 +1102,28 @@ void game_scene_draw()
                 game_scene_mode1 = 0;
                 game_scene_mode2 = 0;
                 talk = 1;
-                printf("talk=%d\n", talk);
+            }
+        }
+        else if(game_scene_mode2 == 4){
+            character_draw();
+            character_infor_draw();
+
+            al_draw_rectangle( //邊框
+                (WIDTH * bound_left1) * scalar + dx,
+                (HEIGHT * bound_top) * scalar + dy,
+                (WIDTH * bound_right1) * scalar + dx,
+                (HEIGHT * bound_bottom) * scalar + dy,
+                al_map_rgb(255, 255, 255),
+                0);
+            al_draw_bitmap(monster_talk[0],
+                           WIDTH * (bound_left1 + bound_right1) / 2 + 50 ,
+                           HEIGHT / 4, 0);
+            game_scene_counter++;
+            if (game_scene_counter == game_scene_counter_end/2)
+            {
+                game_scene_counter = 0;
+                game_scene_mode1 = 1;
+                game_scene_mode2 = 3;
             }
         }
     }
@@ -1219,7 +1245,29 @@ void game_scene_draw()
                     monster_attack_init1();
                 }
             }
-            else if (game_scene_mode2_ == 1)
+            else if (game_scene_mode2_ == 1){
+                character_draw();
+                character_infor_draw();
+
+                al_draw_rectangle( //邊框
+                    (WIDTH * bound_left1) * scalar + dx,
+                    (HEIGHT * bound_top) * scalar + dy,
+                    (WIDTH * bound_right1) * scalar + dx,
+                    (HEIGHT * bound_bottom) * scalar + dy,
+                    al_map_rgb(255, 255, 255),
+                    0);
+                al_draw_bitmap(monster_talk[1],
+                    WIDTH * (bound_left1 + bound_right1) / 2 + 50 ,
+                    HEIGHT / 4, 0);
+                game_scene_counter++;
+                if (game_scene_counter == game_scene_counter_end/2)
+                {
+                    game_scene_mode1 = 2;
+                    game_scene_mode2 = 1;
+                    game_scene_mode2_ = 2;
+                }
+            }
+            else if (game_scene_mode2_ == 2)
             {
                 character_draw();
                 character_infor_draw();
@@ -1250,42 +1298,6 @@ void game_scene_draw()
                     talk = 2;
                 }
             }
-            {
-        /*   else if (game_scene_mode2_ == 2)
-            {
-                al_draw_rectangle( //邊框
-                    (WIDTH * bound_left) * scalar + dx,
-                    (HEIGHT * bound_top) * scalar + dy,
-                    (WIDTH * bound_right) * scalar + dx,
-                    (HEIGHT * bound_bottom) * scalar + dy,
-                    al_map_rgb(255, 255, 255),
-                    0);
-
-                al_draw_text(
-                    font,
-                    al_map_rgb(255, 255, 255),
-                    (WIDTH * bound_left) * scalar + dx,
-                    (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
-                    ALLEGRO_ALIGN_LEFT,
-                    "* Vegetoid gave a mysterious");
-                al_draw_text(
-                    font,
-                    al_map_rgb(255, 255, 255),
-                    (WIDTH * bound_left) * scalar + dx,
-                    (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
-                    ALLEGRO_ALIGN_LEFT,
-                    "  smile");
-
-                game_scene_counter++;
-                if (game_scene_counter == game_scene_counter_end)
-                {
-                    game_scene_counter = 0;
-
-                    game_scene_mode1 = 0;
-                    game_scene_mode2 = 0;
-                    game_scene_mode2_ = 0;
-                }
-            }*/}
         }
         else if (game_scene_mode2 == 2) // devour
         {
@@ -1327,7 +1339,29 @@ void game_scene_draw()
                     monster_attack_init2();
                 }
             }
-            else if (game_scene_mode2_ == 1)
+            else if (game_scene_mode2_ == 1){
+                character_draw();
+                character_infor_draw();
+
+                al_draw_rectangle( //邊框
+                    (WIDTH * bound_left1) * scalar + dx,
+                    (HEIGHT * bound_top) * scalar + dy,
+                    (WIDTH * bound_right1) * scalar + dx,
+                    (HEIGHT * bound_bottom) * scalar + dy,
+                    al_map_rgb(255, 255, 255),
+                    0);
+                al_draw_bitmap(monster_talk[3],
+                    WIDTH * (bound_left1 + bound_right1) / 2 + 50 ,
+                    HEIGHT / 4, 0);
+                game_scene_counter++;
+                if (game_scene_counter == game_scene_counter_end/2)
+                {
+                    game_scene_mode1 = 2;
+                    game_scene_mode2 = 2;
+                    game_scene_mode2_ = 2;
+                }
+            }
+            else if (game_scene_mode2_ == 2)
             {
                 character_draw();
                 character_infor_draw();
@@ -1355,42 +1389,6 @@ void game_scene_draw()
                     talk = 4;
                 }
             }
-            { /*   else if (game_scene_mode2_ == 2)
-                  {
-                      al_draw_rectangle( //邊框
-                          (WIDTH * bound_left) * scalar + dx,
-                          (HEIGHT * bound_top) * scalar + dy,
-                          (WIDTH * bound_right) * scalar + dx,
-                          (HEIGHT * bound_bottom) * scalar + dy,
-                          al_map_rgb(255, 255, 255),
-                          0);
-
-                      al_draw_text(
-                          font,
-                          al_map_rgb(255, 255, 255),
-                          (WIDTH * bound_left) * scalar + dx,
-                          (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
-                          ALLEGRO_ALIGN_LEFT,
-                          "* It smells like steamed");
-                      al_draw_text(
-                          font,
-                          al_map_rgb(255, 255, 255),
-                          (WIDTH * bound_left) * scalar + dx,
-                          (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
-                          ALLEGRO_ALIGN_LEFT,
-                          "  carrots and peas.");
-
-                      game_scene_counter++;
-                      if (game_scene_counter == game_scene_counter_end)
-                      {
-                          game_scene_counter = 0;
-
-                          game_scene_mode1 = 0;
-                          game_scene_mode2 = 0;
-                          game_scene_mode2_ = 0;
-                      }
-                  }*/
-            }
         }
         else if (game_scene_mode2 == 3) // talk
         {
@@ -1399,31 +1397,22 @@ void game_scene_draw()
 
             if (game_scene_mode2_ == 0)
             {
+                character_draw();
+                character_infor_draw();
+
                 al_draw_rectangle( //邊框
-                    (WIDTH * bound_left) * scalar + dx,
+                    (WIDTH * bound_left1) * scalar + dx,
                     (HEIGHT * bound_top) * scalar + dy,
-                    (WIDTH * bound_right) * scalar + dx,
+                    (WIDTH * bound_right1) * scalar + dx,
                     (HEIGHT * bound_bottom) * scalar + dy,
                     al_map_rgb(255, 255, 255),
                     0);
-
-                al_draw_text(
-                    font,
-                    al_map_rgb(255, 255, 255),
-                    (WIDTH * bound_left) * scalar + dx,
-                    (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
-                    ALLEGRO_ALIGN_LEFT,
-                    "* You give Vegetoid a patient smell");
-                /*  al_draw_text(
-                      font,
-                      al_map_rgb(255, 255, 255),
-                      (WIDTH * bound_left) * scalar + dx,
-                      (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
-                      ALLEGRO_ALIGN_LEFT,
-                      "  but it wasn't weakened enough.");*/
+                al_draw_bitmap(monster_talk[2],
+                    WIDTH * (bound_left1 + bound_right1) / 2 + 50 ,
+                    HEIGHT / 4, 0);
 
                 game_scene_counter++;
-                if (game_scene_counter == game_scene_counter_end)
+                if (game_scene_counter == game_scene_counter_end/2)
                 {
                     game_scene_counter = 0;
 
@@ -1503,7 +1492,29 @@ void game_scene_draw()
                     monster_attack_init3();
                 }
             }
-            else if (game_scene_mode2_ == 1)
+            else if (game_scene_mode2_ == 1){
+                character_draw();
+                character_infor_draw();
+
+                al_draw_rectangle( //邊框
+                    (WIDTH * bound_left1) * scalar + dx,
+                    (HEIGHT * bound_top) * scalar + dy,
+                    (WIDTH * bound_right1) * scalar + dx,
+                    (HEIGHT * bound_bottom) * scalar + dy,
+                    al_map_rgb(255, 255, 255),
+                    0);
+                al_draw_bitmap(monster_talk[4],
+                    WIDTH * (bound_left1 + bound_right1) / 2 + 50 ,
+                    HEIGHT / 4, 0);
+                game_scene_counter++;
+                if (game_scene_counter == game_scene_counter_end/2)
+                {
+                    game_scene_mode1 = 2;
+                    game_scene_mode2 = 4;
+                    game_scene_mode2_ = 2;
+                }
+            }
+            else if (game_scene_mode2_ == 2)
             {
                 character_draw();
                 character_infor_draw();
