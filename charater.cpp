@@ -174,6 +174,7 @@ int get_character_hp()
 void character_hp_reset()
 {
     heart.hp = 20;
+    heart.cheating = false;
 }
 
 void character_attack_check1(int pos[][2], int n)

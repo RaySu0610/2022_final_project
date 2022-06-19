@@ -56,3 +56,4 @@ void ending1_process(ALLEGRO_EVENT event);
 void ending1_draw();
 void ending1_destroy();
 
+void reset();
