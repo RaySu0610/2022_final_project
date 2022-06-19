@@ -8,7 +8,8 @@ ALLEGRO_SAMPLE *song = NULL;
 ALLEGRO_SAMPLE *attack_reflect = NULL;
 ALLEGRO_SAMPLE_INSTANCE *reflect_instance[8];
 ALLEGRO_SAMPLE_INSTANCE *sample_instance;
-
+ALLEGRO_SAMPLE *fighting = NULL;
+ALLEGRO_SAMPLE_INSTANCE *fight_instance;
 // function of menu----------------------------------------------------------------------------------------------------------
 
 void menu_init()
@@ -448,6 +449,13 @@ void game_scene_init()
     al_reserve_samples(20);
     sample_instance = al_create_sample_instance(song);
 
+    fighting = al_load_sample("./sound/Attack Hit.mp3");
+    fight_instance = al_create_sample_instance(fighting);
+    al_set_sample_instance_playmode(fight_instance, ALLEGRO_PLAYMODE_ONCE);
+    al_attach_sample_instance_to_mixer(fight_instance, al_get_default_mixer());
+    al_set_sample_instance_gain(fight_instance, (volume_value - 10) / 200);
+
+
     for (int num = 0; num < 8; num++) // to give each attach bullet independent sample instance
     {
         reflect_instance[num] = al_create_sample_instance(attack_reflect);
@@ -465,7 +473,7 @@ void game_scene_init()
 
     // // set the volume of instance
     al_set_sample_instance_gain(sample_instance, (volume_value - 10) / 200);
-    // al_play_sample_instance(reflect_instance);
+
     al_play_sample_instance(sample_instance);
 
     srand(time(NULL));
@@ -965,6 +973,7 @@ void game_scene_draw()
         if (game_scene_mode2 == 1)
         {
             monster_hurt = 1;
+
             if (game_scene_counter == 0)
             {
                 monster_anime = 0;
@@ -998,7 +1007,8 @@ void game_scene_draw()
                 (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 str); //要給實際參數值
-
+            if(game_scene_counter == 0)
+                al_play_sample_instance(fight_instance);
             game_scene_counter++;
             if (game_scene_counter >= game_scene_counter_end / 2)
                 monster_hurt = 2;
@@ -1006,6 +1016,7 @@ void game_scene_draw()
             {
                 hurt_time++;
                 printf("hurt_time=%d\n", hurt_time);
+
                 monster_hurt = 0;
                 game_scene_counter = 0;
                 if (monster_hp > 0)
@@ -1061,7 +1072,6 @@ void game_scene_draw()
             if (lose)
             {
                 failed_draw();
-                al_rest(3);
             }
             game_scene_counter++;
             if (game_scene_counter == 500)
@@ -1209,7 +1219,6 @@ void game_scene_draw()
                 if (lose)
                 {
                     failed_draw();
-                    al_rest(3);
                 }
                 game_scene_counter++;
                 if (game_scene_counter == 500)
@@ -1316,7 +1325,6 @@ void game_scene_draw()
                 if (lose)
                 {
                     failed_draw();
-                    al_rest(3);
                 }
                 game_scene_counter++;
                 if (game_scene_counter == 500)
@@ -1425,7 +1433,6 @@ void game_scene_draw()
                 if (lose)
                 {
                     failed_draw();
-                    al_rest(3);
                 }
                 game_scene_counter++;
                 if (game_scene_counter == 500)
@@ -1864,11 +1871,16 @@ void monster_attack3()
 void game_scene_destroy()
 {
     al_destroy_font(font);
-    // al_destroy_bitmap(background);
+    al_destroy_bitmap(attack_img[0]);
+    al_destroy_bitmap(attack_img[1]);
     music_destroy();
     for (int num = 0; num < 8; num++)
         al_destroy_sample_instance(reflect_instance[num]);
     al_destroy_sample(attack_reflect);
+
+    al_destroy_sample(fighting);
+    al_destroy_sample_instance(fight_instance);
+
     character_destory();
     monster_destroy();
 }

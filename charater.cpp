@@ -42,7 +42,7 @@ void character_init()
     heart.img = al_load_bitmap("./image/heart.png");
     al_convert_mask_to_alpha(heart.img, al_map_rgb(255, 255, 255));
     heart.died = al_load_bitmap("./image/dead.png");
-    al_convert_mask_to_alpha(heart.died, al_map_rgb(255, 255, 255));
+    //al_convert_mask_to_alpha(heart.died, al_map_rgb(255, 255, 255));
     injuried = al_load_sample("./sound/injuried.wav");
     injuried_instance = al_create_sample_instance(injuried);
     al_set_sample_instance_playmode(injuried_instance, ALLEGRO_PLAYMODE_ONCE);
@@ -132,7 +132,7 @@ void character_draw()
 {
 
     // show heart
-    if (heart_counter == heart_counter_initial || (heart_counter % 50) < 25 || isgreen == 1)
+    if (heart_counter == heart_counter_initial || (heart_counter % 50) < 25 || isgreen == 1 || lose)
     {
         if (!lose)
         {
@@ -145,7 +145,7 @@ void character_draw()
         else
         {
             al_draw_scaled_bitmap(
-                heart.died, 0, 0, heart.width, heart.height,
+                heart.died, 0, 0, al_get_bitmap_width(heart.died), al_get_bitmap_height(heart.died),
                 heart.x, heart.y,
                 heart.width * heart.scale, heart.height * heart.scale,
                 0);
