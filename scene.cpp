@@ -207,7 +207,7 @@ void about_process(ALLEGRO_EVENT event)
 void about_draw()
 {
     al_clear_to_color(al_map_rgb(0, 0, 0));
-    al_draw_text(font , al_map_rgb(255, 255, 255), WIDTH /2, HEIGHT /2, ALLEGRO_ALIGN_CENTER, "Just play!");
+    al_draw_text(font, al_map_rgb(255, 255, 255), WIDTH / 2, HEIGHT / 2, ALLEGRO_ALIGN_CENTER, "Just play!");
     if (back_inrange)
         back_draw(100);
     else
@@ -454,7 +454,6 @@ void game_scene_init()
     al_set_sample_instance_playmode(fight_instance, ALLEGRO_PLAYMODE_ONCE);
     al_attach_sample_instance_to_mixer(fight_instance, al_get_default_mixer());
     al_set_sample_instance_gain(fight_instance, (volume_value - 10) / 200);
-
 
     for (int num = 0; num < 8; num++) // to give each attach bullet independent sample instance
     {
@@ -785,8 +784,8 @@ void game_scene_process(ALLEGRO_EVENT event)
         }
         else if (game_scene_mode2 == 2)
         {
-            al_rest(3);
-            reset();
+            // al_rest(3);
+            // reset();
         }
     }
 }
@@ -886,18 +885,18 @@ int game_button_draw()
 }
 
 int hurt_time = 0;
-int talk=0;
-//talk = 0, 初始對話
-//talk = 1, 被打後的對話(選擇fight)
-//talk = 2, act_check
-//talk = 3, act_talk  未做
-//talk = 4, act_devour
-//talk = 5, act_dinner
+int talk = 0;
+// talk = 0, 初始對話
+// talk = 1, 被打後的對話(選擇fight)
+// talk = 2, act_check
+// talk = 3, act_talk  未做
+// talk = 4, act_devour
+// talk = 5, act_dinner
 void game_scene_draw()
 {
     al_clear_to_color(al_map_rgb(0, 0, 0));
 
-    if (hurt_time < 3 )
+    if (hurt_time < 3)
         monster_draw();
     game_button_draw();
 
@@ -910,7 +909,8 @@ void game_scene_draw()
             (HEIGHT * bound_bottom) * scalar + dy,
             al_map_rgb(255, 255, 255),
             0);
-        if(talk==0){
+        if (talk == 0)
+        {
             al_draw_text(
                 font,
                 al_map_rgb(255, 255, 255),
@@ -918,7 +918,9 @@ void game_scene_draw()
                 (HEIGHT * bound_top + HEIGHT * 70 / 760) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "* Vegetoid came out of the earth!");
-        }else if(talk==1){
+        }
+        else if (talk == 1)
+        {
             al_draw_text(
                 font,
                 al_map_rgb(255, 255, 255),
@@ -926,7 +928,9 @@ void game_scene_draw()
                 (HEIGHT * bound_top + HEIGHT * 70 / 760) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "* Vegetoid looked at you in fear.");
-        }else if(talk==2){
+        }
+        else if (talk == 2)
+        {
             al_draw_text(
                 font,
                 al_map_rgb(255, 255, 255),
@@ -941,7 +945,9 @@ void game_scene_draw()
                 (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "  smile");
-        }else if(talk==3){
+        }
+        else if (talk == 3)
+        {
             al_draw_text(
                 font,
                 al_map_rgb(255, 255, 255),
@@ -949,7 +955,9 @@ void game_scene_draw()
                 (HEIGHT * bound_top + HEIGHT * 70 / 760) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "* Vegetoid chackles softly.");
-        }else if(talk==4){
+        }
+        else if (talk == 4)
+        {
             al_draw_text(
                 font,
                 al_map_rgb(255, 255, 255),
@@ -964,7 +972,9 @@ void game_scene_draw()
                 (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "  carrots and peas.");
-        }else if(talk==5){
+        }
+        else if (talk == 5)
+        {
             al_draw_text(
                 font,
                 al_map_rgb(255, 255, 255),
@@ -1014,7 +1024,7 @@ void game_scene_draw()
                 (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 str); //要給實際參數值
-            if(game_scene_counter == 0)
+            if (game_scene_counter == 0)
                 al_play_sample_instance(fight_instance);
             game_scene_counter++;
             if (game_scene_counter >= game_scene_counter_end / 2)
@@ -1037,7 +1047,7 @@ void game_scene_draw()
                 {
                     game_scene_mode1 = 1;
                     game_scene_mode2 = 2;
-                    talk=1;
+                    talk = 1;
                 }
             }
         }
@@ -1087,13 +1097,13 @@ void game_scene_draw()
                 game_scene_mode1 = 0;
                 game_scene_mode2 = 0;
                 talk = 1;
-                printf("talk=%d\n",talk);
+                printf("talk=%d\n", talk);
             }
         }
     }
     else if (game_scene_mode1 == 2) //---------------------------------------------------------------------------------act page
     {
-//        printf("game_scene_mode2=%d\n",game_scene_mode2);
+        //        printf("game_scene_mode2=%d\n",game_scene_mode2);
         if (game_scene_mode2 == 0)
         {
             character_infor_draw();
@@ -1231,16 +1241,16 @@ void game_scene_draw()
                 if (game_scene_counter == 500)
                 {
                     game_scene_counter = 0;
-              /*      game_scene_mode1 = 2;
-                    game_scene_mode2 = 1;
-                    game_scene_mode2_ = 2;*/
+                    /*      game_scene_mode1 = 2;
+                          game_scene_mode2 = 1;
+                          game_scene_mode2_ = 2;*/
                     game_scene_mode1 = 0;
                     game_scene_mode2 = 0;
                     game_scene_mode2_ = 0;
-                    talk=2;
+                    talk = 2;
                 }
             }
-      {
+            {
         /*   else if (game_scene_mode2_ == 2)
             {
                 al_draw_rectangle( //邊框
@@ -1342,47 +1352,49 @@ void game_scene_draw()
                     game_scene_mode1 = 0;
                     game_scene_mode2 = 0;
                     game_scene_mode2_ = 0;
-                    talk=4;
+                    talk = 4;
                 }
             }
-       {/*   else if (game_scene_mode2_ == 2)
-            {
-                al_draw_rectangle( //邊框
-                    (WIDTH * bound_left) * scalar + dx,
-                    (HEIGHT * bound_top) * scalar + dy,
-                    (WIDTH * bound_right) * scalar + dx,
-                    (HEIGHT * bound_bottom) * scalar + dy,
-                    al_map_rgb(255, 255, 255),
-                    0);
+            { /*   else if (game_scene_mode2_ == 2)
+                  {
+                      al_draw_rectangle( //邊框
+                          (WIDTH * bound_left) * scalar + dx,
+                          (HEIGHT * bound_top) * scalar + dy,
+                          (WIDTH * bound_right) * scalar + dx,
+                          (HEIGHT * bound_bottom) * scalar + dy,
+                          al_map_rgb(255, 255, 255),
+                          0);
 
-                al_draw_text(
-                    font,
-                    al_map_rgb(255, 255, 255),
-                    (WIDTH * bound_left) * scalar + dx,
-                    (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
-                    ALLEGRO_ALIGN_LEFT,
-                    "* It smells like steamed");
-                al_draw_text(
-                    font,
-                    al_map_rgb(255, 255, 255),
-                    (WIDTH * bound_left) * scalar + dx,
-                    (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
-                    ALLEGRO_ALIGN_LEFT,
-                    "  carrots and peas.");
+                      al_draw_text(
+                          font,
+                          al_map_rgb(255, 255, 255),
+                          (WIDTH * bound_left) * scalar + dx,
+                          (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
+                          ALLEGRO_ALIGN_LEFT,
+                          "* It smells like steamed");
+                      al_draw_text(
+                          font,
+                          al_map_rgb(255, 255, 255),
+                          (WIDTH * bound_left) * scalar + dx,
+                          (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
+                          ALLEGRO_ALIGN_LEFT,
+                          "  carrots and peas.");
 
-                game_scene_counter++;
-                if (game_scene_counter == game_scene_counter_end)
-                {
-                    game_scene_counter = 0;
+                      game_scene_counter++;
+                      if (game_scene_counter == game_scene_counter_end)
+                      {
+                          game_scene_counter = 0;
 
-                    game_scene_mode1 = 0;
-                    game_scene_mode2 = 0;
-                    game_scene_mode2_ = 0;
-                }
-            }*/}
+                          game_scene_mode1 = 0;
+                          game_scene_mode2 = 0;
+                          game_scene_mode2_ = 0;
+                      }
+                  }*/
+            }
         }
         else if (game_scene_mode2 == 3) // talk
-        {game_scene2_button[2] = false;
+        {
+            game_scene2_button[2] = false;
             character_infor_draw();
 
             if (game_scene_mode2_ == 0)
@@ -1402,13 +1414,13 @@ void game_scene_draw()
                     (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
                     ALLEGRO_ALIGN_LEFT,
                     "* You give Vegetoid a patient smell");
-              /*  al_draw_text(
-                    font,
-                    al_map_rgb(255, 255, 255),
-                    (WIDTH * bound_left) * scalar + dx,
-                    (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
-                    ALLEGRO_ALIGN_LEFT,
-                    "  but it wasn't weakened enough.");*/
+                /*  al_draw_text(
+                      font,
+                      al_map_rgb(255, 255, 255),
+                      (WIDTH * bound_left) * scalar + dx,
+                      (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
+                      ALLEGRO_ALIGN_LEFT,
+                      "  but it wasn't weakened enough.");*/
 
                 game_scene_counter++;
                 if (game_scene_counter == game_scene_counter_end)
@@ -1446,7 +1458,7 @@ void game_scene_draw()
                     game_scene_mode1 = 0;
                     game_scene_mode2 = 0;
                     game_scene_mode2_ = 0;
-                    talk=3;
+                    talk = 3;
                 }
             }
         }
@@ -1516,37 +1528,38 @@ void game_scene_draw()
                     game_scene_mode1 = 0;
                     game_scene_mode2 = 0;
                     game_scene_mode2_ = 0;
-                    talk=5;
+                    talk = 5;
                 }
             }
- {      /*   else if (game_scene_mode2_ == 2)
-            {
-                al_draw_rectangle( //邊框
-                    (WIDTH * bound_left) * scalar + dx,
-                    (HEIGHT * bound_top) * scalar + dy,
-                    (WIDTH * bound_right) * scalar + dx,
-                    (HEIGHT * bound_bottom) * scalar + dy,
-                    al_map_rgb(255, 255, 255),
-                    0);
+            { /*   else if (game_scene_mode2_ == 2)
+                  {
+                      al_draw_rectangle( //邊框
+                          (WIDTH * bound_left) * scalar + dx,
+                          (HEIGHT * bound_top) * scalar + dy,
+                          (WIDTH * bound_right) * scalar + dx,
+                          (HEIGHT * bound_bottom) * scalar + dy,
+                          al_map_rgb(255, 255, 255),
+                          0);
 
-                al_draw_text(
-                    font,
-                    al_map_rgb(255, 255, 255),
-                    (WIDTH * bound_left) * scalar + dx,
-                    (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
-                    ALLEGRO_ALIGN_LEFT,
-                    "* Vegetoid's here for your health");
+                      al_draw_text(
+                          font,
+                          al_map_rgb(255, 255, 255),
+                          (WIDTH * bound_left) * scalar + dx,
+                          (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
+                          ALLEGRO_ALIGN_LEFT,
+                          "* Vegetoid's here for your health");
 
-                game_scene_counter++;
-                if (game_scene_counter == game_scene_counter_end)
-                {
-                    game_scene_counter = 0;
+                      game_scene_counter++;
+                      if (game_scene_counter == game_scene_counter_end)
+                      {
+                          game_scene_counter = 0;
 
-                    game_scene_mode1 = 0;
-                    game_scene_mode2 = 0;
-                    game_scene_mode2_ = 0;
-                }
-            }*/}
+                          game_scene_mode1 = 0;
+                          game_scene_mode2 = 0;
+                          game_scene_mode2_ = 0;
+                      }
+                  }*/
+            }
         }
     }
     else if (game_scene_mode1 == 3) //----------------------------------------------------------------------------------item page
@@ -1736,6 +1749,18 @@ void game_scene_draw()
                 (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 3) * scalar + dy,
                 ALLEGRO_ALIGN_LEFT,
                 "* You escaped...");
+
+            game_scene_counter++;
+            if (game_scene_counter == game_scene_counter_end)
+            {
+                game_scene_counter = 0;
+
+                game_scene_mode1 = 0;
+                game_scene_mode2 = 0;
+                game_scene_mode2_ = 0;
+
+                reset();
+            }
         }
     }
 
@@ -1785,7 +1810,7 @@ void monster_attack1()
             int x = rand();
             double x_ = WIDTH * bound_left1 + 3 + ((x % 301)) * 1.0 / 300 * WIDTH * (bound_right1 - bound_left1);
             attack_pos1[i][0] = x_ + dx;
-            attack_pos1[i][1] = HEIGHT * bound_top; //+ attack_direc1[i][1] * 5
+            attack_pos1[i][1] = HEIGHT * bound_top - i; //+ attack_direc1[i][1] * 5
         }
 
         int r = 3;
@@ -1873,7 +1898,7 @@ int attack_sum3 = 8;
 int attack_pos3[8][2];
 int attack_direc3[8][2];
 int attack_v3 = 3;
-int green_check=0;
+int green_check = 0;
 void monster_attack_init3()
 {
     for (int i = 0; i < attack_sum3; i++)
@@ -1892,7 +1917,8 @@ void monster_attack_init3()
 }
 void monster_attack3()
 {
-    if(isgreen==1) green_check=1;
+    if (isgreen == 1)
+        green_check = 1;
     for (int i = green_check; i < attack_sum3; i++)
     {
         attack_pos3[i][0] += attack_direc3[i][0];
@@ -1999,7 +2025,6 @@ void ending1_process(ALLEGRO_EVENT event)
         if (back_menu_button)
         {
             reset();
-
         }
         else if (exit_button)
         {
@@ -2029,10 +2054,10 @@ void ending1_draw()
     al_clear_to_color(al_map_rgb(0, 0, 0));
     if (win)
     {
-        if(kill)
+        if (kill)
             al_draw_scaled_bitmap(background, 0, 0, 244, 207, (WIDTH * 300 / 1024) * scalar + dx, (HEIGHT * 50 / 760) * scalar + dy, WIDTH * 244 * 2 / 1024, HEIGHT * 207 * 2 / 760, 0);
         else
-            al_draw_bitmap(background, (WIDTH * 200 / 1024) * scalar + dx , (HEIGHT * 100 / 760) * scalar + dy, 0);
+            al_draw_bitmap(background, (WIDTH * 200 / 1024) * scalar + dx, (HEIGHT * 100 / 760) * scalar + dy, 0);
     }
     else
         al_draw_scaled_bitmap(background, 0, 0, 1080, 720, 0, 0, WIDTH, HEIGHT, 0);
@@ -2097,4 +2122,5 @@ void reset()
     cheating_mode = false;
     hurt_time = 0;
     mercy_usabled = false;
+    green_check = 0;
 }
