@@ -24,5 +24,7 @@ int monster_anime_time =240;
 int monster_anime_hurt =20;
 int monster_hurt = 0;
 
+int isgreen = 0;
+
 bool mercy_usabled = false;
 bool lose = false;

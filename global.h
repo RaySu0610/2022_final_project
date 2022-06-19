@@ -35,6 +35,8 @@ extern int monster_anime_time;
 extern int monster_anime_hurt;
 extern int monster_hurt;
 
+extern int isgreen;
+
 extern bool mercy_usabled;
 extern bool lose;
 #endif

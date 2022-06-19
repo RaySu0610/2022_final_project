@@ -206,6 +206,7 @@ void about_process(ALLEGRO_EVENT event)
 void about_draw()
 {
     al_clear_to_color(al_map_rgb(0, 0, 0));
+    al_draw_text(font , al_map_rgb(255, 255, 255), WIDTH /2, HEIGHT /2, ALLEGRO_ALIGN_CENTER, "Just play!");
     if (back_inrange)
         back_draw(100);
     else
@@ -429,7 +430,6 @@ int game_scene_counter = 0;
 int game_scene_counter_end = 150;
 
 int monster_hp = 12;
-
 void game_scene_init()
 {
     font = al_load_ttf_font("./font/UndertaleSans.ttf", 50, 0);
@@ -876,11 +876,19 @@ int game_button_draw()
         game_button[game_button_mercy] ? al_map_rgb(255, 100, 100) : al_map_rgb(255, 255, 255),
         0);
 }
+
 int hurt_time = 0;
+int talk=0;
+//talk = 0, 初始對話
+//talk = 1, 被打後的對話(選擇fight)
+//talk = 2, act_check
+//talk = 3, act_talk  未做
+//talk = 4, act_devour
+//talk = 5, act_dinner
 void game_scene_draw()
 {
     al_clear_to_color(al_map_rgb(0, 0, 0));
-    if (hurt_time < 3 || monster_hp >= 0)
+    if (hurt_time < 3 )
         monster_draw();
     game_button_draw();
 
@@ -893,14 +901,61 @@ void game_scene_draw()
             (HEIGHT * bound_bottom) * scalar + dy,
             al_map_rgb(255, 255, 255),
             0);
-
-        al_draw_text(
-            font,
-            al_map_rgb(255, 255, 255),
-            (WIDTH * bound_left + 3) * scalar + dx,
-            (HEIGHT * bound_top + HEIGHT * 70 / 760) * scalar + dy,
-            ALLEGRO_ALIGN_LEFT,
-            "  Vegetoid came out of the earth!");
+        if(talk==0){
+            al_draw_text(
+                font,
+                al_map_rgb(255, 255, 255),
+                (WIDTH * bound_left + 3) * scalar + dx,
+                (HEIGHT * bound_top + HEIGHT * 70 / 760) * scalar + dy,
+                ALLEGRO_ALIGN_LEFT,
+                "  Vegetoid came out of the earth!");
+        }else if(talk==1){
+            al_draw_text(
+                font,
+                al_map_rgb(255, 255, 255),
+                (WIDTH * bound_left + 3) * scalar + dx,
+                (HEIGHT * bound_top + HEIGHT * 70 / 760) * scalar + dy,
+                ALLEGRO_ALIGN_LEFT,
+                "  Vegetoid looked at you in fear.");
+        }else if(talk==2){
+            al_draw_text(
+                font,
+                al_map_rgb(255, 255, 255),
+                (WIDTH * bound_left) * scalar + dx,
+                (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
+                ALLEGRO_ALIGN_LEFT,
+                "* Vegetoid gave a mysterious");
+            al_draw_text(
+                font,
+                al_map_rgb(255, 255, 255),
+                (WIDTH * bound_left) * scalar + dx,
+                (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
+                ALLEGRO_ALIGN_LEFT,
+                "  smile");
+        }else if(talk==4){
+            al_draw_text(
+                font,
+                al_map_rgb(255, 255, 255),
+                (WIDTH * bound_left) * scalar + dx,
+                (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
+                ALLEGRO_ALIGN_LEFT,
+                "* It smells like steamed");
+            al_draw_text(
+                font,
+                al_map_rgb(255, 255, 255),
+                (WIDTH * bound_left) * scalar + dx,
+                (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 3 / 5) * scalar + dy,
+                ALLEGRO_ALIGN_LEFT,
+                "  carrots and peas.");
+        }else if(talk==5){
+            al_draw_text(
+                font,
+                al_map_rgb(255, 255, 255),
+                (WIDTH * bound_left) * scalar + dx,
+                (HEIGHT * bound_top + HEIGHT * (bound_bottom - bound_top) * 1 / 5) * scalar + dy,
+                ALLEGRO_ALIGN_LEFT,
+                "* Vegetoid's here for your health");
+        }
 
         character_infor_draw();
     }
@@ -963,6 +1018,7 @@ void game_scene_draw()
                 {
                     game_scene_mode1 = 1;
                     game_scene_mode2 = 2;
+                    talk=1;
                 }
             }
         }
@@ -1012,11 +1068,14 @@ void game_scene_draw()
                 game_scene_counter = 0;
                 game_scene_mode1 = 0;
                 game_scene_mode2 = 0;
+                talk = 1;
+                printf("talk=%d\n",talk);
             }
         }
     }
     else if (game_scene_mode1 == 2) //---------------------------------------------------------------------------------act page
     {
+//        printf("game_scene_mode2=%d\n",game_scene_mode2);
         if (game_scene_mode2 == 0)
         {
             character_infor_draw();
@@ -1155,12 +1214,17 @@ void game_scene_draw()
                 if (game_scene_counter == 500)
                 {
                     game_scene_counter = 0;
-                    game_scene_mode1 = 2;
+              /*      game_scene_mode1 = 2;
                     game_scene_mode2 = 1;
-                    game_scene_mode2_ = 2;
+                    game_scene_mode2_ = 2;*/
+                    game_scene_mode1 = 0;
+                    game_scene_mode2 = 0;
+                    game_scene_mode2_ = 0;
+                    talk=2;
                 }
             }
-            else if (game_scene_mode2_ == 2)
+      {
+        /*   else if (game_scene_mode2_ == 2)
             {
                 al_draw_rectangle( //邊框
                     (WIDTH * bound_left) * scalar + dx,
@@ -1194,7 +1258,7 @@ void game_scene_draw()
                     game_scene_mode2 = 0;
                     game_scene_mode2_ = 0;
                 }
-            }
+            }*/}
         }
         else if (game_scene_mode2 == 2) // devour
         {
@@ -1257,12 +1321,13 @@ void game_scene_draw()
                 if (game_scene_counter == 500)
                 {
                     game_scene_counter = 0;
-                    game_scene_mode1 = 2;
-                    game_scene_mode2 = 2;
-                    game_scene_mode2_ = 2;
+                    game_scene_mode1 = 0;
+                    game_scene_mode2 = 0;
+                    game_scene_mode2_ = 0;
+                    talk=4;
                 }
             }
-            else if (game_scene_mode2_ == 2)
+       {/*   else if (game_scene_mode2_ == 2)
             {
                 al_draw_rectangle( //邊框
                     (WIDTH * bound_left) * scalar + dx,
@@ -1296,7 +1361,7 @@ void game_scene_draw()
                     game_scene_mode2 = 0;
                     game_scene_mode2_ = 0;
                 }
-            }
+            }*/}
         }
         else if (game_scene_mode2 == 3) // talk
         {
@@ -1365,12 +1430,13 @@ void game_scene_draw()
                 if (game_scene_counter == 500)
                 {
                     game_scene_counter = 0;
-                    game_scene_mode1 = 2;
-                    game_scene_mode2 = 4;
-                    game_scene_mode2_ = 2;
+                    game_scene_mode1 = 0;
+                    game_scene_mode2 = 0;
+                    game_scene_mode2_ = 0;
+                    talk=5;
                 }
             }
-            else if (game_scene_mode2_ == 2)
+ {      /*   else if (game_scene_mode2_ == 2)
             {
                 al_draw_rectangle( //邊框
                     (WIDTH * bound_left) * scalar + dx,
@@ -1397,7 +1463,7 @@ void game_scene_draw()
                     game_scene_mode2 = 0;
                     game_scene_mode2_ = 0;
                 }
-            }
+            }*/}
         }
     }
     else if (game_scene_mode1 == 3) //----------------------------------------------------------------------------------item page
@@ -1724,7 +1790,7 @@ int attack_sum3 = 8;
 int attack_pos3[8][2];
 int attack_direc3[8][2];
 int attack_v3 = 3;
-
+int green_check=0;
 void monster_attack_init3()
 {
     for (int i = 0; i < attack_sum3; i++)
@@ -1743,7 +1809,8 @@ void monster_attack_init3()
 }
 void monster_attack3()
 {
-    for (int i = 0; i < attack_sum3; i++)
+    if(isgreen==1) green_check=1;
+    for (int i = green_check; i < attack_sum3; i++)
     {
         attack_pos3[i][0] += attack_direc3[i][0];
         attack_pos3[i][1] += attack_direc3[i][1];

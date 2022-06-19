@@ -124,7 +124,7 @@ void character_draw()
 {
 
     // show heart
-    if (heart_counter == heart_counter_initial || (heart_counter % 50) < 25)
+    if (heart_counter == heart_counter_initial || (heart_counter % 50) < 25 || isgreen == 1)
     {
         if (!lose)
         {
@@ -242,6 +242,7 @@ void character_attack_check3(int pos[][2], int n)
         if (heart_counter == 0)
         {
             heart_counter = heart_counter_initial;
+            isgreen = 0;
         }
     }
     else
@@ -263,6 +264,7 @@ void character_attack_check3(int pos[][2], int n)
                 }
                 else
                 {
+                    isgreen = 1;
                     mercy_usabled = true;
                     heart.hp += 1;
                     heart_counter--;
