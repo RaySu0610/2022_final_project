@@ -42,7 +42,7 @@ void character_init()
     heart.img = al_load_bitmap("./image/heart.png");
     al_convert_mask_to_alpha(heart.img, al_map_rgb(255, 255, 255));
     heart.died = al_load_bitmap("./image/dead.png");
-    //al_convert_mask_to_alpha(heart.died, al_map_rgb(255, 255, 255));
+    // al_convert_mask_to_alpha(heart.died, al_map_rgb(255, 255, 255));
     injuried = al_load_sample("./sound/injuried.wav");
     injuried_instance = al_create_sample_instance(injuried);
     al_set_sample_instance_playmode(injuried_instance, ALLEGRO_PLAYMODE_ONCE);
@@ -243,12 +243,12 @@ void character_attack_check2(int pos[][2], int n)
 }
 void character_attack_check3(int pos[][2], int n)
 {
-    if (heart.cheating)
-    {
-        return;
-    }
     if (heart_counter != heart_counter_initial)
     {
+        if (heart.cheating)
+        {
+            return;
+        }
         heart_counter--;
         if (heart_counter == 0)
         {
@@ -258,30 +258,47 @@ void character_attack_check3(int pos[][2], int n)
     }
     else
     {
-        for (int i = 0; i < n; i++)
+        if (heart.cheating)
         {
             if (
-                abs(pos[i][0] - heart.x) <= heart.width * heart.scale / 2 + 3 &&
-                abs(pos[i][1] - heart.y) <= heart.height * heart.scale / 2 + 3)
+                abs(pos[0][0] - heart.x) <= heart.width * heart.scale / 2 + 3 &&
+                abs(pos[0][1] - heart.y) <= heart.height * heart.scale / 2 + 3)
             {
-                if (i != 0)
+                isgreen = 1;
+                mercy_usabled = true;
+                heart.hp += 1;
+                heart_counter--;
+                al_play_sample_instance(increase_instance);
+                printf("heart_plus\n");
+            }
+        }
+        else
+        {
+            for (int i = 0; i < n; i++)
+            {
+                if (
+                    abs(pos[i][0] - heart.x) <= heart.width * heart.scale / 2 + 3 &&
+                    abs(pos[i][1] - heart.y) <= heart.height * heart.scale / 2 + 3)
                 {
-                    heart.hp -= 3;
-                    heart_counter--;
-                    al_play_sample_instance(injuried_instance);
-                    printf("heart\n");
-                    alive();
-                    break;
-                }
-                else
-                {
-                    isgreen = 1;
-                    mercy_usabled = true;
-                    heart.hp += 1;
-                    heart_counter--;
-                    al_play_sample_instance(increase_instance);
-                    printf("heart_plus\n");
-                    break;
+                    if (i != 0)
+                    {
+                        heart.hp -= 3;
+                        heart_counter--;
+                        al_play_sample_instance(injuried_instance);
+                        printf("heart\n");
+                        alive();
+                        break;
+                    }
+                    else
+                    {
+                        isgreen = 1;
+                        mercy_usabled = true;
+                        heart.hp += 1;
+                        heart_counter--;
+                        al_play_sample_instance(increase_instance);
+                        printf("heart_plus\n");
+                        break;
+                    }
                 }
             }
         }
