@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1655626831 source:c:\users\a2282\finalproject\2022_final_project\charater.cpp
+1655641112 source:c:\users\a2282\finalproject\2022_final_project\charater.cpp
 	"charater.h"
 
-1655573228 c:\users\a2282\finalproject\2022_final_project\charater.h
+1655639376 c:\users\a2282\finalproject\2022_final_project\charater.h
 	"global.h"
 
 1655618627 c:\users\a2282\finalproject\2022_final_project\global.h
@@ -335,7 +335,7 @@
 1654624104 source:c:\users\a2282\finalproject\2022_final_project\main.cpp
 	"GameWindow.h"
 
-1655627850 source:c:\users\a2282\finalproject\2022_final_project\scene.cpp
+1655640863 source:c:\users\a2282\finalproject\2022_final_project\scene.cpp
 	"math.h"
 	"scene.h"
 

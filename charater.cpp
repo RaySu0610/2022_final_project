@@ -266,7 +266,7 @@ void character_attack_check3(int pos[][2], int n)
         {
             if (
                 abs(pos[0][0] - heart.x) <= heart.width * heart.scale / 2 + 3 &&
-                abs(pos[0][1] - heart.y) <= heart.height * heart.scale / 2 + 3)
+                abs(pos[0][1] - heart.y) <= heart.height * heart.scale / 2 + 3 && !isgreen)
             {
                 isgreen = 1;
                 mercy_usabled = true;
@@ -293,7 +293,7 @@ void character_attack_check3(int pos[][2], int n)
                         alive();
                         break;
                     }
-                    else
+                    else if(!isgreen)
                     {
                         isgreen = 1;
                         mercy_usabled = true;

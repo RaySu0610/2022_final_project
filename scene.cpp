@@ -265,7 +265,7 @@ void setting_process(ALLEGRO_EVENT event)
             if (pos_x >= (WIDTH * 250 / 1024) * scalar + dx && pos_x <= (WIDTH * (250 + 200) / 1024) * scalar + dx)
             {
                 volume_value = pos_x - WIDTH * 250 / 1024;
-                al_set_sample_instance_gain(sample_instance, (volume_value - 10) / 200);
+                al_set_sample_instance_gain(sample_instance, (volume_value - 10) / (WIDTH * 200 / 1024));
             }
         }
         else if (pos_y >= (HEIGHT * 445 / 760) * scalar + dy && pos_y <= (HEIGHT * 495 / 760) * scalar + dy)
@@ -333,9 +333,9 @@ void setting_draw()
         0);
 
     al_draw_filled_rectangle(
-        (WIDTH * (240 + volume_value) / 1024) * scalar + dx,
+        (WIDTH * (240 ) / 1024) * scalar + dx + volume_value,
         (HEIGHT * 260 / 760) * scalar + dy,
-        (WIDTH * (250 + volume_value) / 1024) * scalar + dx,
+        (WIDTH * (250 ) / 1024) * scalar + dx + volume_value,
         (HEIGHT * 300 / 760) * scalar + dy,
         al_map_rgb(255, 255, 255));
 
@@ -1993,6 +1993,8 @@ void game_scene_destroy()
         al_destroy_sample_instance(reflect_instance[num]);
     al_destroy_sample(attack_reflect);
 
+    for(int i = 0;i < 5;i++)
+        al_destroy_bitmap(monster_talk[i]);
     al_destroy_sample(fighting);
     al_destroy_sample_instance(fight_instance);
 
@@ -2136,6 +2138,7 @@ void reset()
     cheating_mode = false;
     hurt_time = 0;
     mercy_usabled = false;
+    isgreen = 0;
     green_check = 0;
     talk = 0;
 
