@@ -2123,4 +2123,5 @@ void reset()
     hurt_time = 0;
     mercy_usabled = false;
     green_check = 0;
+    talk = 0;
 }
